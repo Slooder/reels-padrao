@@ -1,0 +1,84 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- EXEMPLO / MODELO da skill video-colagem-parallax: copie esta pasta (cp -R videos/exemplo-mico videos/<nome>) e troque
+     imagens, textos, posições e tempos. Mantenha .ly + DEPTH + cam (é o parallax) e o slap() (entrada stop-motion).
+     Mico-leão-dourado, 5 s, 9:16. Imagens do Wikimedia Commons (ver img/creditos.json): foto CC0, gravura e mapa em domínio público, floresta CC BY 4.0. -->
+<script>VIDEO={w:1080,h:1920,fps:60,dur:5,bpm:96,music:{style:'ambient_major',key:'G',gain:-2}}</script>
+<script src="../../lib/boot.js"></script>
+<style>
+#stage{background:#2b2a20;overflow:hidden}
+.ly{position:absolute;inset:0;transform-origin:50% 52%;will-change:transform}
+.abs{position:absolute}
+img{display:block}
+.stk{filter:drop-shadow(6px 0 0 #fbf6ea) drop-shadow(-6px 0 0 #fbf6ea) drop-shadow(0 6px 0 #fbf6ea) drop-shadow(0 -6px 0 #fbf6ea) drop-shadow(14px 22px 16px rgba(20,12,4,.45))}
+.tag{position:absolute;background:#e3321f;color:#fff6ea;font:400 60px/1 'Libre Caslon Text';padding:16px 28px 22px;box-shadow:7px 9px 0 rgba(30,15,5,.3);white-space:nowrap}
+.hand{position:absolute;font:700 66px/1.02 'Caveat';color:#fffaf0;text-shadow:0 3px 14px rgba(0,0,0,.65);white-space:nowrap}
+.cap{position:absolute;font:italic 400 28px 'Libre Caslon Text';color:#3c2c1c;white-space:nowrap}
+.tape{position:absolute;width:150px;height:46px;background:rgba(236,226,196,.82);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+#halftone{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,rgba(0,0,0,.28) 1.3px,transparent 1.6px) 0 0/7px 7px;mix-blend-mode:multiply;opacity:.35}
+#paperTex{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5}
+</style></head><body>
+<div id="stage">
+ <!-- L0 floresta (foto) · L1 mapa preso com fita · L2 gravura do séc. XIX · L3 foto do mico · L4 folhas da frente · L5 textos -->
+ <div class="ly" id="L0"><img class="abs" src="img/floresta.jpg" style="left:-230px;top:-60px;width:1540px;filter:saturate(.85) sepia(.18) brightness(.78) contrast(1.05) blur(1.2px)"></div>
+ <div class="ly" id="Lp"></div>
+ <div class="ly" id="L1"><div class="abs" id="map" style="left:70px;top:610px;width:470px;background:#fbf6ea;padding:14px 14px 56px;transform:rotate(-6deg);box-shadow:10px 18px 26px rgba(0,0,0,.4)">
+   <img src="img/mapa_crop.jpg" style="width:442px"><div style="position:absolute;left:18px;bottom:12px;font:400 26px 'Caveat';color:#3c2c1c">área original da Mata Atlântica</div>
+   <svg class="abs" style="left:14px;top:14px" width="442" height="420" viewBox="0 0 442 420"><path id="circ" d="M278 300 C 330 290 355 330 330 362 C 305 395 245 385 238 350 C 232 318 262 300 300 302" fill="none" stroke="#e3321f" stroke-width="7" stroke-linecap="round"/>
+     <text id="rj" x="300" y="268" font-family="Caveat" font-weight="700" font-size="44" fill="#e3321f">RJ</text></svg>
+   <div class="tape" style="left:-40px;top:-14px;transform:rotate(-32deg)"></div><div class="tape" style="right:-46px;top:-6px;transform:rotate(28deg)"></div></div></div>
+ <div class="ly" id="L2"><div class="abs" id="grav" style="left:20px;top:1260px;width:540px;transform:rotate(5deg)"><img class="stk" src="img/gravura_cut.png" style="width:540px"><div class="cap" style="left:190px;top:470px;color:#fffaf0;text-shadow:0 2px 8px #000">gravura, séc. XIX</div></div></div>
+ <div class="ly" id="L3"><div class="abs" id="foto" style="left:440px;top:1010px;width:640px;transform:rotate(-4deg)"><img class="stk" src="img/mico_cut.png" style="width:640px"></div></div>
+ <div class="ly" id="L4"></div>
+ <div class="ly" id="L5">
+  <div class="abs" style="left:76px;top:150px;font:700 26px 'JetBrains Mono';letter-spacing:.2em;color:#e3321f" id="num">MACACOS DO BRASIL · Nº 1</div>
+  <div class="abs" id="title" style="left:70px;top:196px;font:700 128px/.9 'Playfair Display';color:#24170e;letter-spacing:-.035em">Mico-leão-<br>dourado</div>
+  <div class="tag" id="tg" style="left:600px;top:1500px;transform:rotate(-3deg)">só no Brasil</div>
+  <svg class="abs" style="left:360px;top:560px" width="520" height="420" viewBox="0 0 520 420"><path id="arr" d="M250 150 C 215 230 160 300 92 360 M92 360 L 140 352 M92 360 L 100 312" stroke="#fffaf0" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))"/></svg>
+  <div class="hand" id="hd" style="left:560px;top:520px;transform:rotate(-3deg)">só existe na Mata<br>Atlântica do RJ</div>
+ </div>
+ <div id="halftone"></div><canvas id="paperTex" width="540" height="960"></canvas>
+ <!-- créditos fora das camadas: não sofrem parallax nem zoom, ficam sempre na tela (CC BY exige) -->
+ <div class="abs" id="cred" style="left:0;right:0;top:1872px;text-align:center;font:500 15px 'Inter Tight';color:rgba(255,250,240,.75);text-shadow:0 1px 4px #000">Imagens via Wikimedia Commons: Daderot (CC0) · PedroJoséCarvalho (CC BY 4.0) · NASA · Iconographia Zoologica, Univ. de Amsterdã (domínio público)</div>
+</div>
+<script>
+// faixa de papel rasgado no topo (onde fica o título)
+K.html(K.$('#Lp'), `<svg class="abs" width="1080" height="560" viewBox="0 0 1080 560" style="left:0;top:0"><defs><filter id="torn"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="6"/><feDisplacementMap in="SourceGraphic" scale="22"/></filter>
+ <filter id="sh"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000" flood-opacity=".45"/></filter></defs>
+ <g filter="url(#sh)"><path d="M-30 -30 H1110 V 470 C 900 500 760 440 560 480 C 360 520 200 460 -30 500 Z" fill="#ece3cf" filter="url(#torn)"/></g></svg>`);
+// folhas de papel na frente (desfocadas)
+function leaf(len, wid, col) { let L = [], Rr = []; for (let i = 0; i <= 20; i++) { const u = i / 20, w = Math.sin(u * Math.PI) * wid * (1 - u * .25); L.push([-w, -u * len]); Rr.push([w, -u * len]); }
+  return `<path d="M0 0 ${L.map(p => `L${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ')} ${Rr.reverse().map(p => `L${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ')} Z" fill="${col}"/><path d="M0 0 L0 ${-len}" stroke="#fff" stroke-opacity=".25" stroke-width="6"/>`; }
+[[-80, 2060, -26, 900, 250, '#203f1b', 7], [1170, 2010, 30, 860, 240, '#25481f', 6], [1160, 300, 205, 520, 170, '#2a4f22', 9]].forEach(([x, y, r, l, w, c, b], i) =>
+  K.html(K.$('#L4'), `<svg class="abs leaf" width="10" height="10" style="left:${x}px;top:${y}px;filter:blur(${b}px)" viewBox="0 0 10 10"><g transform="rotate(${r})">${leaf(l, w, c)}</g></svg>`));
+// textura de papel
+const pt = K.$('#paperTex').getContext('2d'), pr = K.rng(5); pt.fillStyle = '#fff'; pt.fillRect(0, 0, 540, 960); for (let i = 0; i < 16000; i++) { pt.fillStyle = `rgba(${pr() < .5 ? '110,80,40' : '255,255,255'},${pr() * .14})`; pt.fillRect(pr() * 540, pr() * 960, 1 + pr() * 2, 1 + pr() * 2); }
+K.grain(K.$('#stage'), { opacity: .2, w: 360 });
+
+// câmera 2.5D: cada camada anda conforme a profundidade (parallax)
+const DEPTH = { L0: .06, Lp: .3, L1: .35, L2: .6, L3: .85, L4: 1.7, L5: .4 };
+const cam = { z: 0, x: 0, y: 0, r: 0 };
+onTick(t => {
+  for (const [id, d] of Object.entries(DEPTH)) K.$('#' + id).style.transform = `translate(${(cam.x * d).toFixed(2)}px,${(cam.y * d).toFixed(2)}px) scale(${(1 + cam.z * d).toFixed(4)}) rotate(${(cam.r * d).toFixed(3)}deg)`;
+  K.$$('.leaf').forEach((l, i) => l.style.transform = `rotate(${(Math.sin(t * 1.2 + i * 2) * 2.5).toFixed(2)}deg)`);
+  const q = Math.floor(t * 12) / 12; // pedaços de colagem tremem em stop-motion (12 qps)
+  K.$('#tg').style.translate = `${Math.round(Math.sin(q * 13) * 2)}px ${Math.round(Math.cos(q * 11) * 2)}px`;
+  K.$('#foto').style.translate = `0 ${(Math.sin(t * 1.4) * 6).toFixed(1)}px`; K.$('#grav').style.translate = `0 ${(Math.sin(t * 1.1 + 1) * 5).toFixed(1)}px`;
+});
+
+window.SETUP = () => {
+  cue('m:intro', 0); cue('m:main', .05);
+  TL.fromTo(cam, { z: -.02, x: 50, y: 40, r: -.8 }, { z: .17, x: -60, y: -40, r: .6, duration: 5, ease: 'sine.inOut', immediateRender: true }, 0);
+  const slap = (sel, at, r0 = 0) => { TL.fromTo(sel, { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: .24, ease: 'steps(4)', immediateRender: true }, at); cue('paper', at + .04, { gain: -1 }); };
+  TL.fromTo('#Lp svg', { y: -560 }, { y: 0, duration: .45, ease: 'expo.out', immediateRender: true }, 0); cue('swoosh', 0, { gain: -6 });
+  slap('#num', .2); TL.fromTo('#title', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .5, ease: 'steps(7)', immediateRender: true }, .3); cue('paper', .32);
+  slap('#map', .55); slap('#grav', .85); slap('#foto', 1.15); cue('hit_soft', 1.2, { gain: -6 });
+  slap('#tg', 1.55);
+  TL.fromTo('#circ', { drawSVG: '0%' }, { drawSVG: '100%', duration: .55, ease: 'power1.inOut', immediateRender: true }, 2.0); cue('marker', 2.0);
+  TL.fromTo('#rj', { opacity: 0 }, { opacity: 1, duration: .2, immediateRender: true }, 2.5);
+  TL.fromTo('#hd', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .9, ease: 'steps(10)', immediateRender: true }, 2.6); cue('marker', 2.65);
+  TL.fromTo('#arr', { drawSVG: '0%' }, { drawSVG: '100%', duration: .5, ease: 'power1.inOut', immediateRender: true }, 3.4); cue('marker', 3.4, { gain: -4 });
+  TL.fromTo('#cred', { opacity: 0 }, { opacity: 1, duration: .5, immediateRender: true }, 1.0);
+  for (let k = 0; k < 3; k++) cue('bird', .5 + k * 1.4, { gain: -9 - k * 2 });
+  cue('m:stop', 4.7);
+};
+</script></body></html>

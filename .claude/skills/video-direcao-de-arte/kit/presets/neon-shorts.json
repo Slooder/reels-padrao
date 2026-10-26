@@ -1,0 +1,281 @@
+{
+  "versao_esquema": 1,
+  "herda": null,
+  "projeto": {
+    "nome": "Neon shorts",
+    "slug": "neon-shorts",
+    "criada_em": "2026-10-05",
+    "revisao": 1,
+    "aprovada": false,
+    "aprovada_em": null,
+    "aprovada_sha256": null
+  },
+  "conceito": {
+    "frase": "Feito para o polegar: preto absoluto, neon que salta e legenda gigante — cada segundo briga pela atenção no feed vertical.",
+    "palavras_chave": ["vertical", "contraste máximo", "neon", "ritmo", "impacto", "feed"],
+    "referencias": [],
+    "faca": [
+      "Uma ideia por tela, em no máximo quatro palavras gigantes",
+      "Legenda palavra a palavra no centro óptico, com a palavra falada em verde-limão",
+      "Cortar a cada 1 ou 2 segundos; zoom e empurrão para marcar a virada",
+      "Rosto grande e nítido; bordas escurecidas para o texto saltar",
+      "Respeitar as zonas seguras: nada importante sob os botões ou a descrição"
+    ],
+    "nao_faca": [
+      "Texto pequeno, fino ou em caixa baixa",
+      "Tom pastel, cinza médio ou baixo contraste",
+      "Fade lento e respiro longo",
+      "Mais de duas cores neon na mesma tela",
+      "Logo ou texto nos 35% de baixo ou na coluna direita do quadro vertical"
+    ]
+  },
+  "formatos": {
+    "horizontal": {"largura": 1920, "altura": 1080, "fps": "30000/1001"},
+    "vertical": {"largura": 1080, "altura": 1920, "fps": "30000/1001"},
+    "quadrado": {"largura": 1080, "altura": 1080, "fps": "30000/1001"},
+    "thumbnail": {"largura": 1280, "altura": 720},
+    "margens_seguras": {
+      "horizontal": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      },
+      "vertical": {
+        "instagram": [0.14, 0.21, 0.35, 0.06],
+        "tiktok": [0.125, 0.2778, 0.3438, 0.1111],
+        "shorts": [0.15, 0.1778, 0.35, 0.0444],
+        "uniao": [0.15, 0.2778, 0.35, 0.1111]
+      },
+      "quadrado": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      }
+    }
+  },
+  "cor": {
+    "paleta": {
+      "fundo": "#050505",
+      "superficie": "#161616",
+      "texto": "#FFFFFF",
+      "texto_suave": "#B8B8B8",
+      "primaria": "#B6FF00",
+      "secundaria": "#FF2E93",
+      "destaque": "#00E5FF",
+      "positivo": "#2BFF88",
+      "negativo": "#FF3B30",
+      "alerta": "#FFB300"
+    },
+    "neutros": ["#000000", "#FFFFFF"],
+    "dados": ["primaria", "secundaria", "#00E5FF", "#FFB300", "#B56BFF", "texto", "#FF3B30"],
+    "gradientes": {
+      "choque": {
+        "tipo": "linear",
+        "angulo": 135,
+        "paradas": [["primaria", 0], ["destaque", 1]]
+      },
+      "calor": {
+        "tipo": "linear",
+        "angulo": 135,
+        "paradas": [["secundaria", 0], ["alerta", 1]]
+      }
+    }
+  },
+  "tipografia": {
+    "papeis": {
+      "titulo": {
+        "familia": "Bebas Neue",
+        "arquivo": "fontes/BebasNeue-Regular.ttf",
+        "peso": 400,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.01,
+        "altura_linha": 0.94
+      },
+      "subtitulo": {
+        "familia": "Montserrat",
+        "arquivo": "fontes/Montserrat-Variable.ttf",
+        "peso": 800,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.04,
+        "altura_linha": 1.15,
+        "eixos": {"wght": 800}
+      },
+      "corpo": {
+        "familia": "Montserrat",
+        "arquivo": "fontes/Montserrat-Variable.ttf",
+        "peso": 600,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.3,
+        "eixos": {"wght": 600}
+      },
+      "dados": {
+        "familia": "IBM Plex Mono",
+        "arquivo": "fontes/IBMPlexMono-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.2
+      },
+      "legenda": {
+        "familia": "Montserrat",
+        "arquivo": "fontes/Montserrat-Variable.ttf",
+        "peso": 900,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": -0.01,
+        "altura_linha": 1.05,
+        "eixos": {"wght": 900}
+      }
+    },
+    "escala": {"display": 0.17, "h1": 0.11, "h2": 0.075, "h3": 0.052, "corpo": 0.038, "nota": 0.026}
+  },
+  "layout": {
+    "grade": {"colunas": 6, "margem": 0.05, "calha": 0.012},
+    "raio": 0.018,
+    "traco": 0.0065,
+    "sombra": null,
+    "densidade": "densa"
+  },
+  "movimento": {
+    "curvas": {
+      "entrada": [0.34, 1.56, 0.64, 1],
+      "saida": [0.36, 0, 0.66, -0.56],
+      "enfase": [0.68, -0.6, 0.32, 1.6],
+      "suave": [0.22, 1, 0.36, 1],
+      "linear": [0, 0, 1, 1]
+    },
+    "duracoes": {"micro": 0.06, "curta": 0.16, "media": 0.28, "longa": 0.5},
+    "escalonamento": 0.03,
+    "entrada_padrao": "escala",
+    "saida_padrao": "corte",
+    "transicoes": {
+      "padrao": "corte",
+      "permitidas": ["corte", "empurra", "zoom"]
+    },
+    "principios": [
+      "Tudo entra estalando: escala com ultrapassagem e parada firme",
+      "Nada sai devagar: corte seco, sempre",
+      "Cada palavra importante ganha um golpe (escala, cor ou tremor curto)",
+      "Se dá para tirar um quadro, tire: o ritmo é rápido"
+    ]
+  },
+  "tratamento": {
+    "grade": {
+      "lut": null,
+      "intensidade_lut": 1.0,
+      "exposicao": 0.0,
+      "contraste": 1.12,
+      "saturacao": 1.25,
+      "gama": 1.1,
+      "temperatura": 0,
+      "matiz": 0,
+      "curva": null
+    },
+    "duotone": {"ativo": false, "sombra": "fundo", "luz": "primaria", "mistura": 0.25},
+    "grao": {"ativo": false, "intensidade": 0, "temporal": true},
+    "vinheta": {"ativo": true, "angulo": 0.4},
+    "nitidez": 0.4,
+    "desfoque": 0.0,
+    "velocidade": 1.0,
+    "moldura": {
+      "estilo": "borda",
+      "espessura": 0.0075,
+      "cor": "primaria",
+      "raio": 0.03,
+      "margem": 0.04,
+      "rotulo": false
+    },
+    "recorte": {"ancora": "rosto"}
+  },
+  "legenda": {
+    "estilo": "palavra",
+    "papel": "legenda",
+    "tamanho": 0.092,
+    "caixa": "alta",
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "cor_falada": null,
+    "contorno": {"cor": "#000000", "espessura": 0.14},
+    "sombra": {"dx": 0, "dy": 0.07, "desfoque": 0, "alfa": 1, "cor": "#000000"},
+    "fundo": null,
+    "posicao": {
+      "vertical": {"y": 0.56, "largura_max": 0.61},
+      "horizontal": {"y": 0.8}
+    },
+    "largura_max": 0.8,
+    "max_linhas": 2,
+    "max_palavras": 3,
+    "animacao": "pop"
+  },
+  "graficos": {
+    "gc": {
+      "estilo": "etiqueta",
+      "posicao": "inferior_esquerda",
+      "papel_nome": "subtitulo",
+      "papel_cargo": "corpo",
+      "tamanho_nome": 0.05,
+      "tamanho_cargo": 0.03,
+      "cor_nome": "fundo",
+      "cor_cargo": "texto",
+      "cor_fundo": "primaria",
+      "alfa_fundo": 1,
+      "cor_acento": "secundaria"
+    },
+    "tarja": {
+      "estilo": "chapada",
+      "papel": "titulo",
+      "tamanho": 0.075,
+      "cor_fundo": "primaria",
+      "cor_texto": "fundo",
+      "inclinacao": -3
+    },
+    "icones": {"estilo": "cheio", "espessura": 0.0065},
+    "dados": {"eixo": "texto_suave", "grade": "superficie", "rotulo": "dados"},
+    "citacao_fonte": {
+      "papel": "dados",
+      "tamanho": 0.022,
+      "posicao": "superior_esquerda",
+      "cor": "texto_suave"
+    }
+  },
+  "thumbnail": {
+    "max_palavras": 3,
+    "papel": "titulo",
+    "tamanho": 0.3,
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "contorno": {"cor": "#000000", "espessura": 0.08},
+    "tratamento_foto": {
+      "saturacao": 1.3,
+      "contraste": 1.2,
+      "recorte_pessoa": true,
+      "contorno_pessoa": {"cor": "primaria", "espessura": 0.014}
+    },
+    "fundo": "fundo",
+    "zona_proibida": "inferior_direita"
+  },
+  "som": {
+    "identidade": "Alto e direto: grave marcado, whoosh rápido e impacto em cada corte.",
+    "loudness": {
+      "longo": {"lufs": -14, "pico_real": -1.0},
+      "curto": {"lufs": -14, "pico_real": -1.0}
+    },
+    "sfx": {"entrada": "whoosh", "enfase": "impacto", "texto": "blip"},
+    "musica": {
+      "clima": "batida eletrônica acelerada, grave presente",
+      "bpm": [120, 140]
+    }
+  },
+  "marca": {
+    "logo": null,
+    "assinatura": null,
+    "posicao_logo": "superior_esquerda",
+    "marca_dagua": false
+  }
+}

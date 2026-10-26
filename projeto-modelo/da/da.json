@@ -1,0 +1,450 @@
+{
+  "versao_esquema": 1,
+  "herda": null,
+  "projeto": {
+    "nome": "Testemunhos",
+    "slug": "testemunhos",
+    "criada_em": "2026-10-22T19:23:02-03:00",
+    "revisao": 1,
+    "aprovada": false,
+    "aprovada_em": null,
+    "aprovada_sha256": null,
+    "base": "editorial-claro"
+  },
+  "conceito": {
+    "frase": "Desabafo sóbrio e cinematográfico: o JP falando é o centro; pouco motion, texto limpo, papel e máquina de escrever nos momentos de peso.",
+    "palavras_chave": [
+      "editorial",
+      "sóbrio",
+      "papel",
+      "tipográfico",
+      "arejado",
+      "revista"
+    ],
+    "referencias": [],
+    "faca": [
+      "Compor como página: título forte, chapéu em caixa alta espaçada, texto em coluna estreita",
+      "Vermelho só para o que é notícia: o número principal, a palavra-chave, o fio que guia o olho",
+      "Fios finos e legenda de foto como em revista; crédito sempre visível",
+      "Entradas por fade e cortes secos: o ritmo vem da edição, não do efeito",
+      "Fotos com cor natural, levemente aquecidas, em moldura fina"
+    ],
+    "nao_faca": [
+      "Fundo escuro, neon ou qualquer brilho",
+      "Texto sobre foto sem caixa de papel por trás",
+      "Animação chamativa: nada gira, quica ou pisca",
+      "Mais de uma família de título por tela",
+      "Encher a página: se não cabe com folga, vira duas telas"
+    ]
+  },
+  "formatos": {
+    "horizontal": {
+      "largura": 1920,
+      "altura": 1080,
+      "fps": "30000/1001"
+    },
+    "vertical": {
+      "largura": 1080,
+      "altura": 1920,
+      "fps": "30000/1001"
+    },
+    "quadrado": {
+      "largura": 1080,
+      "altura": 1080,
+      "fps": "30000/1001"
+    },
+    "thumbnail": {
+      "largura": 1280,
+      "altura": 720
+    },
+    "margens_seguras": {
+      "horizontal": {
+        "padrao": [
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      },
+      "vertical": {
+        "instagram": [
+          0.14,
+          0.21,
+          0.35,
+          0.06
+        ],
+        "tiktok": [
+          0.125,
+          0.2778,
+          0.3438,
+          0.1111
+        ],
+        "shorts": [
+          0.15,
+          0.1778,
+          0.35,
+          0.0444
+        ],
+        "uniao": [
+          0.15,
+          0.2778,
+          0.35,
+          0.1111
+        ]
+      },
+      "quadrado": {
+        "padrao": [
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      }
+    }
+  },
+  "cor": {
+    "paleta": {
+      "fundo": "#0E0D0B",
+      "superficie": "#1C1A17",
+      "texto": "#FFFFFF",
+      "texto_suave": "#D9D4CA",
+      "primaria": "#F2D24B",
+      "secundaria": "#231F1A",
+      "destaque": "#F2D24B",
+      "positivo": "#2D6A4F",
+      "negativo": "#7F1D1D",
+      "alerta": "#B45309",
+      "papel": "#E6DAC0",
+      "tinta": "#231F1A",
+      "bandeira_sombra": "#000000",
+      "mesa": "#3B2A1D",
+      "marcador": "#C8102E"
+    },
+    "neutros": [
+      "#000000",
+      "#FFFFFF"
+    ],
+    "dados": [
+      "primaria",
+      "texto",
+      "#E07A5F",
+      "#81B29A",
+      "#F2CC8F",
+      "#A8DADC"
+    ],
+    "gradientes": {
+      "papel": {
+        "tipo": "linear",
+        "angulo": 180,
+        "paradas": [
+          [
+            "fundo",
+            0
+          ],
+          [
+            "superficie",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "tipografia": {
+    "papeis": {
+      "titulo": {
+        "familia": "Helvetica",
+        "arquivo": "fontes/Helvetica-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.022,
+        "altura_linha": 1.02
+      },
+      "subtitulo": {
+        "familia": "Helvetica",
+        "arquivo": "fontes/Helvetica-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.14,
+        "altura_linha": 1.3
+      },
+      "corpo": {
+        "familia": "Helvetica",
+        "arquivo": "fontes/Helvetica.ttf",
+        "peso": 400,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.002,
+        "altura_linha": 1.5
+      },
+      "dados": {
+        "familia": "Helvetica",
+        "arquivo": "fontes/Helvetica.ttf",
+        "peso": 400,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.3
+      },
+      "legenda": {
+        "familia": "Helvetica",
+        "arquivo": "fontes/Helvetica-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.045,
+        "altura_linha": 1.0
+      },
+      "versiculo": {
+        "familia": "Newsreader",
+        "arquivo": "fontes/Newsreader-Variable.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.01,
+        "altura_linha": 1.18,
+        "eixos": {
+          "wght": 700,
+          "opsz": 72
+        }
+      }
+    },
+    "escala": {
+      "display": 0.115,
+      "h1": 0.076,
+      "h2": 0.05,
+      "h3": 0.036,
+      "corpo": 0.029,
+      "nota": 0.022
+    }
+  },
+  "layout": {
+    "grade": {
+      "colunas": 12,
+      "margem": 0.08,
+      "calha": 0.016
+    },
+    "raio": 0,
+    "traco": 0.0019,
+    "sombra": null,
+    "densidade": "arejada"
+  },
+  "movimento": {
+    "curvas": {
+      "entrada": [
+        0.25,
+        0.1,
+        0.25,
+        1
+      ],
+      "saida": [
+        0.4,
+        0,
+        1,
+        1
+      ],
+      "enfase": [
+        0.3,
+        0,
+        0.1,
+        1
+      ],
+      "suave": [
+        0.45,
+        0,
+        0.55,
+        1
+      ],
+      "linear": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    "duracoes": {
+      "micro": 0.14,
+      "curta": 0.36,
+      "media": 0.64,
+      "longa": 1.1
+    },
+    "escalonamento": 0.09,
+    "entrada_padrao": "fade",
+    "saida_padrao": "fade",
+    "transicoes": {
+      "padrao": "corte",
+      "permitidas": [
+        "corte",
+        "fade"
+      ]
+    },
+    "principios": [
+      "Calma: o texto surge, fica o tempo de ser lido e sai sem chamar atenção",
+      "Deslocamentos curtos; a página nunca treme",
+      "O corte seco é a transição; o fade é exceção para mudança de assunto",
+      "Hierarquia entra de cima para baixo: chapéu, título, texto"
+    ]
+  },
+  "tratamento": {
+    "grade": {
+      "lut": null,
+      "intensidade_lut": 1.0,
+      "exposicao": 0.0,
+      "contraste": 1.04,
+      "saturacao": 0.92,
+      "gama": 1.0,
+      "temperatura": 8,
+      "matiz": 0,
+      "curva": null
+    },
+    "duotone": {
+      "ativo": false,
+      "sombra": "texto",
+      "luz": "fundo",
+      "mistura": 0.5
+    },
+    "grao": {
+      "ativo": true,
+      "intensidade": 3,
+      "temporal": true
+    },
+    "vinheta": {
+      "ativo": false,
+      "angulo": 0.3
+    },
+    "nitidez": 0.1,
+    "desfoque": 0.0,
+    "velocidade": 1.0,
+    "moldura": {
+      "estilo": "borda",
+      "espessura": 0.0019,
+      "cor": "texto",
+      "raio": 0,
+      "margem": 0.07,
+      "rotulo": true
+    },
+    "recorte": {
+      "ancora": "rosto"
+    }
+  },
+  "legenda": {
+    "estilo": "bloco",
+    "papel": "legenda",
+    "tamanho": 0.067,
+    "caixa": "normal",
+    "cor": "texto",
+    "cor_destaque": "texto",
+    "cor_falada": null,
+    "contorno": null,
+    "sombra": null,
+    "fundo": null,
+    "posicao": {
+      "vertical": {
+        "y": 0.79,
+        "largura_max": 0.82
+      },
+      "horizontal": {
+        "y": 0.86
+      }
+    },
+    "largura_max": 0.76,
+    "max_linhas": 1,
+    "max_palavras": 4,
+    "animacao": "nenhuma"
+  },
+  "graficos": {
+    "gc": {
+      "estilo": "linha",
+      "posicao": "inferior_esquerda",
+      "papel_nome": "titulo",
+      "papel_cargo": "subtitulo",
+      "tamanho_nome": 0.034,
+      "tamanho_cargo": 0.025,
+      "cor_nome": "texto",
+      "cor_cargo": "texto_suave",
+      "cor_fundo": "fundo",
+      "alfa_fundo": 0.94,
+      "cor_acento": "primaria"
+    },
+    "tarja": {
+      "estilo": "sublinhado",
+      "papel": "titulo",
+      "tamanho": 0.04,
+      "cor_fundo": "primaria",
+      "cor_texto": "texto",
+      "inclinacao": 0
+    },
+    "icones": {
+      "estilo": "traco",
+      "espessura": 0.0024
+    },
+    "dados": {
+      "eixo": "texto",
+      "grade": "superficie",
+      "rotulo": "dados"
+    },
+    "citacao_fonte": {
+      "papel": "dados",
+      "tamanho": 0.023,
+      "posicao": "inferior_esquerda",
+      "cor": "texto_suave"
+    }
+  },
+  "thumbnail": {
+    "max_palavras": 5,
+    "papel": "titulo",
+    "tamanho": 0.16,
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "contorno": null,
+    "tratamento_foto": {
+      "saturacao": 1.0,
+      "contraste": 1.06,
+      "recorte_pessoa": true,
+      "contorno_pessoa": {
+        "cor": "fundo",
+        "espessura": 0.014
+      }
+    },
+    "fundo": "fundo",
+    "zona_proibida": "inferior_direita"
+  },
+  "som": {
+    "identidade": "Acústico e contido: piano, cordas discretas e som de papel; nada compete com a voz.",
+    "loudness": {
+      "longo": {
+        "lufs": -14,
+        "pico_real": -1.0
+      },
+      "curto": {
+        "lufs": -14,
+        "pico_real": -1.0
+      }
+    },
+    "sfx": {
+      "entrada": "papel",
+      "enfase": "tick",
+      "texto": "tick"
+    },
+    "musica": {
+      "clima": "piano e cordas leves, contemplativo",
+      "bpm": [
+        70,
+        95
+      ]
+    }
+  },
+  "marca": {
+    "logo": null,
+    "assinatura": null,
+    "posicao_logo": "superior_direita",
+    "marca_dagua": false
+  }
+}

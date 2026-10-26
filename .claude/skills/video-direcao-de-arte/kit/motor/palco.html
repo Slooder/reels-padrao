@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>palco — motor de render da direção de arte</title>
+<!-- da-livre-arquivo: o palco não tem cor própria; tudo vem de da.css (injetado) e da cena. -->
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; }
+  body { position: relative; -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+  #palco { position: absolute; left: 0; top: 0; overflow: hidden; }
+  #palco * { box-sizing: border-box; }
+  #palco img { display: block; }
+</style>
+</head>
+<body>
+<div id="palco"></div>
+<script>
+// Contrato com o render.mjs:
+//   await window.__palco.iniciar(cfg) → {dur, meta, fontes, ancoras}; depois window.READY === true (ou window.ERR)
+//   window.seek(t) (função pura de t), window.frameKey(t) (cache de quadro estático ou null), window.DUR
+//   await window.__palco.auditar(opcoes) → relatório do auditor (C3), com `livres` e os usos de APIs proibidas
+//   window.__palco.pureza([t…]) → instantes em que seek(t) depende do seek anterior (lista vazia = cena pura)
+//   window.__palco.imagens() → URLs de toda imagem que a página usa (img, <image>, url() em estilos): o render.mjs
+//                              confere no disco se alguma é animada (GIF, APNG, WebP, SVG com animação)
+window.READY = false; window.ERR = null; window.DUR = 0; window.META = null; window.INFO = {};
+
+// APIs de tempo, de aleatoriedade e de agendamento: interceptadas ANTES de a cena ser carregada. Continuam funcionando
+// (a cena monta e o erro sai legível), mas cada uso fica registrado e o auditor reprova: peça é função pura de t.
+// Relógios: requestAnimationFrame, setTimeout, setInterval, requestIdleCallback, Date, performance.now,
+// document.timeline.currentTime, event.timeStamp, Intl.DateTimeFormat sem data, Temporal.Now. Sorte: Math.random,
+// crypto.getRandomValues, crypto.randomUUID. Laços fora de seek(t):
+// MessagePort/window/BroadcastChannel.postMessage, scheduler.postTask, Worker, queueMicrotask encadeado sem fim.
+// O que nenhuma lista cobre (laço por promessa, observer, GIF…) cai na checagem de quietude do render.mjs.
+function instalarVigias(estado) {
+  const usos = estado.apis, mapa = new Map();
+  const reg = (api) => {
+    const pilha = String(new Error().stack || '').split('\n').slice(1).map((l) => l.trim())
+      .filter((l) => !/palco\.html|motor\/runtime\.js|motor\/auditor\.js/.test(l));
+    let onde = '(cena)';
+    if (pilha.length) {
+      const m = /([^/\\()\s]+\.m?js):(\d+)(?::\d+)?\)?$/.exec(pilha[0]);
+      onde = m ? decodeURIComponent(m[1]) + ':' + m[2] : pilha[0].replace(/^at\s+/, '').slice(0, 80);
+    }
+    const chave = api + '|' + onde + '|' + estado.fase;
+    const ja = mapa.get(chave);
+    if (ja) { ja.vezes++; return; }
+    if (usos.length >= 40) return;
+    const u = { api, onde, fase: estado.fase, vezes: 1 };
+    mapa.set(chave, u); usos.push(u);
+  };
+  const o = { raf: window.requestAnimationFrame.bind(window), st: window.setTimeout.bind(window), si: window.setInterval.bind(window),
+    ric: window.requestIdleCallback ? window.requestIdleCallback.bind(window) : null, rnd: Math.random, now: Date.now,
+    pnow: performance.now.bind(performance), Data: Date };
+  window.requestAnimationFrame = function (f) { reg('requestAnimationFrame'); return o.raf(f); };
+  window.setTimeout = function (...a) { reg('setTimeout'); return o.st(...a); };
+  window.setInterval = function (...a) { reg('setInterval'); return o.si(...a); };
+  if (o.ric) window.requestIdleCallback = function (...a) { reg('requestIdleCallback'); return o.ric(...a); };
+  Math.random = function () { reg('Math.random'); return o.rnd(); };
+  const agora = function () { reg('Date.now'); return o.now(); };
+  performance.now = function () { reg('performance.now'); return o.pnow(); };
+  window.Date = new Proxy(o.Data, {
+    construct(alvo, args, nt) { if (!args.length) reg('new Date()'); return Reflect.construct(alvo, args, nt); },
+    apply(alvo, isto, args) { reg('Date()'); return Reflect.apply(alvo, isto, args); },
+    get(alvo, prop, rec) { return prop === 'now' ? agora : Reflect.get(alvo, prop, rec); },
+  });
+  const naProto = (proto, nome, api, embrulho) => {
+    try {
+      const d = Object.getOwnPropertyDescriptor(proto, nome);
+      if (!d) return;
+      if (typeof d.value === 'function') { const orig = d.value; Object.defineProperty(proto, nome, { ...d, value: embrulho ? embrulho(orig) : function (...a) { reg(api); return orig.apply(this, a); } }); }
+      else if (d.get) { const orig = d.get; Object.defineProperty(proto, nome, { ...d, get() { reg(api); return orig.call(this); } }); }
+    } catch (e) { /* API ausente neste Chromium */ }
+  };
+  // quem chamar pelo protótipo (Performance.prototype.now.call(performance)) também fica registrado
+  naProto(Performance.prototype, 'now', 'performance.now', () => function () { reg('performance.now'); return o.pnow(); });
+  naProto(Performance.prototype, 'timeOrigin', 'performance.timeOrigin');
+  if (window.AnimationTimeline) naProto(AnimationTimeline.prototype, 'currentTime', 'document.timeline.currentTime');
+  // relógios que não passam por Date nem por performance: carimbo de evento, Intl sem data (formata "agora") e Temporal.Now
+  naProto(Event.prototype, 'timeStamp', 'event.timeStamp');
+  if (window.Intl && Intl.DateTimeFormat) {
+    const P = Intl.DateTimeFormat.prototype, semData = 'Intl.DateTimeFormat sem data';
+    const df = Object.getOwnPropertyDescriptor(P, 'format');
+    if (df && df.get) Object.defineProperty(P, 'format', { ...df, get() { const f = df.get.call(this); return function (d) { if (d === undefined) reg(semData); return f(d); }; } });
+    naProto(P, 'formatToParts', semData, (orig) => function (d) { if (d === undefined) reg(semData); return orig.call(this, d); });
+  }
+  if (window.Temporal && Temporal.Now) {
+    for (const nome of Object.getOwnPropertyNames(Temporal.Now)) {
+      const orig = Temporal.Now[nome];
+      if (typeof orig !== 'function') continue;
+      try { Object.defineProperty(Temporal.Now, nome, { configurable: true, writable: true, value(...a) { reg('Temporal.Now.' + nome); return orig.apply(Temporal.Now, a); } }); } catch (e) { /* não configurável neste Chromium */ }
+    }
+  }
+  // aleatoriedade que não passa por Math.random
+  if (window.Crypto) { naProto(Crypto.prototype, 'getRandomValues', 'crypto.getRandomValues'); naProto(Crypto.prototype, 'randomUUID', 'crypto.randomUUID'); }
+  // laços que rodam no relógio do navegador sem timer nenhum: mensagens e tarefas agendadas
+  if (window.MessagePort) naProto(MessagePort.prototype, 'postMessage', 'MessageChannel.postMessage');
+  if (window.BroadcastChannel) naProto(BroadcastChannel.prototype, 'postMessage', 'BroadcastChannel.postMessage');
+  const pm = window.postMessage.bind(window);
+  window.postMessage = function (...a) { reg('window.postMessage'); return pm(...a); };
+  if (window.scheduler && window.Scheduler) { naProto(Scheduler.prototype, 'postTask', 'scheduler.postTask'); naProto(Scheduler.prototype, 'yield', 'scheduler.yield'); }
+  for (const nome of ['Worker', 'SharedWorker']) {
+    if (typeof window[nome] === 'function') window[nome] = new Proxy(window[nome], { construct(alvo, args, nt) { reg('new ' + nome); return Reflect.construct(alvo, args, nt); } });
+  }
+  // queueMicrotask sozinho é inofensivo (roda antes de a tarefa acabar); encadeado sem fim, congela a página: corta e registra
+  const qm = window.queueMicrotask.bind(window);
+  let cadeia = 0;
+  window.queueMicrotask = function (f) {
+    const nivel = cadeia + 1;
+    if (nivel > 2000) { reg('queueMicrotask em laço'); throw new Error('queueMicrotask encadeado mais de 2000 vezes: laço sem fim'); }
+    return qm(() => { cadeia = nivel; try { f(); } finally { cadeia = 0; } });
+  };
+  // shadow roots (inclusive os fechados) ficam registrados para o auditor descer neles
+  const anexar = Element.prototype.attachShadow;
+  Element.prototype.attachShadow = function (op) { const r = anexar.call(this, op); estado.sombras.push(r); return r; };
+}
+
+/** Retrato do DOM para a checagem de pureza: marcação + estilos em linha + pixels dos canvas. */
+function retrato() {
+  let s = document.body.outerHTML + '|' + (document.documentElement.getAttribute('style') || '');
+  for (const r of window.__palco.sombras) s += '|' + r.innerHTML;
+  for (const c of document.querySelectorAll('canvas')) { try { s += '|' + c.toDataURL(); } catch (e) { s += '|canvas?'; } }
+  return s;
+}
+
+function carregarCss(href) {
+  return new Promise((ok, falha) => {
+    const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href;
+    l.onload = () => ok(l); l.onerror = () => falha(new Error('não consegui carregar ' + href));
+    document.head.appendChild(l);
+  });
+}
+function carregarJs(src) {
+  return new Promise((ok, falha) => {
+    const s = document.createElement('script'); s.src = src;
+    s.onload = () => ok(s); s.onerror = () => falha(new Error('não consegui carregar ' + src));
+    document.head.appendChild(s);
+  });
+}
+
+window.__palco = {
+  cfg: null, mod: null, ctx: null, grao: null, runtime: null, auditorMod: null,
+  fase: 'carga', apis: [], sombras: [],
+
+  async iniciar(cfg) {
+    this.cfg = cfg;
+    const palco = document.getElementById('palco');
+    const { L, A } = cfg.formato;
+    document.documentElement.style.setProperty('--da-lado', Math.min(L, A) + 'px');
+    document.body.style.width = L + 'px'; document.body.style.height = A + 'px';
+    palco.style.width = L + 'px'; palco.style.height = A + 'px';
+    if (cfg.formato.auto) {                                   // altura pelo conteúdo (prancha): mede depois de montar
+      document.body.style.height = 'auto'; palco.style.height = 'auto'; palco.style.minHeight = A + 'px';
+      palco.style.position = 'relative'; palco.style.overflow = 'visible';
+    }
+
+    // 1. DA: css + js (window.DA congelado)
+    await carregarCss(cfg.da_css);
+    await carregarJs(cfg.da_js);
+    if (!window.DA || !window.DA._meta) throw new Error('da.js não definiu window.DA — recompile a DA (da.py compilar)');
+    const DA = window.DA;
+    document.body.style.color = DA.cor.paleta.texto;
+    if (!cfg.alfa) document.body.style.backgroundColor = DA.cor.paleta.fundo;
+    else document.body.style.backgroundColor = 'transparent';
+
+    // 2. fontes dos papéis ANTES de montar (as medições dependem delas)
+    const fontes = {};
+    const faltando = [];
+    for (const [nome, p] of Object.entries(DA.tipografia.papeis)) {
+      const desc = `${p.estilo === 'italic' ? 'italic ' : ''}${p.peso} 32px "${p.familia}"`;
+      try { await document.fonts.load(desc); } catch (e) { /* conferido abaixo */ }
+      const ok = document.fonts.check(desc);
+      fontes[nome] = { familia: p.familia, peso: p.peso, carregada: ok, arquivo: p.arquivo || null };
+      if (!ok && p.arquivo) faltando.push(`${nome} (${p.familia} ${p.peso} ← ${p.arquivo})`);
+    }
+    await document.fonts.ready;
+    for (const f of document.fonts) if (f.status === 'error') faltando.push(`${f.family} ${f.weight} (status error)`);
+    if (faltando.length) throw new Error('fonte(s) da DA não carregaram: ' + faltando.join('; ') + '. Confira tipografia.papeis.*.arquivo e da/build/da.css.');
+    window.INFO.fontes = fontes;
+
+    // 3. runtime + cena
+    this.runtime = await import(cfg.runtime);
+    this.auditorMod = await import(cfg.auditor);
+    instalarVigias(this);                                     // antes de a cena existir: nada dela escapa
+    this.fase = 'importação';
+    const mod = await import(cfg.cena);
+    if (typeof mod.build !== 'function' || typeof mod.seek !== 'function') {
+      throw new Error('a cena precisa exportar build(palco, params, ctx) e seek(t): ' + cfg.cena);
+    }
+    this.mod = mod;
+    const meta = mod.meta || {};
+    window.META = meta;
+    const dur = cfg.dur ?? meta.dur_padrao ?? 4;
+    window.DUR = dur;
+    const ctx = this.runtime.criarCtx({ DA, palco, formato: { nome: cfg.formato.nome, L, A, fps: cfg.formato.fps }, dur, alfa: !!cfg.alfa });
+    ctx.params = cfg.params || {};
+    this.ctx = ctx;
+    this.fase = 'build';
+    const info = await mod.build(palco, cfg.params || {}, ctx);
+    window.INFO.layout = info || null;
+
+    // 4. imagens (img e <image> de SVG) antes do READY
+    const imgs = [...palco.querySelectorAll('img')];
+    await Promise.all(imgs.map((im) => (im.complete && im.naturalWidth) ? null : new Promise((ok, falha) => {
+      im.addEventListener('load', ok, { once: true });
+      im.addEventListener('error', () => falha(new Error('imagem não carregou: ' + im.src)), { once: true });
+      if (im.complete && !im.naturalWidth && im.src) falha(new Error('imagem não carregou: ' + im.src));
+    })));
+    const svgImgs = [...palco.querySelectorAll('image')];
+    await Promise.all(svgImgs.map((im) => new Promise((ok) => {
+      const href = im.getAttribute('href') || im.getAttribute('xlink:href');
+      if (!href) return ok();
+      const probe = new Image(); probe.onload = ok; probe.onerror = () => ok(); probe.src = href;
+    })));
+    if (typeof mod.layout === 'function') await mod.layout(palco, cfg.params || {}, ctx);   // passe opcional de medição pós-imagens
+
+    // 5. grão (opcional: meta.grao e DA.tratamento.grao.ativo; nunca em peça com alfa)
+    if (meta.grao && !cfg.alfa && DA.tratamento.grao.ativo && cfg.grao !== false) {
+      this.grao = this.runtime.criarGrao(ctx);
+      palco.appendChild(this.grao.elemento);
+    }
+
+    // 6. seek/frameKey puros
+    const grao = this.grao;
+    const estado = this;
+    window.seek = function (t) {
+      const antes = estado.fase;
+      estado.fase = 'seek';
+      try { mod.seek(t, ctx); } catch (e) {
+        throw new Error(`a cena lançou erro em seek(t=${(+t).toFixed(3)}): ${e && e.message ? e.message : e}`);
+      } finally { estado.fase = antes; }
+      if (grao) grao.seek(t);
+      return t;
+    };
+    window.frameKey = function (t) {
+      if (typeof mod.key !== 'function') return null;
+      const k = mod.key(t, ctx);
+      if (k == null) return null;
+      return (grao ? 'g' + grao.indice(t) + '|' : '') + k;
+    };
+    window.ANCORAS = typeof mod.ancoras === 'function' ? (mod.ancoras(ctx) || []) : [];
+    this.fase = 'entre seeks';
+    window.seek(0);
+    const altura = cfg.formato.auto ? Math.ceil(palco.scrollHeight) : A;
+    window.READY = true;
+    return { dur, meta: { nome: meta.nome || null, descricao: meta.descricao || null, grao: !!grao }, fontes, ancoras: window.ANCORAS, layout: window.INFO.layout, altura };
+  },
+
+  fixarAltura(h) {
+    const palco = document.getElementById('palco');
+    document.body.style.height = h + 'px'; palco.style.height = h + 'px'; palco.style.minHeight = '0'; palco.style.overflow = 'hidden';
+    if (this.ctx) this.ctx.A = h;
+    return h;
+  },
+
+  auditar(op = {}) {
+    const DA = window.DA;
+    const nomes = {};
+    for (const [k, h] of Object.entries(DA.cor.paleta)) nomes[h.toUpperCase()] = nomes[h.toUpperCase()] || k;
+    DA.cor.dados.forEach((h, i) => { nomes[h.toUpperCase()] = nomes[h.toUpperCase()] || `dado-${i + 1}`; });
+    DA.cor.neutros.forEach((h, i) => { nomes[h.toUpperCase()] = nomes[h.toUpperCase()] || `neutro-${i + 1}`; });
+    const familias = Object.values(DA.tipografia.papeis).map((p) => p.familia);
+    return this.auditorMod.auditar({
+      permitidas: DA.cor.permitidas, familias, nomes,
+      tolerancia: op.tolerancia ?? 3,
+      amostras: op.amostras || [0, 0.25, 0.5, 0.75, 1].map((f) => +(f * window.DUR).toFixed(4)),
+      seek: window.seek, sombras: this.sombras, apis: this.apis, doKit: (e) => this.runtime.GRAOS.has(e),
+    });
+  },
+
+  /**
+   * Pureza: para cada t, seek(t) tem de deixar o DOM idêntico venha de onde vier — do início (como em --quadro),
+   * do fim, do repouso (tudo visível) e do quadro anterior (como no vídeo). Devolve [{t, de, a, b}] dos que diferem.
+   */
+  /** URLs de imagem usadas pela página (inclusive dentro de data-da-livre): o render confere se alguma é animada. */
+  imagens() {
+    const urls = new Set();
+    const de = (v) => { for (const m of String(v || '').matchAll(/url\((?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|([^)]*))\)/g)) { const u = (m[1] ?? m[2] ?? m[3] ?? '').trim(); if (u && !u.startsWith('#')) urls.add(u); } };
+    const ver = (raiz) => {
+      for (const e of raiz.querySelectorAll('*')) {
+        const tag = e.tagName.toLowerCase();
+        if (tag === 'img' || (tag === 'input' && e.type === 'image')) { if (e.currentSrc || e.src) urls.add(e.currentSrc || e.src); }
+        else if (tag === 'image' || tag === 'feimage') { const h = e.getAttribute('href') || e.getAttribute('xlink:href'); if (h) urls.add(new URL(h, document.baseURI).href); }
+        else if (tag === 'video' && e.poster) urls.add(e.poster);
+        else if (tag === 'object' && e.data) urls.add(e.data);
+        else if (tag === 'embed' && e.src) urls.add(e.src);
+        const cs = getComputedStyle(e);
+        for (const p of ['backgroundImage', 'borderImageSource', 'listStyleImage', 'content', 'maskImage', 'webkitMaskImage']) if (cs[p] && cs[p].includes('url(')) de(cs[p]);
+        for (const ps of ['::before', '::after']) { const pc = getComputedStyle(e, ps); if (pc.content && pc.content !== 'none' && pc.content !== 'normal') { de(pc.content); de(pc.backgroundImage); } }
+        const sombra = e.shadowRoot || this.sombras.find((r) => r.host === e);
+        if (sombra) ver(sombra);
+      }
+    };
+    ver(document);
+    return [...urls];
+  },
+
+  pureza(instantes, { repouso = null, passo = 1 / 30 } = {}) {
+    const D = window.DUR;
+    const meio = repouso ?? D / 2;
+    const suspeitos = [];
+    for (const t of instantes) {
+      window.seek(0); window.seek(t);
+      const ref = retrato();
+      for (const de of [D, meio, Math.max(0, t - passo)]) {
+        window.seek(de); window.seek(t);
+        const outro = retrato();
+        if (outro === ref) continue;
+        let i = 0;
+        while (i < ref.length && i < outro.length && ref[i] === outro[i]) i++;
+        const ini = Math.max(0, ref.lastIndexOf('<', i));
+        suspeitos.push({ t, de, depois_de_0: ref.slice(ini, ini + 220), depois_de_outro: outro.slice(ini, ini + 220) });
+        break;
+      }
+    }
+    window.seek(instantes[0] ?? 0);
+    return suspeitos;
+  },
+};
+</script>
+</body>
+</html>

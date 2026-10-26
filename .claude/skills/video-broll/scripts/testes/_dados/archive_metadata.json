@@ -1,0 +1,90 @@
+{
+ "created": 1791338604,
+ "files": [
+  {
+   "name": "612Magic1958.avi",
+   "source": "original",
+   "format": "Cinepack",
+   "size": "40225572",
+   "length": "750.91",
+   "width": "320",
+   "height": "240"
+  },
+  {
+   "name": "612Magic1958.gif",
+   "source": "derivative",
+   "format": "Animated GIF",
+   "size": "376289",
+   "original": "612Magic1958.mpeg"
+  },
+  {
+   "name": "612Magic1958.mp4",
+   "source": "derivative",
+   "format": "h.264",
+   "size": "78054869",
+   "length": "750.65",
+   "width": "640",
+   "height": "480",
+   "original": "612Magic1958.mpeg"
+  },
+  {
+   "name": "612Magic1958.mpeg",
+   "source": "original",
+   "format": "MPEG2",
+   "size": "346610506",
+   "length": "750.61",
+   "width": "640",
+   "height": "480"
+  },
+  {
+   "name": "612Magic1958.ogv",
+   "source": "derivative",
+   "format": "Ogg Video",
+   "size": "53586573",
+   "length": "750.65",
+   "width": "400",
+   "height": "304",
+   "original": "612Magic1958.mpeg"
+  },
+  {
+   "name": "612Magic1958.png",
+   "source": "derivative",
+   "format": "PNG",
+   "size": "11457",
+   "original": "612Magic1958.mp3"
+  },
+  {
+   "name": "612Magic1958.thumbs/612Magic1958_000001.jpg",
+   "source": "derivative",
+   "format": "Thumbnail",
+   "size": "1443",
+   "original": "612Magic1958.mpeg"
+  },
+  {
+   "name": "612Magic1958.thumbs/612Magic1958_000030.jpg",
+   "source": "derivative",
+   "format": "Thumbnail",
+   "size": "3428",
+   "original": "612Magic1958.mpeg"
+  },
+  {
+   "name": "612Magic1958.thumbs/612Magic1958_000060.jpg",
+   "source": "derivative",
+   "format": "Thumbnail",
+   "size": "5314",
+   "original": "612Magic1958.mpeg"
+  }
+ ],
+ "files_count": 9,
+ "metadata": {
+  "identifier": "612Magic1958",
+  "title": "6 1/2 Magic Hours",
+  "mediatype": "movies",
+  "licenseurl": "http://creativecommons.org/licenses/publicdomain/",
+  "description": "The comfort and delight of transatlantic air travel at the beginning of the jet age.",
+  "date": "1958",
+  "creator": "Kahlenberg",
+  "runtime": "12:25"
+ },
+ "server": "ia800000.us.archive.org"
+}

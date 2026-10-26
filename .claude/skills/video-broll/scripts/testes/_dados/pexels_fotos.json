@@ -1,0 +1,25 @@
+{
+ "_nota": "simulado a partir da documentação oficial",
+ "page": 1,
+ "per_page": 1,
+ "total_results": 1,
+ "photos": [
+  {
+   "id": 7654321,
+   "width": 6000,
+   "height": 4000,
+   "url": "https://www.pexels.com/photo/close-up-of-circuit-board-7654321/",
+   "photographer": "João Souza",
+   "photographer_url": "https://www.pexels.com/@joao-souza",
+   "photographer_id": 77,
+   "alt": "Close-up de uma placa de circuito",
+   "src": {
+    "original": "https://images.pexels.com/photos/7654321/pexels-photo-7654321.jpeg",
+    "large2x": "https://images.pexels.com/photos/7654321/pexels-photo-7654321.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "large": "https://images.pexels.com/photos/7654321/pexels-photo-7654321.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "medium": "https://images.pexels.com/photos/7654321/pexels-photo-7654321.jpeg?auto=compress&cs=tinysrgb&h=350",
+    "small": "https://images.pexels.com/photos/7654321/pexels-photo-7654321.jpeg?auto=compress&cs=tinysrgb&h=130"
+   }
+  }
+ ]
+}

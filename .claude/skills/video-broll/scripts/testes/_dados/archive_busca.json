@@ -1,0 +1,29 @@
+{
+ "responseHeader": {
+  "status": 0
+ },
+ "response": {
+  "numFound": 131,
+  "start": 0,
+  "docs": [
+   {
+    "creator": "Kahlenberg",
+    "description": "The comfort and delight of transatlantic air travel at the beginning of the jet age.",
+    "downloads": 102099,
+    "identifier": "612Magic1958",
+    "licenseurl": "http://creativecommons.org/licenses/publicdomain/",
+    "title": "6 1/2 Magic Hours",
+    "year": 1958
+   },
+   {
+    "creator": "Rick Duffield",
+    "description": "Notice: Archive.org has a bug where files and folders with ampersands (&) in them can't be deleted, and it's inhibiting my ability to get everything organized properly.  I'm going to reach out on thei…",
+    "downloads": 54538,
+    "identifier": "wishbonefullseriesremastered",
+    "licenseurl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "title": "Wishbone (TV Series 1995–1998) REMASTERED",
+    "year": 1995
+   }
+  ]
+ }
+}

@@ -1,0 +1,182 @@
+{
+ "batchcomplete": true,
+ "query": {
+  "pages": [
+   {
+    "pageid": 16875655,
+    "ns": 6,
+    "title": "File:Green IT.ogv",
+    "index": 1,
+    "imageinfo": [
+     {
+      "size": 70086786,
+      "width": 640,
+      "height": 360,
+      "duration": 404.92,
+      "thumburl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Green_IT.ogv/500px--Green_IT.ogv.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+      "thumbwidth": 480,
+      "thumbheight": 270,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Green_IT.ogv?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Green_IT.ogv",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Green IT"
+       },
+       "ImageDescription": {
+        "value": "Green IT, was bedeutet das? Am Beispiel des neuen Rechenzentrums der Hochschule Reutlingen wird diese Frage beantwortet. Dort stehen leistungsstarke Server (IBM) die, ausgestattet mit einem optimalen Kühlsystem, minimale Enerige benötigen, aber mehr Leistung l…"
+       },
+       "Credit": {
+        "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>"
+       },
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Terpinc&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Terpinc (page does not exist)\">Terpinc</a> Hannah-Elena Seeger, Thomas Hornstein, Boris Terpinc"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 3.0"
+       },
+       "UsageTerms": {
+        "value": "Creative Commons Attribution-Share Alike 3.0"
+       },
+       "AttributionRequired": {
+        "value": "true"
+       },
+       "LicenseUrl": {
+        "value": "https://creativecommons.org/licenses/by-sa/3.0"
+       },
+       "Copyrighted": {
+        "value": "True"
+       },
+       "Restrictions": {
+        "value": ""
+       },
+       "License": {
+        "value": "cc-by-sa-3.0"
+       }
+      },
+      "mime": "application/ogg",
+      "mediatype": "VIDEO"
+     }
+    ],
+    "videoinfo": [
+     {
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Green_IT.ogv?utm_source=commons.wikimedia.org&utm_campaign=api&utm_content=original",
+        "type": "video/ogg; codecs=\"theora, vorbis\"",
+        "width": 640,
+        "height": 360,
+        "bandwidth": 1384703
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fe/Green_IT.ogv/Green_IT.ogv.240p.vp9.webm",
+        "type": "video/webm; codecs=\"vp9, opus\"",
+        "transcodekey": "240p.vp9.webm",
+        "width": 426,
+        "height": 240,
+        "bandwidth": 264832
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/fe/Green_IT.ogv/Green_IT.ogv.360p.mpeg4.mov",
+        "type": "video/quicktime; codecs=\"mp4v\"",
+        "transcodekey": "360p.mpeg4.mov",
+        "width": 640,
+        "height": 360,
+        "bandwidth": 965560
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "pageid": 53867652,
+    "ns": 6,
+    "title": "File:20161115 FLOTUS Arts and Humanities Youth Awards HD.webm",
+    "index": 4,
+    "imageinfo": [
+     {
+      "size": 1088639458,
+      "width": 1280,
+      "height": 720,
+      "duration": 3440.195,
+      "thumburl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm/500px--20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+      "thumbwidth": 480,
+      "thumbheight": 270,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "20161115 FLOTUS Arts and Humanities Youth Awards HD"
+       },
+       "ImageDescription": {
+        "value": "20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD"
+       },
+       "Credit": {
+        "value": "<a rel=\"nofollow\" class=\"external free\" href=\"https://www.whitehouse.gov/videos/2016/November/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.mp4\">https://www.whitehouse.gov/videos/2016/November/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.mp4</a>"
+       },
+       "Artist": {
+        "value": "The White House"
+       },
+       "LicenseShortName": {
+        "value": "Public domain"
+       },
+       "UsageTerms": {
+        "value": "Public domain"
+       },
+       "AttributionRequired": {
+        "value": "false"
+       },
+       "Copyrighted": {
+        "value": "False"
+       },
+       "Restrictions": {
+        "value": ""
+       },
+       "License": {
+        "value": "pd"
+       }
+      },
+      "mime": "video/webm",
+      "mediatype": "VIDEO"
+     }
+    ],
+    "videoinfo": [
+     {
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm?utm_source=commons.wikimedia.org&utm_campaign=api&utm_content=original",
+        "type": "video/webm; codecs=\"vp8, vorbis\"",
+        "width": 1280,
+        "height": 720,
+        "bandwidth": 2531576
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm.240p.vp9.webm",
+        "type": "video/webm; codecs=\"vp9, opus\"",
+        "transcodekey": "240p.vp9.webm",
+        "width": 426,
+        "height": 240,
+        "bandwidth": 267480
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm.360p.mpeg4.mov",
+        "type": "video/quicktime; codecs=\"mp4v\"",
+        "transcodekey": "360p.mpeg4.mov",
+        "width": 640,
+        "height": 360,
+        "bandwidth": 947248
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/de/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm/20161115_FLOTUS_Arts_and_Humanities_Youth_Awards_HD.webm.480p.vp9.webm",
+        "type": "video/webm; codecs=\"vp9, opus\"",
+        "transcodekey": "480p.vp9.webm",
+        "width": 854,
+        "height": 480,
+        "bandwidth": 786248
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

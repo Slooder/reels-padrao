@@ -1,0 +1,24 @@
+[
+ {
+  "file": "frutos_pb.jpg",
+  "title": "File:Ripe Seeds Coffee Robusta Coorg Karnataka India Feb24 D72 25688.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "Timothy A. Gonsalves",
+  "page": "https://commons.wikimedia.org/wiki/File:Ripe_Seeds_Coffee_Robusta_Coorg_Karnataka_India_Feb24_D72_25688.jpg",
+  "nota": "versão P&B e recortada de frutos.jpg (960 px) baixada com tools/commons.py"
+ },
+ {
+  "file": "*_cinza/verde/vermelho.webp",
+  "title": "Blue Marble: Shaded Relief + ASTER GDEM Shaded Relief (NASA GIBS)",
+  "license": "Domínio público (NASA)",
+  "artist": "NASA",
+  "page": "https://gibs.earthdata.nasa.gov"
+ },
+ {
+  "file": "geo.json",
+  "title": "Natural Earth (admin 0/1, rios)",
+  "license": "Domínio público",
+  "artist": "Natural Earth",
+  "page": "https://www.naturalearthdata.com"
+ }
+]

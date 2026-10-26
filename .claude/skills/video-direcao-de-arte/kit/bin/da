@@ -1,0 +1,49 @@
+#!/bin/sh
+# da — executável do kit de direção de arte: acha um python3 que sirva e roda kit/da.py com os argumentos recebidos.
+#
+#   ~/.claude/skills/video-direcao-de-arte/kit/bin/da <subcomando> [opções]      (da --help lista os subcomandos)
+#
+# Existe para que a documentação e o CLAUDE.md dos projetos tenham UMA chamada que funciona igual em zsh, bash e sh,
+# com espaço no caminho e sem depender de qual `python3` está no PATH (num shell limpo do macOS, `python3` é o 3.9 do
+# sistema, sem Pillow). Não use `DA="python3 …/da.py"; $DA …`: zsh não divide a variável em palavras (erro 127) e o
+# til dentro de aspas não expande (em bash sai código 2, o mesmo de "projeto sem DA").
+#
+# Ordem de escolha do Python: variável VIDEO_OPS_PYTHON (usada sem conferir) → /opt/homebrew/bin/python3 →
+# /usr/local/bin/python3 → python3 do PATH → /usr/bin/python3; vale o primeiro que for ≥ 3.10 e tiver Pillow.
+# Códigos de saída: os do da.py (0 ok · 1 reprovado · 2 nenhuma DA · 64 uso · 75 fila · 124 sem progresso);
+# 127 = nenhum python3 utilizável (nunca 2, para não ser confundido com "sem DA").
+
+aqui=$0
+while [ -L "$aqui" ]; do                       # chamado por um link simbólico: segue até o arquivo de verdade
+  alvo=$(readlink "$aqui")
+  case $alvo in
+    /*) aqui=$alvo ;;
+    *) aqui=$(dirname "$aqui")/$alvo ;;
+  esac
+done
+kit=$(cd "$(dirname "$aqui")/.." 2>/dev/null && pwd -P)
+if [ -z "$kit" ] || [ ! -f "$kit/da.py" ]; then
+  echo "da: não encontrei da.py ao lado de bin/ (procurei em: ${kit:-$(dirname "$aqui")/..}). O kit foi copiado pela metade?" >&2
+  exit 127
+fi
+
+if [ -n "${VIDEO_OPS_PYTHON:-}" ]; then
+  if ! command -v "$VIDEO_OPS_PYTHON" >/dev/null 2>&1; then
+    echo "da: VIDEO_OPS_PYTHON aponta para '$VIDEO_OPS_PYTHON', que não é um executável." >&2
+    exit 127
+  fi
+  exec "$VIDEO_OPS_PYTHON" "$kit/da.py" "$@"
+fi
+
+do_path=$(command -v python3 2>/dev/null)
+for py in /opt/homebrew/bin/python3 /usr/local/bin/python3 "$do_path" /usr/bin/python3; do
+  [ -n "$py" ] && [ -x "$py" ] || continue
+  if "$py" -c 'import sys, PIL; sys.exit(sys.version_info < (3, 10))' >/dev/null 2>&1; then
+    exec "$py" "$kit/da.py" "$@"
+  fi
+done
+
+echo "da: não achei um python3 (3.10 ou mais novo) com Pillow." >&2
+echo "    Procurei em /opt/homebrew/bin/python3, /usr/local/bin/python3, no PATH e em /usr/bin/python3." >&2
+echo "    Instale (brew install python; python3 -m pip install pillow numpy) ou aponte VIDEO_OPS_PYTHON para o seu Python." >&2
+exit 127

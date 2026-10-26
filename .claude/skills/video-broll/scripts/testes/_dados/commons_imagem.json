@@ -1,0 +1,111 @@
+{
+ "batchcomplete": true,
+ "query": {
+  "pages": [
+   {
+    "pageid": 40072920,
+    "ns": 6,
+    "title": "File:Aurora 2ch mixer board arrived (2009-07-28 11.20.55 by c-g.).jpg",
+    "index": 1,
+    "imageinfo": [
+     {
+      "size": 1885036,
+      "width": 2304,
+      "height": 1728,
+      "thumburl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Aurora_2ch_mixer_board_arrived_%282009-07-28_11.20.55_by_c-g.%29.jpg/500px-Aurora_2ch_mixer_board_arrived_%282009-07-28_11.20.55_by_c-g.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "thumbwidth": 480,
+      "thumbheight": 360,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Aurora_2ch_mixer_board_arrived_%282009-07-28_11.20.55_by_c-g.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Aurora_2ch_mixer_board_arrived_(2009-07-28_11.20.55_by_c-g.).jpg",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Aurora 2ch mixer board arrived (2009-07-28 11.20.55 by c-g.)"
+       },
+       "Credit": {
+        "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/tanais/3864728916/\">Aurora 2ch mixer board arrived</a>"
+       },
+       "Artist": {
+        "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/44113611@N00\">c-g.</a>"
+       },
+       "LicenseShortName": {
+        "value": "CC BY 2.0"
+       },
+       "UsageTerms": {
+        "value": "Creative Commons Attribution 2.0"
+       },
+       "AttributionRequired": {
+        "value": "true"
+       },
+       "LicenseUrl": {
+        "value": "https://creativecommons.org/licenses/by/2.0"
+       },
+       "Copyrighted": {
+        "value": "True"
+       },
+       "Restrictions": {
+        "value": ""
+       },
+       "License": {
+        "value": "cc-by-2.0"
+       }
+      },
+      "mime": "image/jpeg",
+      "mediatype": "BITMAP"
+     }
+    ]
+   },
+   {
+    "pageid": 113714930,
+    "ns": 6,
+    "title": "File:Circuit board after manual etching.jpg",
+    "index": 2,
+    "imageinfo": [
+     {
+      "size": 371071,
+      "width": 3264,
+      "height": 2448,
+      "thumburl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Circuit_board_after_manual_etching.jpg/500px-Circuit_board_after_manual_etching.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "thumbwidth": 480,
+      "thumbheight": 360,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Circuit_board_after_manual_etching.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Circuit_board_after_manual_etching.jpg",
+      "extmetadata": {
+       "ObjectName": {
+        "value": "Circuit board after manual etching"
+       },
+       "Credit": {
+        "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>"
+       },
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/wiki/User:Tinux\" title=\"User:Tinux\">Tinux</a>"
+       },
+       "LicenseShortName": {
+        "value": "CC0"
+       },
+       "UsageTerms": {
+        "value": "Creative Commons Zero, Public Domain Dedication"
+       },
+       "AttributionRequired": {
+        "value": "false"
+       },
+       "LicenseUrl": {
+        "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+       },
+       "Copyrighted": {
+        "value": "True"
+       },
+       "Restrictions": {
+        "value": ""
+       },
+       "License": {
+        "value": "cc0"
+       }
+      },
+      "mime": "image/jpeg",
+      "mediatype": "BITMAP"
+     }
+    ]
+   }
+  ]
+ }
+}

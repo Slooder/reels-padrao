@@ -1,0 +1,15 @@
+{
+  "versao": 1,
+  "sha256": "9ad198ef744bb3a672da9dae86c9c1840b430dc688cfacc262923547c24c0aa4",
+  "arquivos": [
+    {
+      "caminho": "D:\\STUDIO\\studio\\projetos\\104. JP\\da\\da.json",
+      "sha256": "6d0692a89845e086092dcf3d0a58d3470d0143d85be89f87e6aae9c6c7227978"
+    }
+  ],
+  "raiz": "D:\\STUDIO\\studio\\projetos\\104. JP",
+  "kit_versao": "1.6.0",
+  "gerador_sha256": "5bbf4bca10682e523177e50b232d73c24a8b4a34e86c8e3ded3b4d3343ff0b42",
+  "compilado_em": "2026-10-22T23:45:55-03:00",
+  "saidas": ["da.resolvida.json", "da.css", "da.js", "grade.json", "da.lock", "../DA.md"]
+}

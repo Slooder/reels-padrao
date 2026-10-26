@@ -1,0 +1,41 @@
+[
+ {
+  "file": "catador.jpg",
+  "title": "File:Waste picker of Recife, Pernambuco, Brazil.jpg",
+  "license": "CC0",
+  "artist": "Wilfredor",
+  "page": "https://commons.wikimedia.org/wiki/File:Waste_picker_of_Recife,_Pernambuco,_Brazil.jpg",
+  "usado_como": "catador_pb.png"
+ },
+ {
+  "file": "fardo.jpg",
+  "title": "File:USMC-110114-M-2664B-059.jpg",
+  "license": "Public domain",
+  "artist": "Lance Cpl. Miranda Blackburn",
+  "page": "https://commons.wikimedia.org/wiki/File:USMC-110114-M-2664B-059.jpg",
+  "usado_como": "fardo_s.png"
+ },
+ {
+  "file": "cidade.jpg",
+  "title": "File:Sao Paulo Brazil Skyline Aerial, December 2024.jpg",
+  "license": "CC0",
+  "artist": "Spicypepper999",
+  "page": "https://commons.wikimedia.org/wiki/File:Sao_Paulo_Brazil_Skyline_Aerial,_December_2024.jpg",
+  "usado_como": "cidade_s.png"
+ },
+ {
+  "file": "fundicao.jpg",
+  "title": "File:A Merlin Is Made- the Production of Merlin Engines at a Rolls Royce Factory, 1942 D12095.jpg",
+  "license": "Public domain",
+  "artist": "Richard Stone",
+  "page": "https://commons.wikimedia.org/wiki/File:A_Merlin_Is_Made-_the_Production_of_Merlin_Engines_at_a_Rolls_Royce_Factory,_1942_D12095.jpg",
+  "usado_como": "fundicao_pb.png"
+ },
+ {
+  "file": "globo.json",
+  "title": "Natural Earth 1:110m (land, admin 0)",
+  "license": "Domínio público",
+  "artist": "Natural Earth",
+  "page": "https://www.naturalearthdata.com/"
+ }
+]

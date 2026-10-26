@@ -1,0 +1,13 @@
+{
+  "name": "video-texto-grifado",
+  "private": true,
+  "description": "Motor quadro a quadro (GSAP + Playwright + ffmpeg) + biblioteca do estilo texto-grifado",
+  "scripts": {
+    "preview": "node render.mjs --preview=12",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "playwright": "^1.64.0"
+  }
+}

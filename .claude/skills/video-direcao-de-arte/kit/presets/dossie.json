@@ -1,0 +1,275 @@
+{
+  "versao_esquema": 1,
+  "herda": null,
+  "projeto": {
+    "nome": "Dossiê",
+    "slug": "dossie",
+    "criada_em": "2026-10-05",
+    "revisao": 1,
+    "aprovada": false,
+    "aprovada_em": null,
+    "aprovada_sha256": null
+  },
+  "conceito": {
+    "frase": "Dossiê investigativo: preto de arquivo, amarelo de marca-texto e tipografia de carimbo — cada tela parece uma prova sendo apresentada.",
+    "palavras_chave": ["investigativo", "documental", "sóbrio", "contraste alto", "arquivo", "prova"],
+    "referencias": [],
+    "faca": [
+      "Abrir blocos amarelos por máscara e só depois revelar o texto preto por cima",
+      "Usar o amarelo como marca-texto: uma ênfase por tela, nunca decoração",
+      "Títulos em caixa alta, condensados, alinhados à esquerda na grade",
+      "Dados, datas e nomes em mono, com a fonte da informação citada no rodapé",
+      "Fotos de pessoas em preto e branco, com bloco amarelo deslocado atrás"
+    ],
+    "nao_faca": [
+      "Gradiente, brilho, sombra projetada ou canto arredondado",
+      "Mais de uma cor de destaque na mesma tela",
+      "Movimento que quica ou passa do ponto final",
+      "Texto centralizado solto no meio do quadro",
+      "Emoji, ícone colorido ou imagem com cara de publicidade"
+    ]
+  },
+  "formatos": {
+    "horizontal": {"largura": 1920, "altura": 1080, "fps": "30000/1001"},
+    "vertical": {"largura": 1080, "altura": 1920, "fps": "30000/1001"},
+    "quadrado": {"largura": 1080, "altura": 1080, "fps": "30000/1001"},
+    "thumbnail": {"largura": 1280, "altura": 720},
+    "margens_seguras": {
+      "horizontal": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      },
+      "vertical": {
+        "instagram": [0.14, 0.21, 0.35, 0.06],
+        "tiktok": [0.125, 0.2778, 0.3438, 0.1111],
+        "shorts": [0.15, 0.1778, 0.35, 0.0444],
+        "uniao": [0.15, 0.2778, 0.35, 0.1111]
+      },
+      "quadrado": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      }
+    }
+  },
+  "cor": {
+    "paleta": {
+      "fundo": "#0A0A0A",
+      "superficie": "#161616",
+      "texto": "#F4F1EA",
+      "texto_suave": "#8A8A8A",
+      "primaria": "#FFC700",
+      "secundaria": "#2A2A2A",
+      "destaque": "#FF6B35",
+      "positivo": "#57C785",
+      "negativo": "#E5484D",
+      "alerta": "#FF9F1C"
+    },
+    "neutros": ["#000000", "#FFFFFF"],
+    "dados": ["primaria", "texto", "texto_suave", "#FF6B35", "#4FB8B0", "#B08BE8"],
+    "gradientes": {
+      "profundidade": {
+        "tipo": "linear",
+        "angulo": 180,
+        "paradas": [["superficie", 0], ["fundo", 1]]
+      }
+    }
+  },
+  "tipografia": {
+    "papeis": {
+      "titulo": {
+        "familia": "Archivo SemiExpanded",
+        "arquivo": "fontes/ArchivoSemiExpanded-Black.ttf",
+        "peso": 900,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": -0.005,
+        "altura_linha": 1.08,
+        "escala_x": 0.66
+      },
+      "subtitulo": {
+        "familia": "IBM Plex Mono",
+        "arquivo": "fontes/IBMPlexMono-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.2,
+        "altura_linha": 1.45
+      },
+      "corpo": {
+        "familia": "IBM Plex Mono",
+        "arquivo": "fontes/IBMPlexMono-Medium.ttf",
+        "peso": 500,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.01,
+        "altura_linha": 1.4
+      },
+      "dados": {
+        "familia": "IBM Plex Mono",
+        "arquivo": "fontes/IBMPlexMono-Bold.ttf",
+        "peso": 700,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.2
+      },
+      "legenda": {
+        "familia": "Archivo SemiExpanded",
+        "arquivo": "fontes/ArchivoSemiExpanded-Black.ttf",
+        "peso": 900,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.0,
+        "altura_linha": 1.1,
+        "escala_x": 0.7
+      }
+    },
+    "escala": {"display": 0.13, "h1": 0.085, "h2": 0.058, "h3": 0.042, "corpo": 0.03, "nota": 0.022}
+  },
+  "layout": {
+    "grade": {"colunas": 12, "margem": 0.065, "calha": 0.014},
+    "raio": 0,
+    "traco": 0.0056,
+    "sombra": null,
+    "densidade": "media"
+  },
+  "movimento": {
+    "curvas": {
+      "entrada": [0.215, 0.61, 0.355, 1],
+      "saida": [0.55, 0.055, 0.675, 0.19],
+      "enfase": [0.2, 0, 0, 1],
+      "suave": [0.4, 0, 0.2, 1],
+      "linear": [0, 0, 1, 1]
+    },
+    "duracoes": {"micro": 0.12, "curta": 0.28, "media": 0.5, "longa": 0.9},
+    "escalonamento": 0.06,
+    "entrada_padrao": "mascara",
+    "saida_padrao": "fade",
+    "transicoes": {
+      "padrao": "corte",
+      "permitidas": ["corte", "mascara", "fade"]
+    },
+    "principios": [
+      "O bloco abre primeiro, o texto aparece depois: forma antes de conteúdo",
+      "Nada quica: curvas sem ultrapassagem, parada seca",
+      "Um movimento por vez; o resto da tela fica parado",
+      "Saída sempre mais rápida e discreta que a entrada"
+    ]
+  },
+  "tratamento": {
+    "grade": {
+      "lut": null,
+      "intensidade_lut": 1.0,
+      "exposicao": 0.0,
+      "contraste": 1.08,
+      "saturacao": 0.78,
+      "gama": 1.0,
+      "temperatura": 0,
+      "matiz": 0,
+      "curva": null
+    },
+    "duotone": {"ativo": false, "sombra": "fundo", "luz": "texto", "mistura": 1.0},
+    "grao": {"ativo": true, "intensidade": 6, "temporal": true},
+    "vinheta": {"ativo": true, "angulo": 0.35},
+    "nitidez": 0.0,
+    "desfoque": 0.0,
+    "velocidade": 1.0,
+    "moldura": {
+      "estilo": "cantoneiras",
+      "espessura": 0.0037,
+      "cor": "primaria",
+      "raio": 0,
+      "margem": 0.05,
+      "rotulo": true
+    },
+    "recorte": {"ancora": "rosto"}
+  },
+  "legenda": {
+    "estilo": "karaoke",
+    "papel": "legenda",
+    "tamanho": 0.062,
+    "caixa": "alta",
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "cor_falada": null,
+    "contorno": {"cor": "fundo", "espessura": 0.11},
+    "sombra": {"dx": 0, "dy": 0.04, "desfoque": 0.08, "alfa": 0.6, "cor": "#000000"},
+    "fundo": null,
+    "posicao": {
+      "vertical": {"y": 0.6, "largura_max": 0.61},
+      "horizontal": {"y": 0.84}
+    },
+    "largura_max": 0.8,
+    "max_linhas": 2,
+    "max_palavras": 4,
+    "animacao": "fade"
+  },
+  "graficos": {
+    "gc": {
+      "estilo": "barra",
+      "posicao": "inferior_esquerda",
+      "papel_nome": "titulo",
+      "papel_cargo": "dados",
+      "tamanho_nome": 0.039,
+      "tamanho_cargo": 0.026,
+      "cor_nome": "texto",
+      "cor_cargo": "texto_suave",
+      "cor_fundo": "fundo",
+      "alfa_fundo": 0.86,
+      "cor_acento": "primaria"
+    },
+    "tarja": {
+      "estilo": "chapada",
+      "papel": "titulo",
+      "tamanho": 0.037,
+      "cor_fundo": "primaria",
+      "cor_texto": "fundo",
+      "inclinacao": 0
+    },
+    "icones": {"estilo": "traco", "espessura": 0.004},
+    "dados": {"eixo": "texto_suave", "grade": "secundaria", "rotulo": "dados"},
+    "citacao_fonte": {
+      "papel": "dados",
+      "tamanho": 0.024,
+      "posicao": "inferior_esquerda",
+      "cor": "texto_suave"
+    }
+  },
+  "thumbnail": {
+    "max_palavras": 4,
+    "papel": "titulo",
+    "tamanho": 0.2,
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "contorno": {"cor": "fundo", "espessura": 0.05},
+    "tratamento_foto": {
+      "saturacao": 0.0,
+      "contraste": 1.15,
+      "recorte_pessoa": true,
+      "contorno_pessoa": {"cor": "primaria", "espessura": 0.012}
+    },
+    "fundo": "fundo",
+    "zona_proibida": "inferior_direita"
+  },
+  "som": {
+    "identidade": "Seco e documental: voz na frente, impactos graves e curtos, silêncio como pontuação.",
+    "loudness": {
+      "longo": {"lufs": -14, "pico_real": -1.0},
+      "curto": {"lufs": -14, "pico_real": -1.0}
+    },
+    "sfx": {"entrada": "whoosh", "enfase": "impacto", "texto": "tick"},
+    "musica": {
+      "clima": "tensão contida: drones, pulsos graves e piano esparso",
+      "bpm": [80, 100]
+    }
+  },
+  "marca": {
+    "logo": null,
+    "assinatura": null,
+    "posicao_logo": "superior_direita",
+    "marca_dagua": false
+  }
+}

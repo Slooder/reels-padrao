@@ -1,0 +1,159 @@
+{
+  "versao": 1,
+  "da_sha256": "9ad198ef744bb3a672da9dae86c9c1840b430dc688cfacc262923547c24c0aa4",
+  "kit_versao": "1.6.0",
+  "uso": "ffmpeg -i entrada.mp4 -vf \"<cadeia>\" …  ou, num filter_complex, \"[0:v]<cadeia>[v]\". 'cadeia' = cor + acabamento; 'cadeia_cor' = grade/LUT/duotone (por clipe); 'cadeia_acabamento' = desfoque/nitidez/vinheta/grão (uma vez, no fim). \"null\" = nada a fazer. 8 bits; se a cadeia passa por RGB ela devolve o formato 'retorno', senão mantém o da fonte.",
+  "formatos": {
+    "horizontal": {
+      "largura": 1920,
+      "altura": 1080,
+      "lado_menor": 1080,
+      "retorno": "yuv420p",
+      "cadeia": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p,unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "cadeia_cor": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p",
+      "cadeia_acabamento": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "neutro": false,
+      "passos": [
+        {
+          "token": "tratamento.grade.contraste/saturacao/gama",
+          "filtro": "eq=contrast=1.04:saturation=0.92"
+        },
+        {
+          "token": "tratamento.grade.temperatura",
+          "filtro": "colortemperature=temperature=3500:mix=0.08:pl=1"
+        },
+        {"token": "tratamento.nitidez", "filtro": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0"},
+        {"token": "tratamento.grao", "filtro": "noise=c0s=3:c0f=t+u"}
+      ]
+    },
+    "vertical": {
+      "largura": 1080,
+      "altura": 1920,
+      "lado_menor": 1080,
+      "retorno": "yuv420p",
+      "cadeia": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p,unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "cadeia_cor": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p",
+      "cadeia_acabamento": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "neutro": false,
+      "passos": [
+        {
+          "token": "tratamento.grade.contraste/saturacao/gama",
+          "filtro": "eq=contrast=1.04:saturation=0.92"
+        },
+        {
+          "token": "tratamento.grade.temperatura",
+          "filtro": "colortemperature=temperature=3500:mix=0.08:pl=1"
+        },
+        {"token": "tratamento.nitidez", "filtro": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0"},
+        {"token": "tratamento.grao", "filtro": "noise=c0s=3:c0f=t+u"}
+      ]
+    },
+    "quadrado": {
+      "largura": 1080,
+      "altura": 1080,
+      "lado_menor": 1080,
+      "retorno": "yuv420p",
+      "cadeia": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p,unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "cadeia_cor": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv420p",
+      "cadeia_acabamento": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "neutro": false,
+      "passos": [
+        {
+          "token": "tratamento.grade.contraste/saturacao/gama",
+          "filtro": "eq=contrast=1.04:saturation=0.92"
+        },
+        {
+          "token": "tratamento.grade.temperatura",
+          "filtro": "colortemperature=temperature=3500:mix=0.08:pl=1"
+        },
+        {"token": "tratamento.nitidez", "filtro": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0"},
+        {"token": "tratamento.grao", "filtro": "noise=c0s=3:c0f=t+u"}
+      ]
+    },
+    "thumbnail": {
+      "largura": 1280,
+      "altura": 720,
+      "lado_menor": 720,
+      "retorno": "yuv444p",
+      "cadeia": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv444p,unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "cadeia_cor": "eq=contrast=1.04:saturation=0.92,format=gbrp,colortemperature=temperature=3500:mix=0.08:pl=1,format=yuv444p",
+      "cadeia_acabamento": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0,noise=c0s=3:c0f=t+u",
+      "neutro": false,
+      "passos": [
+        {
+          "token": "tratamento.grade.contraste/saturacao/gama",
+          "filtro": "eq=contrast=1.04:saturation=0.92"
+        },
+        {
+          "token": "tratamento.grade.temperatura",
+          "filtro": "colortemperature=temperature=3500:mix=0.08:pl=1"
+        },
+        {"token": "tratamento.nitidez", "filtro": "unsharp=lx=5:ly=5:la=0.1:cx=5:cy=5:ca=0"},
+        {"token": "tratamento.grao", "filtro": "noise=c0s=3:c0f=t+u"}
+      ]
+    }
+  },
+  "velocidade": {"fator": 1.0, "video": null, "audio": null},
+  "mapeamento": [
+    {
+      "token": "tratamento.grade.exposicao",
+      "filtro": "lutyuv",
+      "regra": "ganho K = 2^(EV/2,2) em Y, U e V (equivale a multiplicar R'G'B' por K); 0 = omitido"
+    },
+    {
+      "token": "tratamento.grade.contraste | saturacao | gama",
+      "filtro": "eq",
+      "regra": "eq=contrast=C:saturation=S:gamma=G, só com os parâmetros diferentes de 1"
+    },
+    {
+      "token": "tratamento.grade.matiz",
+      "filtro": "hue",
+      "regra": "hue=h=<graus>; 0 = omitido"
+    },
+    {
+      "token": "tratamento.grade.temperatura",
+      "filtro": "colortemperature",
+      "regra": "t > 0 → 3500 K (quente); t < 0 → 12000 K (fria); mix = |t|/100; pl=1 preserva a luminosidade"
+    },
+    {
+      "token": "tratamento.grade.curva",
+      "filtro": "curves",
+      "regra": "nome → curves=preset=…; lista de pontos → curves=all='x/y …'; objeto → master/r/g/b"
+    },
+    {
+      "token": "tratamento.grade.lut + intensidade_lut",
+      "filtro": "lut3d (+ split/blend)",
+      "regra": "intensidade 1 → lut3d direto; entre 0 e 1 → split, lut3d num ramo e blend normal com all_opacity = intensidade"
+    },
+    {
+      "token": "tratamento.duotone",
+      "filtro": "colorchannelmixer + lutrgb (+ split/blend)",
+      "regra": "luma BT.709 nos três canais e rampa linear sombra→luz por canal; mistura < 1 usa split/blend"
+    },
+    {
+      "token": "tratamento.desfoque",
+      "filtro": "gblur",
+      "regra": "sigma = fração × lado menor do quadro (px)"
+    },
+    {
+      "token": "tratamento.nitidez",
+      "filtro": "unsharp",
+      "regra": "unsharp 5x5 só na luma, la = nitidez"
+    },
+    {
+      "token": "tratamento.vinheta",
+      "filtro": "vignette",
+      "regra": "vignette=angle=<angulo em rad>"
+    },
+    {
+      "token": "tratamento.grao",
+      "filtro": "noise",
+      "regra": "ruído uniforme só na luma: noise=c0s=<intensidade>:c0f=t+u (temporal) ou c0f=u (fixo)"
+    },
+    {
+      "token": "tratamento.velocidade",
+      "filtro": "setpts / atempo",
+      "regra": "fora da cadeia de cor: grade.json → velocidade.video e velocidade.audio"
+    }
+  ]
+}

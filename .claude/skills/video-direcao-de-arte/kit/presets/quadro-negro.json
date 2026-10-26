@@ -1,0 +1,273 @@
+{
+  "versao_esquema": 1,
+  "herda": null,
+  "projeto": {
+    "nome": "Quadro-negro",
+    "slug": "quadro-negro",
+    "criada_em": "2026-10-05",
+    "revisao": 1,
+    "aprovada": false,
+    "aprovada_em": null,
+    "aprovada_sha256": null
+  },
+  "conceito": {
+    "frase": "Aula no quadro: lousa verde-escura, giz colorido e passo a passo — a explicação se desenha na frente de quem assiste.",
+    "palavras_chave": ["didático", "escolar", "giz", "passo a passo", "acolhedor", "claro"],
+    "referencias": [],
+    "faca": [
+      "Construir o raciocínio um passo por vez, como quem escreve na lousa",
+      "Giz amarelo para o conceito central, azul para exemplo, rosa para ponto de atenção",
+      "Setas, sublinhados e círculos para ligar as ideias",
+      "Frases curtas, em caixa normal, com bastante espaço entre os blocos",
+      "Recapitular no fim com a lousa completa"
+    ],
+    "nao_faca": [
+      "Encher a lousa: no máximo três blocos por tela",
+      "Cor pura e saturada: giz é sempre pastel",
+      "Título em caixa alta gritando",
+      "Corte frenético ou efeito de impacto",
+      "Jargão sem exemplo ao lado"
+    ]
+  },
+  "formatos": {
+    "horizontal": {"largura": 1920, "altura": 1080, "fps": "30000/1001"},
+    "vertical": {"largura": 1080, "altura": 1920, "fps": "30000/1001"},
+    "quadrado": {"largura": 1080, "altura": 1080, "fps": "30000/1001"},
+    "thumbnail": {"largura": 1280, "altura": 720},
+    "margens_seguras": {
+      "horizontal": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      },
+      "vertical": {
+        "instagram": [0.14, 0.21, 0.35, 0.06],
+        "tiktok": [0.125, 0.2778, 0.3438, 0.1111],
+        "shorts": [0.15, 0.1778, 0.35, 0.0444],
+        "uniao": [0.15, 0.2778, 0.35, 0.1111]
+      },
+      "quadrado": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      }
+    }
+  },
+  "cor": {
+    "paleta": {
+      "fundo": "#1F2D27",
+      "superficie": "#2A3D35",
+      "texto": "#F2EFE4",
+      "texto_suave": "#A8B5AA",
+      "primaria": "#F6D55C",
+      "secundaria": "#7FC8F8",
+      "destaque": "#F4A6C0",
+      "positivo": "#9BE29B",
+      "negativo": "#FF8A7A",
+      "alerta": "#FFA552"
+    },
+    "neutros": ["#000000", "#FFFFFF"],
+    "dados": ["primaria", "secundaria", "#F4A6C0", "#9BE29B", "#FFA552", "#C3A6FF", "texto"],
+    "gradientes": {
+      "lousa": {
+        "tipo": "radial",
+        "angulo": 0,
+        "paradas": [["superficie", 0], ["fundo", 1]]
+      }
+    }
+  },
+  "tipografia": {
+    "papeis": {
+      "titulo": {
+        "familia": "Urbanist",
+        "arquivo": "fontes/Urbanist-ExtraBold.ttf",
+        "peso": 800,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.01,
+        "altura_linha": 1.1
+      },
+      "subtitulo": {
+        "familia": "Urbanist",
+        "arquivo": "fontes/Urbanist-SemiBold.ttf",
+        "peso": 600,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.01,
+        "altura_linha": 1.25
+      },
+      "corpo": {
+        "familia": "Urbanist",
+        "arquivo": "fontes/Urbanist-Medium.ttf",
+        "peso": 500,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.005,
+        "altura_linha": 1.45
+      },
+      "dados": {
+        "familia": "IBM Plex Mono",
+        "arquivo": "fontes/IBMPlexMono-Medium.ttf",
+        "peso": 500,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.3
+      },
+      "legenda": {
+        "familia": "Urbanist",
+        "arquivo": "fontes/Urbanist-Black.ttf",
+        "peso": 900,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.15
+      }
+    },
+    "escala": {"display": 0.125, "h1": 0.082, "h2": 0.056, "h3": 0.04, "corpo": 0.032, "nota": 0.023}
+  },
+  "layout": {
+    "grade": {"colunas": 12, "margem": 0.07, "calha": 0.016},
+    "raio": 0.012,
+    "traco": 0.0046,
+    "sombra": null,
+    "densidade": "arejada"
+  },
+  "movimento": {
+    "curvas": {
+      "entrada": [0.33, 1, 0.68, 1],
+      "saida": [0.32, 0, 0.67, 0],
+      "enfase": [0.34, 1.3, 0.64, 1],
+      "suave": [0.37, 0, 0.63, 1],
+      "linear": [0, 0, 1, 1]
+    },
+    "duracoes": {"micro": 0.12, "curta": 0.32, "media": 0.56, "longa": 1.0},
+    "escalonamento": 0.1,
+    "entrada_padrao": "sobe",
+    "saida_padrao": "fade",
+    "transicoes": {
+      "padrao": "corte",
+      "permitidas": ["corte", "fade", "desliza"]
+    },
+    "principios": [
+      "Um item por vez, no tempo de quem escreve: o escalonamento é generoso",
+      "Traços se desenham do começo ao fim; nada aparece pronto",
+      "Ênfase com um leve salto, simpático, nunca agressivo",
+      "A lousa acumula: o que já foi explicado continua visível, mais apagado"
+    ]
+  },
+  "tratamento": {
+    "grade": {
+      "lut": null,
+      "intensidade_lut": 1.0,
+      "exposicao": 0.0,
+      "contraste": 1.03,
+      "saturacao": 0.9,
+      "gama": 1.0,
+      "temperatura": 6,
+      "matiz": 0,
+      "curva": null
+    },
+    "duotone": {"ativo": false, "sombra": "fundo", "luz": "texto", "mistura": 0.4},
+    "grao": {"ativo": true, "intensidade": 4, "temporal": true},
+    "vinheta": {"ativo": true, "angulo": 0.5},
+    "nitidez": 0.0,
+    "desfoque": 0.0,
+    "velocidade": 1.0,
+    "moldura": {
+      "estilo": "polaroid",
+      "espessura": 0.011,
+      "cor": "texto",
+      "raio": 0.004,
+      "margem": 0.06,
+      "rotulo": true
+    },
+    "recorte": {"ancora": "centro"}
+  },
+  "legenda": {
+    "estilo": "karaoke",
+    "papel": "legenda",
+    "tamanho": 0.056,
+    "caixa": "normal",
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "cor_falada": null,
+    "contorno": {"cor": "fundo", "espessura": 0.09},
+    "sombra": {"dx": 0, "dy": 0.05, "desfoque": 0.1, "alfa": 0.5, "cor": "#000000"},
+    "fundo": null,
+    "posicao": {
+      "vertical": {"y": 0.6, "largura_max": 0.61},
+      "horizontal": {"y": 0.85}
+    },
+    "largura_max": 0.8,
+    "max_linhas": 2,
+    "max_palavras": 5,
+    "animacao": "fade"
+  },
+  "graficos": {
+    "gc": {
+      "estilo": "caixa",
+      "posicao": "inferior_esquerda",
+      "papel_nome": "titulo",
+      "papel_cargo": "corpo",
+      "tamanho_nome": 0.038,
+      "tamanho_cargo": 0.024,
+      "cor_nome": "texto",
+      "cor_cargo": "texto_suave",
+      "cor_fundo": "superficie",
+      "alfa_fundo": 0.92,
+      "cor_acento": "primaria"
+    },
+    "tarja": {
+      "estilo": "sublinhado",
+      "papel": "titulo",
+      "tamanho": 0.044,
+      "cor_fundo": "primaria",
+      "cor_texto": "texto",
+      "inclinacao": -1.5
+    },
+    "icones": {"estilo": "traco", "espessura": 0.0046},
+    "dados": {"eixo": "texto_suave", "grade": "superficie", "rotulo": "dados"},
+    "citacao_fonte": {
+      "papel": "dados",
+      "tamanho": 0.024,
+      "posicao": "inferior_direita",
+      "cor": "texto_suave"
+    }
+  },
+  "thumbnail": {
+    "max_palavras": 4,
+    "papel": "titulo",
+    "tamanho": 0.19,
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "contorno": {"cor": "fundo", "espessura": 0.05},
+    "tratamento_foto": {
+      "saturacao": 1.05,
+      "contraste": 1.08,
+      "recorte_pessoa": true,
+      "contorno_pessoa": {"cor": "texto", "espessura": 0.012}
+    },
+    "fundo": "gradiente:lousa",
+    "zona_proibida": "inferior_direita"
+  },
+  "som": {
+    "identidade": "Leve e acolhedor: risco de giz, clique suave e música que não disputa com a explicação.",
+    "loudness": {
+      "longo": {"lufs": -14, "pico_real": -1.0},
+      "curto": {"lufs": -14, "pico_real": -1.0}
+    },
+    "sfx": {"entrada": "papel", "enfase": "tick", "texto": "tick"},
+    "musica": {
+      "clima": "violão, marimba ou piano leve, otimista",
+      "bpm": [85, 105]
+    }
+  },
+  "marca": {
+    "logo": null,
+    "assinatura": null,
+    "posicao_logo": "superior_direita",
+    "marca_dagua": false
+  }
+}

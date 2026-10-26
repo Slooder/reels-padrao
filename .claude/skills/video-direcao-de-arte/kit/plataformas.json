@@ -1,0 +1,939 @@
+{
+  "verificado_em": "2026-10-05",
+  "esquema": 1,
+  "revalidar_a_cada_meses": 3,
+  "convencoes": {
+    "fracoes": "Toda margem é uma fração de 0 a 1: 'topo' e 'base' são frações da ALTURA do quadro; 'direita' e 'esquerda' são frações da LARGURA. Multiplique pela dimensão do seu quadro para obter pixels.",
+    "oficial": "'oficial': true significa que o número foi lido em página, documentação ou gabarito publicado pela própria plataforma (ou por norma técnica) na data de 'verificado_em'. Chaves listadas em 'nao_oficial' são estimativas de mercado ou medições próprias, mesmo dentro de um bloco oficial.",
+    "null": "null significa 'não encontrado em fonte confiável' — não é zero e não é 'sem limite'.",
+    "margem_direita_vertical": "No vídeo vertical, 'direita' é a margem ESTRITA: vale para qualquer altura da área útil, inclusive ao lado da coluna de botões (curtir, comentar, compartilhar). Acima da linha 'coluna_botoes_a_partir_de_y' (fração da altura medida a partir do topo) pode-se usar a margem menor 'direita_acima_da_coluna'.",
+    "anuncio_x_organico": "As três plataformas só publicam zona segura para ANÚNCIOS (que têm botão de chamada e rótulo de patrocinado a mais). Para conteúdo orgânico esses números são conservadores: quem cabe neles cabe no orgânico. As faixas observadas no orgânico estão em 'estimativa_organico_mercado' e NÃO são oficiais.",
+    "nomes": "Todas as seções usam os mesmos nomes canônicos de plataforma: youtube (vídeo longo, horizontal), shorts, reels e tiktok. Os nomes antigos e apelidos estão em 'apelidos'. No da.json, formatos.margens_seguras.vertical guarda a zona do Reels na chave 'instagram' (contrato do esquema v1): é a mesma zona de margens_seguras_vertical.reels, e o kit aceita os dois nomes."
+  },
+  "plataformas": ["youtube", "shorts", "reels", "tiktok"],
+  "apelidos": {"youtube_longo": "youtube", "youtube-longo": "youtube", "yt": "youtube", "longo": "youtube", "youtube_shorts": "shorts", "youtube-shorts": "shorts", "short": "shorts", "instagram": "reels", "instagram_reels": "reels", "instagram-reels": "reels", "reel": "reels", "ig": "reels", "insta": "reels", "tt": "tiktok", "tik-tok": "tiktok"},
+  "fontes": [
+    {
+      "id": "yt_encoding",
+      "titulo": "Ajuda do YouTube — Recommended upload encoding settings",
+      "url": "https://support.google.com/youtube/answer/1722171?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_resolucao",
+      "titulo": "Ajuda do YouTube — Video resolution & aspect ratios",
+      "url": "https://support.google.com/youtube/answer/6375112?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_upload_limite",
+      "titulo": "Ajuda do YouTube — Upload videos longer than 15 minutes",
+      "url": "https://support.google.com/youtube/answer/71673?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_formatos",
+      "titulo": "Ajuda do YouTube — Supported YouTube file formats",
+      "url": "https://support.google.com/youtube/troubleshooter/2888402?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_hdr",
+      "titulo": "Ajuda do YouTube — Upload High Dynamic Range (HDR) videos",
+      "url": "https://support.google.com/youtube/answer/7126552?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_shorts_3min",
+      "titulo": "Ajuda do YouTube — Understand three-minute YouTube Shorts",
+      "url": "https://support.google.com/youtube/answer/15424877?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_shorts_criar",
+      "titulo": "Ajuda do YouTube — Get started creating YouTube Shorts",
+      "url": "https://support.google.com/youtube/answer/10059070?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_thumbnail",
+      "titulo": "Ajuda do YouTube — Add custom thumbnails on YouTube",
+      "url": "https://support.google.com/youtube/answer/72431?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_ab",
+      "titulo": "Ajuda do YouTube — A/B test titles & thumbnails",
+      "url": "https://support.google.com/youtube/answer/13861714?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_capitulos",
+      "titulo": "Ajuda do YouTube — Video Chapters",
+      "url": "https://support.google.com/youtube/answer/9884579?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_config_video",
+      "titulo": "Ajuda do YouTube — Edit video settings (limites de título e descrição)",
+      "url": "https://support.google.com/youtube/answer/57404?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_api_videos",
+      "titulo": "YouTube Data API — recurso Videos (snippet.title, description, tags)",
+      "url": "https://developers.google.com/youtube/v3/docs/videos",
+      "oficial": true
+    },
+    {
+      "id": "yt_tags",
+      "titulo": "Ajuda do YouTube — Add tags to your YouTube videos",
+      "url": "https://support.google.com/youtube/answer/146402?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_hashtags",
+      "titulo": "Ajuda do YouTube — Find playlists & videos using hashtags",
+      "url": "https://support.google.com/youtube/answer/6390658?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_tela_final",
+      "titulo": "Ajuda do YouTube — Add end screens to videos",
+      "url": "https://support.google.com/youtube/answer/6388789?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "yt_marca",
+      "titulo": "Ajuda do YouTube — Manage your channel branding (marca d'água do vídeo)",
+      "url": "https://support.google.com/youtube/answer/10456525?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "gads_specs",
+      "titulo": "Ajuda do Google Ads — About video ad specs (Universal safe zones for video ads on YouTube)",
+      "url": "https://support.google.com/google-ads/answer/13547298?hl=en",
+      "oficial": true
+    },
+    {
+      "id": "gads_tpl_vertical",
+      "titulo": "Google — gabarito PNG oficial 'YouTube | Vertical Video Ads — Safe Zone Overlay' (1080x1920)",
+      "url": "https://services.google.com/fh/files/misc/youtubesafezoneoverlay_vertical_final.png",
+      "oficial": true
+    },
+    {
+      "id": "gads_tpl_horizontal",
+      "titulo": "Google — gabarito PNG oficial 'YouTube | Horizontal Video Ads — Safe Zone Overlay' (1920x1080)",
+      "url": "https://services.google.com/fh/files/blogs/ytsafezoneoverlay-horizontal.png",
+      "oficial": true
+    },
+    {
+      "id": "meta_reels_ads",
+      "titulo": "Meta Ads Guide — Video ad specs on Instagram Reels (14% / 35% / 6%)",
+      "url": "https://www.facebook.com/business/ads-guide/update/video/instagram-reels",
+      "oficial": true
+    },
+    {
+      "id": "meta_zona_segura",
+      "titulo": "Central de Ajuda da Meta para Empresas — About text overlays and the safe zone for ads on Facebook and Instagram (diagrama 6/14/35/40)",
+      "url": "https://www.facebook.com/business/help/980593475366490",
+      "oficial": true
+    },
+    {
+      "id": "ig_reel_tamanho",
+      "titulo": "Central de Ajuda do Instagram — Reel size & aspect ratios on Instagram",
+      "url": "https://help.instagram.com/1038071743007909",
+      "oficial": true
+    },
+    {
+      "id": "ig_reel_gravar",
+      "titulo": "Central de Ajuda do Instagram — Record a reel on Instagram (duração)",
+      "url": "https://help.instagram.com/2720958398006062",
+      "oficial": true
+    },
+    {
+      "id": "ig_hashtags",
+      "titulo": "Central de Ajuda do Instagram — Use hashtags on Instagram (limite de 5)",
+      "url": "https://help.instagram.com/351460621611097",
+      "oficial": true
+    },
+    {
+      "id": "ig_api_media",
+      "titulo": "Meta for Developers — IG User Media (Reel Specifications, Graph API v26.0)",
+      "url": "https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media",
+      "oficial": true
+    },
+    {
+      "id": "tt_suporte_camera",
+      "titulo": "Suporte do TikTok — Camera tools (Video length)",
+      "url": "https://www.tiktok.com/support/faq_detail?id=7581821547946580492",
+      "url_anterior": "https://support.tiktok.com/en/using-tiktok/creating-videos/camera-tools",
+      "nota": "Em 2026-10-06 o endereço antigo responde 302 para este. A página só mostra o conteúdo com JavaScript: revalide num navegador, não com curl.",
+      "oficial": true
+    },
+    {
+      "id": "tt_ads_infeed",
+      "titulo": "Central de Ajuda do TikTok para Empresas — TikTok Auction In-Feed Ads (specs e arquivos de zona segura)",
+      "url": "https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads?lang=en",
+      "oficial": true
+    },
+    {
+      "id": "tt_tpl_infeed",
+      "titulo": "TikTok — gabarito oficial 'In-Feed - Standard Version LTR' (.zip de 84 KB com Feed.png)",
+      "url": "https://lf-tt4b.tiktokcdn.com/obj/i18nblog/tt4b_cms/en-US/5jqet0ab9qci-10e7f5Vig4uhAscNP8XPB0.zip",
+      "oficial": true
+    },
+    {
+      "id": "tt_api_midia",
+      "titulo": "TikTok for Developers — Content Posting API: Media Transfer Guide (restrições de vídeo)",
+      "url": "https://developers.tiktok.com/doc/content-posting-api-media-transfer-guide",
+      "oficial": true
+    },
+    {
+      "id": "tt_api_post",
+      "titulo": "TikTok for Developers — Content Posting API: Direct Post (legenda de 2200)",
+      "url": "https://developers.tiktok.com/doc/content-posting-api-reference-direct-post",
+      "oficial": true
+    },
+    {
+      "id": "tt_api_foto",
+      "titulo": "TikTok for Developers — Content Posting API: Photo Post (título 90, descrição 4000)",
+      "url": "https://developers.tiktok.com/doc/content-posting-api-reference-photo-post",
+      "oficial": true
+    },
+    {
+      "id": "ebu_r95",
+      "titulo": "EBU R 95 v1.1 (2017) — Safe areas for 16:9 television production",
+      "url": "https://tech.ebu.ch/publications/r095",
+      "oficial": true
+    },
+    {
+      "id": "medicao_propria_yt",
+      "titulo": "Medição própria no DOM do YouTube (busca no desktop, m.youtube.com e lista lateral) em 2026-10-05",
+      "url": "https://www.youtube.com/results?search_query=documentary+history",
+      "oficial": false
+    },
+    {
+      "id": "adkit_zonas",
+      "titulo": "AdKit — Safe zones de Instagram, TikTok e YouTube (medições dos gabaritos oficiais, atualizado em 2026-09-10)",
+      "url": "https://adkit.so/tools/safe-zones/instagram",
+      "oficial": false
+    },
+    {
+      "id": "adaptly_zonas",
+      "titulo": "AdaptlyPost — Social media safe zones 2026 (medições no orgânico)",
+      "url": "https://adaptlypost.com/blog/social-media-safe-zones-2026-complete-guide",
+      "oficial": false
+    },
+    {
+      "id": "posteverywhere_tt",
+      "titulo": "PostEverywhere — TikTok aspect ratio (zona orgânica, capa, tamanho de arquivo por aparelho; 2026-05-15)",
+      "url": "https://posteverywhere.ai/blog/tiktok-aspect-ratio",
+      "oficial": false
+    },
+    {
+      "id": "clipspeed_shorts",
+      "titulo": "ClipSpeed — YouTube Shorts size in 2026 (zona orgânica; 2026-09-11)",
+      "url": "https://www.clipspeed.ai/blog/youtube-shorts-size.html",
+      "oficial": false
+    },
+    {
+      "id": "posterly_shorts",
+      "titulo": "Poster.ly — YouTube Shorts safe zone checker (zona orgânica, 2026)",
+      "url": "https://www.poster.ly/tools/youtube-shorts-safe-zone-checker",
+      "oficial": false
+    },
+    {
+      "id": "hopper_reels",
+      "titulo": "Hopper HQ — Instagram Reel size in 2026 (capa e grade 3:4; 2026-09-18)",
+      "url": "https://www.hopperhq.com/blog/instagram-reel-size/",
+      "oficial": false
+    },
+    {
+      "id": "reap_zonas",
+      "titulo": "Reap — Short-form video safe zones (2026-09-07)",
+      "url": "https://reap.video/blog/short-form-video-safe-zones",
+      "oficial": false
+    },
+    {
+      "id": "kapwing_grade",
+      "titulo": "Kapwing — Instagram's new grid layout: size and dimensions (grade 3:4)",
+      "url": "https://www.kapwing.com/resources/instagrams-new-grid-layout-size-and-dimensions-2025/",
+      "oficial": false
+    },
+    {
+      "id": "businesstoday_grade",
+      "titulo": "Business Today — Mosseri anuncia Reels de 3 minutos e nova grade do perfil (2025-01-21)",
+      "url": "https://www.businesstoday.in/technology/news/story/instagram-head-announces-big-changes-3-minute-reels-and-new-look-for-profile-grid-461527-2025-01-21",
+      "oficial": false
+    },
+    {
+      "id": "betanews_hashtags",
+      "titulo": "BetaNews — Instagram puts a limit on hashtag usage (anúncio de 2025-12-18)",
+      "url": "https://betanews.com/2025/12/19/instagram-puts-a-limit-on-hashtag-usage/",
+      "oficial": false
+    },
+    {
+      "id": "forasoft_lufs",
+      "titulo": "Fora Soft — LUFS targets per platform 2026 (2026-06-05)",
+      "url": "https://www.forasoft.com/learn/audio-for-video/articles-audio/lufs-targets-per-platform-2026",
+      "oficial": false
+    },
+    {
+      "id": "productionadvice_yt",
+      "titulo": "Production Advice — YouTube 'Stats for nerds' e normalização de volume",
+      "url": "https://productionadvice.co.uk/stats-for-nerds/",
+      "oficial": false
+    },
+    {
+      "id": "howmanywords_yt",
+      "titulo": "HowManyWords — YouTube character limits (trechos visíveis de título e descrição; 2026-04-29)",
+      "url": "https://howmanywords.app/blog/youtube-character-limits",
+      "oficial": false
+    },
+    {
+      "id": "clipspeed_legenda_ig",
+      "titulo": "ClipSpeed — Instagram Reels captions in 2026 (trecho visível da legenda)",
+      "url": "https://www.clipspeed.ai/blog/instagram-reels-captions.html",
+      "oficial": false
+    },
+    {
+      "id": "recurpost_tt",
+      "titulo": "RecurPost — TikTok character limits and hashtags",
+      "url": "https://recurpost.com/tiktok-scheduler/tiktok-character-limits-and-hashtags/",
+      "oficial": false
+    },
+    {
+      "id": "relevantaudience_shorts",
+      "titulo": "Relevant Audience — YouTube Shorts custom thumbnails (liberação em 2026-07-25, sem teste A/B)",
+      "url": "https://www.relevantaudience.com/social-media-marketing/youtube-shorts-custom-thumbnails-no-ab-testing/",
+      "oficial": false
+    }
+  ],
+  "margens_seguras_vertical": {
+    "quadro_px": [1080, 1920],
+    "reels": {
+      "topo": 0.14,
+      "direita": 0.21,
+      "base": 0.35,
+      "esquerda": 0.06,
+      "direita_acima_da_coluna": 0.06,
+      "coluna_botoes_a_partir_de_y": 0.6,
+      "px": {"topo": 268.8, "direita": 226.8, "base": 672, "esquerda": 64.8, "direita_acima_da_coluna": 64.8, "coluna_botoes_a_partir_de_y": 1152},
+      "retangulo_px": {"x0": 65, "y0": 269, "x1": 853, "y1": 1248, "largura": 788, "altura": 979},
+      "retangulo_alternativo_px": {
+        "x0": 65,
+        "y0": 269,
+        "x1": 1015,
+        "y1": 1152,
+        "largura": 950,
+        "altura": 883,
+        "nota": "base de 40% em vez de 35%, lateral de 6%: mais largo e mais baixo"
+      },
+      "base_com_aviso_legal": 0.4,
+      "oficial": true,
+      "nao_oficial": ["direita", "px.direita"],
+      "nota": "Meta (anúncios em Reels): deixar livres pelo menos 14% do topo, 35% da base e 6% de cada lado. O diagrama oficial mostra ainda um recorte no canto inferior direito que sobe até 40% da altura (coluna de botões); a largura desse recorte não vem rotulada — os 21% foram medidos no diagrama e batem com a medição do AdKit (226,8 px). Com aviso legal no anúncio, a Meta pede 40% da base inteira livre. Telas mais altas que 9:16 podem dar zoom e cortar o que está fora da zona segura.",
+      "fontes": ["meta_reels_ads", "meta_zona_segura", "adkit_zonas"]
+    },
+    "tiktok": {
+      "topo": 0.125,
+      "direita": 0.2778,
+      "base": 0.3438,
+      "esquerda": 0.1111,
+      "direita_acima_da_coluna": 0.1111,
+      "coluna_botoes_a_partir_de_y": 0.4375,
+      "px": {"topo": 240, "direita": 300, "base": 660, "esquerda": 120, "direita_acima_da_coluna": 120, "coluna_botoes_a_partir_de_y": 840},
+      "retangulo_px": {"x0": 120, "y0": 240, "x1": 780, "y1": 1260, "largura": 660, "altura": 1020},
+      "oficial": true,
+      "nao_oficial": [],
+      "nota": "Medido pixel a pixel no gabarito oficial de anúncios In-Feed (versão padrão LTR, sem âncora), desenhado em base 720x1280 com cotas 160 (topo), 440 (base), 80 (cada lado) e coluna direita de 120 de largura por 720 de altura; convertido para 1080x1920 (x1,5). A página oficial avisa que a zona depende do tamanho da legenda do anúncio e que a prévia pode diferir um pouco do aparelho. Com âncora (link/produto) a base cresce: use o gabarito 'In-Feed with Anchor'. Versão árabe (RTL) espelha a coluna para a esquerda. O TikTok não publica zona segura para vídeo orgânico.",
+      "fontes": ["tt_ads_infeed", "tt_tpl_infeed"]
+    },
+    "shorts": {
+      "topo": 0.15,
+      "direita": 0.1778,
+      "base": 0.35,
+      "esquerda": 0.0444,
+      "direita_acima_da_coluna": 0.1778,
+      "coluna_botoes_a_partir_de_y": null,
+      "px": {"topo": 288, "direita": 192, "base": 672, "esquerda": 48, "direita_acima_da_coluna": 192, "coluna_botoes_a_partir_de_y": null},
+      "retangulo_px": {"x0": 48, "y0": 288, "x1": 888, "y1": 1248, "largura": 840, "altura": 960},
+      "oficial": true,
+      "nao_oficial": [],
+      "nota": "Medido pixel a pixel no gabarito oficial do Google Ads para vídeo vertical no YouTube (retângulo livre de x=48 a 888 e y=288 a 1248 em 1080x1920). É um gabarito UNIVERSAL de anúncios verticais (cobre Shorts e outros inventários), não uma medição de uma única tela do Shorts; a margem direita já vale para toda a altura, por isso não há linha de coluna. O YouTube não publica zona segura para Shorts orgânico.",
+      "fontes": ["gads_specs", "gads_tpl_vertical"]
+    },
+    "uniao": {
+      "topo": 0.15,
+      "direita": 0.2778,
+      "base": 0.35,
+      "esquerda": 0.1111,
+      "direita_acima_da_coluna": 0.1778,
+      "coluna_botoes_a_partir_de_y": 0.4375,
+      "px": {"topo": 288, "direita": 300, "base": 672, "esquerda": 120, "direita_acima_da_coluna": 192, "coluna_botoes_a_partir_de_y": 840},
+      "retangulo_px": {"x0": 120, "y0": 288, "x1": 780, "y1": 1248, "largura": 660, "altura": 960},
+      "retangulo_acima_da_coluna_px": {"x0": 120, "y0": 288, "x1": 888, "y1": 840, "largura": 768, "altura": 552},
+      "quem_define": {
+        "topo": "shorts",
+        "direita": "tiktok",
+        "base": "reels e shorts (35%)",
+        "esquerda": "tiktok",
+        "direita_acima_da_coluna": "shorts",
+        "coluna_botoes_a_partir_de_y": "tiktok"
+      },
+      "oficial": false,
+      "derivado": true,
+      "derivado_de": ["reels", "tiktok", "shorts"],
+      "nao_oficial": [],
+      "nota": "Pior caso dos três apps: o maior valor de cada lado e a linha de coluna mais alta. Nenhuma plataforma publica este número (por isso 'oficial': false: é uma conta do kit sobre três blocos oficiais, não um número de plataforma); ele é calculado a partir dos três blocos acima. Um texto dentro de 'retangulo_px' fica livre nos três apps. Texto inteiro acima de y=840 (43,75% da altura) pode usar 'retangulo_acima_da_coluna_px', que é mais largo. Atenção: o retângulo estrito não é centrado no quadro (centro em x=450); para legenda centrada em x=540 a largura segura cai para 480 px.",
+      "fontes": ["meta_reels_ads", "meta_zona_segura", "tt_tpl_infeed", "gads_tpl_vertical"]
+    },
+    "estimativa_organico_mercado": {
+      "oficial": false,
+      "nota": "Faixas (mínimo, máximo) relatadas por fontes de mercado para a interface ORGÂNICA em 2026. As fontes divergem bastante entre si e mudam a cada atualização dos apps; servem só para saber quanto de folga os números oficiais de anúncio carregam. Não use como limite de segurança.",
+      "reels": {"topo": [0.109, 0.14], "base": [0.161, 0.35], "direita": [0.06, 0.078], "esquerda": [0, 0.06]},
+      "tiktok": {"topo": [0.056, 0.104], "base": [0.13, 0.169], "direita": [0.111, 0.152], "esquerda": [0, 0.056]},
+      "shorts": {"topo": [0.0625, 0.198], "base": [0.15, 0.198], "direita": [0.089, 0.13], "esquerda": [0, 0.056]},
+      "fontes": ["adaptly_zonas", "posteverywhere_tt", "clipspeed_shorts", "posterly_shorts", "hopper_reels", "reap_zonas"]
+    }
+  },
+  "margens_seguras_horizontal": {
+    "quadro_px": [1920, 1080],
+    "padrao": {
+      "topo": 0.05,
+      "direita": 0.05,
+      "base": 0.05,
+      "esquerda": 0.05,
+      "px": {"topo": 54, "direita": 96, "base": 54, "esquerda": 96},
+      "retangulo_px": {"x0": 96, "y0": 54, "x1": 1824, "y1": 1026, "largura": 1728, "altura": 972},
+      "area_de_acao": {"topo": 0.035, "direita": 0.035, "base": 0.035, "esquerda": 0.035},
+      "oficial": true,
+      "nao_oficial": [],
+      "nota": "Área segura de GRÁFICOS da norma EBU R 95 (5% por lado; texto e logotipo ficam dentro dos 90% centrais). A área segura de AÇÃO é 3,5% por lado. É norma de radiodifusão, não regra do YouTube: nenhuma plataforma publica zona segura para vídeo horizontal orgânico.",
+      "fontes": ["ebu_r95"]
+    },
+    "youtube_anuncios": {
+      "topo": 0.0352,
+      "direita": 0.0844,
+      "base": 0.3583,
+      "esquerda": 0.0198,
+      "px": {"topo": 38, "direita": 162, "base": 387, "esquerda": 38},
+      "recortes": [
+        {
+          "canto": "superior_esquerdo",
+          "largura": 0.2583,
+          "altura": 0.1694,
+          "px": {"largura": 496, "altura": 183}
+        },
+        {
+          "canto": "superior_direito",
+          "largura": 0.2479,
+          "altura": 0.1231,
+          "px": {"largura": 476, "altura": 133}
+        }
+      ],
+      "oficial": true,
+      "nao_oficial": [],
+      "nota": "Medido pixel a pixel no gabarito oficial do Google Ads para anúncio horizontal no YouTube. A base de 35,8% reserva espaço para botão de pular, chamada para ação e controles do player em anúncios; para vídeo orgânico é exagerada. Use só se a peça também for rodar como anúncio.",
+      "fontes": ["gads_specs", "gads_tpl_horizontal"]
+    },
+    "sobreposicoes_player_youtube": [
+      {
+        "elemento": "tela final (end screen)",
+        "quando": "últimos 5 a 20 segundos",
+        "regra": "o vídeo precisa ter pelo menos 25 s; até 4 elementos em 16:9",
+        "posicao": "definida pelo criador no YouTube Studio",
+        "oficial": true,
+        "fontes": ["yt_tela_final"]
+      },
+      {
+        "elemento": "marca d'água do canal",
+        "quando": "últimos 15 s, a partir de um instante escolhido ou o vídeo inteiro",
+        "regra": "imagem quadrada de no mínimo 150x150 px e menos de 1 MB; aparece no modo paisagem em computador e celular",
+        "posicao": null,
+        "oficial": true,
+        "fontes": ["yt_marca"]
+      },
+      {
+        "elemento": "controles, barra de progresso e título",
+        "quando": "ao pausar, tocar na tela ou passar o mouse",
+        "regra": null,
+        "posicao": "base e topo do player",
+        "oficial": false,
+        "fontes": []
+      },
+      {
+        "elemento": "legendas automáticas (CC)",
+        "quando": "quando o espectador liga",
+        "regra": null,
+        "posicao": "centro da base, por padrão",
+        "oficial": false,
+        "fontes": []
+      }
+    ]
+  },
+  "specs": {
+    "youtube": {
+      "resolucao_recomendada_px": [1920, 1080],
+      "resolucoes_16x9_px": {"2160p": [3840, 2160], "1440p": [2560, 1440], "1080p": [1920, 1080], "720p": [1280, 720], "480p": [854, 480], "360p": [640, 360]},
+      "proporcao": "16:9",
+      "fps": {"regra": "enviar na mesma taxa em que foi gravado", "comuns": [24, 25, 30, 48, 50, 60], "entrelaçado": "desentrelaçar antes de enviar"},
+      "container": "MP4 com moov atom no início (fast start) e sem edit lists",
+      "codec_video": "H.264 High Profile, varredura progressiva, 2 B-frames consecutivos, GOP fechado de metade do fps, CABAC, bitrate variável, croma 4:2:0",
+      "bitrate_video_mbps": {
+        "sdr": {
+          "720p": {"fps_padrao": 5, "fps_alto": 7.5},
+          "1080p": {"fps_padrao": 8, "fps_alto": 12},
+          "1440p": {"fps_padrao": 16, "fps_alto": 24},
+          "2160p": {"fps_padrao": [35, 45], "fps_alto": [53, 68]}
+        },
+        "hdr": {
+          "720p": {"fps_padrao": 6.5, "fps_alto": 9.5},
+          "1080p": {"fps_padrao": 10, "fps_alto": 15},
+          "1440p": {"fps_padrao": 20, "fps_alto": 30},
+          "2160p": {"fps_padrao": [44, 56], "fps_alto": [66, 85]}
+        },
+        "nota": "fps_padrao = 24, 25 ou 30; fps_alto = 48, 50 ou 60. O YouTube não impõe teto de bitrate."
+      },
+      "audio": {
+        "codec": "AAC-LC (aceita também Opus e Eclipsa Audio)",
+        "canais": "estéreo (ou estéreo + 5.1)",
+        "taxa_amostragem_hz": 48000,
+        "bitrate_kbps": {"mono": 128, "estereo": 384, "5.1": 512}
+      },
+      "loudness_alvo_lufs": -14,
+      "true_peak_max_dbtp": -1,
+      "cor": {
+        "sdr": "BT.709 em primárias, transferência e matriz (H.273 valor 1). O YouTube converte faixa completa (full range) para faixa limitada.",
+        "hdr": "Rec. 2020 com PQ ou HLG (Rec. 2100), 10 ou 12 bits, com metadados HDR; codecs recomendados VP9 Profile 2, AV1 ou HEVC; resoluções 720p a 2160p. DCI-P3 não é suportado. O YouTube gera a versão SDR sozinho."
+      },
+      "duracao_min_s": null,
+      "duracao_max_s": 43200,
+      "duracao_max_conta_nao_verificada_s": 900,
+      "tamanho_max_gb": 256,
+      "formatos_aceitos": [
+        ".MOV",
+        ".MPEG-1",
+        ".MPEG-2",
+        ".MPEG4",
+        ".MP4",
+        ".MPG",
+        ".AVI",
+        ".WMV",
+        ".MPEGPS",
+        ".FLV",
+        "3GPP",
+        "WebM",
+        "DNxHR",
+        "ProRes",
+        "CineForm",
+        "HEVC (H.265)"
+      ],
+      "oficial": true,
+      "nao_oficial": ["loudness_alvo_lufs", "true_peak_max_dbtp"],
+      "notas": [
+        "Limite de upload: 256 GB ou 12 horas, o que for menor; sem verificação da conta, 15 minutos.",
+        "Loudness: o YouTube não documenta o alvo em página de ajuda. O valor de -14 LUFS integrado é consenso de mercado medido em 'Estatísticas para nerds'; o YouTube só atenua o que passa do alvo, não sobe o que está abaixo. True peak de -1 dBTP é recomendação de mercado.",
+        "Evite barras pretas embutidas: o player se adapta à proporção do vídeo."
+      ],
+      "fontes": ["yt_encoding", "yt_resolucao", "yt_upload_limite", "yt_formatos", "yt_hdr", "productionadvice_yt", "forasoft_lufs"]
+    },
+    "shorts": {
+      "resolucao_recomendada_px": [1080, 1920],
+      "resolucao_max": "1080p",
+      "proporcao": "9:16 (qualquer vídeo quadrado ou vertical de até 3 min vira Short)",
+      "fps": {"regra": "enviar na mesma taxa em que foi gravado", "comuns": [24, 25, 30, 48, 50, 60]},
+      "container": "MP4 com moov atom no início (fast start) e sem edit lists",
+      "codec_video": "H.264 High Profile, varredura progressiva, GOP fechado, CABAC, croma 4:2:0",
+      "bitrate_video_mbps": {"fps_padrao": 8, "fps_alto": 12},
+      "audio": {
+        "codec": "AAC-LC",
+        "canais": "estéreo",
+        "taxa_amostragem_hz": 48000,
+        "bitrate_kbps": {"estereo": 384}
+      },
+      "loudness_alvo_lufs": -14,
+      "true_peak_max_dbtp": -1,
+      "cor": {"sdr": "BT.709 (mesma recomendação do YouTube)", "hdr": null},
+      "duracao_min_s": null,
+      "duracao_max_s": 180,
+      "tamanho_max_gb": 256,
+      "oficial": true,
+      "nao_oficial": ["loudness_alvo_lufs", "true_peak_max_dbtp"],
+      "notas": [
+        "Desde 15/10/2024, todo envio quadrado ou vertical de até 3 minutos é classificado como Short (canais oficiais de artista: desde 08/12/2025). Envios anteriores continuam como vídeo comum.",
+        "Short com mais de 1 minuto e reivindicação ativa de Content ID é bloqueado no mundo todo — cuidado com música de terceiros em peças de 61 a 180 s.",
+        "Não há duração mínima documentada.",
+        "A ajuda do YouTube diz: 'You can upload Short videos with a maximum resolution of 1080p'.",
+        "Container, codec, bitrate, áudio e cor: o YouTube não publica tabela própria para Shorts; valem as recomendações gerais de upload (linha de 1080p). HDR em Shorts não está documentado.",
+        "O tamanho máximo é o limite geral de upload do YouTube; não há número específico para Shorts.",
+        "Teste A/B de título e thumbnail não está disponível para Shorts."
+      ],
+      "fontes": ["yt_shorts_3min", "yt_shorts_criar", "yt_encoding", "yt_upload_limite", "yt_ab"]
+    },
+    "reels": {
+      "resolucao_recomendada_px": [1080, 1920],
+      "resolucao_min_px": 720,
+      "largura_max_px_api": 1920,
+      "resolucao_recomendada_anuncio_px": [1440, 2560],
+      "proporcao": "9:16 (aceita de 1.91:1 a 9:16)",
+      "fps": {"min_central_de_ajuda": 30, "faixa_api": [23, 60]},
+      "container": "MP4 ou MOV, com moov atom no início e sem edit lists",
+      "codec_video": "H.264 ou HEVC; varredura progressiva, High profile, 2 B-frames consecutivos, GOP fechado de metade do fps, CABAC, croma 4:2:0",
+      "bitrate_video_max_mbps": 25,
+      "bitrate_video_recomendado_mbps": null,
+      "audio": {
+        "codec": "AAC",
+        "canais": "estéreo (a API aceita mono ou estéreo; a Central de Ajuda cita estéreo ou estéreo + 5.1)",
+        "taxa_amostragem_hz": 48000,
+        "bitrate_kbps": {"estereo": 128}
+      },
+      "loudness_alvo_lufs": -14,
+      "true_peak_max_dbtp": -1,
+      "cor": {"sdr": null, "hdr": null, "capa": "sRGB"},
+      "duracao_min_s": 3,
+      "duracao_max_s": 1200,
+      "duracao_max_recomendada_s": 180,
+      "duracao_max_api_s": 900,
+      "tamanho_max_mb_api": 300,
+      "tamanho_max_gb_anuncio": 4,
+      "tamanho_max_app_gb": null,
+      "oficial": true,
+      "nao_oficial": ["resolucao_recomendada_px", "loudness_alvo_lufs", "true_peak_max_dbtp"],
+      "notas": [
+        "Duração: a Central de Ajuda diz que dá para gravar e editar até 20 minutos e que 'Reels over 3 minutes won't be recommended to new audiences'. Para alcance, trate 180 s como teto prático.",
+        "A API de publicação (Graph API v26.0) tem limites próprios e mais baixos: 3 s a 15 min, 300 MB, 25 Mbps VBR, largura máxima de 1920 px. Ferramentas de agendamento herdam esses limites.",
+        "Anúncio em Reels: 0 s a 15 min, até 4 GB, resolução recomendada de 1440x2560.",
+        "1080x1920 é o padrão de mercado; a Central de Ajuda só exige 9:16 (ou até 1.91:1), mínimo de 720 px e 30 fps.",
+        "Tamanho máximo pelo aplicativo, espaço de cor do vídeo, HDR e alvo de loudness não estão documentados pelo Instagram. Mercado: BT.709 SDR e -14 LUFS (há fontes que citam de -10 a -16).",
+        "Para preservar qualidade, ligue no app 'Enviar na qualidade mais alta' (Configurações > Qualidade da mídia).",
+        "O recurso de Reels longos é liberado aos poucos; nem toda conta vê os 20 minutos."
+      ],
+      "fontes": ["ig_reel_tamanho", "ig_reel_gravar", "ig_api_media", "meta_reels_ads", "hopper_reels", "forasoft_lufs"]
+    },
+    "tiktok": {
+      "resolucao_recomendada_px": [1080, 1920],
+      "resolucao_min_px_api": 360,
+      "resolucao_max_px_api": 4096,
+      "resolucao_min_anuncio_px": [540, 960],
+      "proporcao": "9:16 (aceita também 1:1 e 16:9)",
+      "fps": {"faixa_api": [23, 60]},
+      "container": "MP4 (recomendado), WebM ou MOV",
+      "codec_video": "H.264 (recomendado), H.265, VP8 ou VP9",
+      "bitrate_video_min_kbps_anuncio": 516,
+      "bitrate_video_recomendado_mbps": null,
+      "audio": {"codec": null, "canais": null, "taxa_amostragem_hz": null, "bitrate_kbps": null},
+      "loudness_alvo_lufs": -14,
+      "true_peak_max_dbtp": -1,
+      "cor": {"sdr": null, "hdr": null},
+      "duracao_min_s": null,
+      "duracao_max_s": 3600,
+      "duracao_max_gravado_no_app_s": 600,
+      "duracao_max_api_s": 600,
+      "duracao_garantida_a_toda_conta_api_s": 180,
+      "tamanho_max_gb_api": 4,
+      "tamanho_max_mb_anuncio": 500,
+      "tamanho_max_app_gb": null,
+      "oficial": true,
+      "nao_oficial": ["resolucao_recomendada_px", "loudness_alvo_lufs", "true_peak_max_dbtp"],
+      "notas": [
+        "Duração (suporte oficial): 'Videos you record in TikTok can be up to 10 minutes long. Videos you upload in TikTok can be up to 60 minutes long.'",
+        "Pela API de publicação: toda conta posta 3 minutos; algumas têm 5 ou 10; o máximo enviado por API é 10 minutos e 4 GB. Ferramentas de agendamento herdam esses limites.",
+        "Anúncio In-Feed (não Spark): até 10 minutos, até 500 MB, bitrate mínimo de 516 kbps, 9:16 a partir de 540x960.",
+        "1080x1920 é o padrão de mercado; o TikTok não publica resolução recomendada para vídeo orgânico em página pública.",
+        "Não documentados em fonte oficial pública: duração mínima, codec e bitrate de áudio, espaço de cor, HDR, loudness e tamanho máximo pelo aplicativo. Mercado: AAC, BT.709 SDR, -14 LUFS, bitrate de vídeo de 8 a 12 Mbps; os relatos de tamanho máximo divergem muito (72 MB no Android e 287,6 MB no iOS segundo uma fonte; de 500 MB a 10 GB no envio pela web segundo outras).",
+        "Vídeos longos e limites maiores são liberados aos poucos por conta e região."
+      ],
+      "fontes": ["tt_suporte_camera", "tt_api_midia", "tt_ads_infeed", "posteverywhere_tt", "forasoft_lufs"]
+    }
+  },
+  "limites_texto": {
+    "youtube": {
+      "titulo_max_caracteres": 100,
+      "titulo_visivel_estimado_caracteres": [60, 70],
+      "descricao_max_caracteres": 5000,
+      "descricao_max_bytes_api": 5000,
+      "descricao_visivel_estimada_caracteres": [120, 150],
+      "caracteres_proibidos": ["<", ">"],
+      "tags_max_caracteres_total": 500,
+      "tags_regra_de_contagem": "A lista inteira conta: as vírgulas entre as tags entram na soma, e tag com espaço é tratada como se estivesse entre aspas (as aspas também contam).",
+      "hashtags_max": 60,
+      "hashtags_exibidas_junto_ao_titulo": 3,
+      "capitulos": {
+        "primeiro_timestamp": "00:00",
+        "min_timestamps": 3,
+        "ordem": "crescente",
+        "duracao_min_capitulo_s": 10,
+        "onde": "lista de tempos e títulos na descrição",
+        "indisponivel_se": ["canal com strike ativo", "conteúdo que pode ser inadequado para alguns espectadores"],
+        "manual_substitui_automatico": true
+      },
+      "oficial": true,
+      "nao_oficial": ["titulo_visivel_estimado_caracteres", "descricao_visivel_estimada_caracteres"],
+      "notas": [
+        "Título: 100 caracteres (ajuda e API). Descrição: 5.000 caracteres na ajuda; a API fala em 5.000 bytes — texto com muito acento e emoji pode estourar antes.",
+        "Mais de 60 hashtags no vídeo: o YouTube ignora TODAS. Das hashtags da descrição, até três aparecem junto ao título.",
+        "A ajuda do YouTube diz que tags têm papel mínimo na descoberta; servem para grafias erradas comuns.",
+        "Trechos visíveis (60 a 70 caracteres do título; 120 a 150 da descrição antes do 'mais') são estimativas de mercado e variam por tela."
+      ],
+      "fontes": ["yt_config_video", "yt_api_videos", "yt_tags", "yt_hashtags", "yt_capitulos", "howmanywords_yt"]
+    },
+    "shorts": {
+      "titulo_max_caracteres": 100,
+      "descricao_max_caracteres": 5000,
+      "hashtags_max": 60,
+      "oficial": true,
+      "nao_oficial": [],
+      "notas": ["Short usa os mesmos campos e limites do vídeo comum do YouTube; não há tabela própria. Capítulos não se aplicam."],
+      "fontes": ["yt_config_video", "yt_hashtags"]
+    },
+    "reels": {
+      "legenda_max_caracteres": 2200,
+      "hashtags_max": 5,
+      "hashtags_max_segundo_doc_da_api": 30,
+      "mencoes_max": 20,
+      "colaboradores_max_api": 3,
+      "legenda_visivel_estimada_caracteres": {"reels": 55, "feed": 125},
+      "oficial": true,
+      "nao_oficial": ["legenda_visivel_estimada_caracteres"],
+      "notas": [
+        "Hashtags: a Central de Ajuda diz 'You can use up to 5 tags on a post. If you include more than 5 tags on a single photo/video, your comment won't post.' O limite foi anunciado pela conta @creators em 18/12/2025 e vale para legenda e comentários somados.",
+        "A documentação da Graph API ainda diz 'Maximum 2200 characters, 30 hashtags, and 20 @ tags' — o número 30 está defasado em relação à Central de Ajuda; use 5.",
+        "Trecho visível antes do 'mais' (cerca de 55 caracteres no player de Reels e 125 no feed) é estimativa de mercado."
+      ],
+      "fontes": ["ig_api_media", "ig_hashtags", "betanews_hashtags", "clipspeed_legenda_ig"]
+    },
+    "tiktok": {
+      "legenda_max_caracteres_api": 2200,
+      "legenda_max_caracteres_app": 4000,
+      "foto_titulo_max_caracteres_api": 90,
+      "foto_descricao_max_caracteres_api": 4000,
+      "hashtags_max": null,
+      "legenda_visivel_estimada_caracteres": [55, 100],
+      "oficial": true,
+      "nao_oficial": ["legenda_max_caracteres_app", "legenda_visivel_estimada_caracteres"],
+      "notas": [
+        "Legenda de vídeo pela API: 'The maximum length is 2200 in UTF-16 runes' (hashtags e menções contam dentro). Post de fotos pela API: título de 90 e descrição de 4.000.",
+        "No aplicativo, o limite de 4.000 caracteres para legenda de vídeo é relatado pelo mercado desde 2023; não foi encontrado em página oficial pública. Se a publicação passa por agendador, o teto real é 2.200.",
+        "Não foi encontrado limite oficial de quantidade de hashtags; elas consomem caracteres da legenda.",
+        "Trecho visível antes do 'mais' varia de 55 a 100 caracteres conforme a fonte."
+      ],
+      "fontes": ["tt_api_post", "tt_api_foto", "recurpost_tt"]
+    }
+  },
+  "thumbnail": {
+    "youtube": {
+      "resolucao_recomendada_px": [3840, 2160],
+      "resolucao_minima_para_teste_ab_px": [1280, 720],
+      "largura_min_px": 640,
+      "proporcao": "16:9",
+      "formatos": ["JPG", "PNG"],
+      "peso_max_mb": {"celular": 2, "computador": 50, "podcast_no_celular": 10},
+      "peso_max_seguro_mb": 2,
+      "teste_ab": {
+        "nome": "A/B test titles & thumbnails (antes 'Test & compare')",
+        "variacoes_max": 3,
+        "modos": ["só título", "só thumbnail", "título e thumbnail"],
+        "criterio_do_vencedor": "maior participação no tempo de exibição (watch time share), não a taxa de cliques",
+        "duracao_max_dias": 14,
+        "onde": "YouTube Studio no computador",
+        "requisitos": ["recursos avançados ativados no canal"],
+        "nao_disponivel_para": ["Shorts", "lives agendadas", "estreias", "vídeos feitos para crianças", "vídeos para público adulto", "vídeos privados"],
+        "resolucao_min_sem_rebaixar_px": [1280, 720],
+        "rebaixamento_se_alguma_for_menor_px": [854, 480],
+        "sem_vencedor": "fica a primeira variação enviada",
+        "mudar_titulo_ou_thumbnail_durante_o_teste": "interrompe o teste",
+        "oficial": true
+      },
+      "video_vertical_com_thumbnail_16x9": "Em vídeo vertical, a thumbnail personalizada 16:9 é trocada por uma 4:5 gerada automaticamente na página inicial, no Explorar e nas inscrições; a personalizada continua no feed de exibição, no histórico e fora do celular.",
+      "zona_timestamp": {
+        "canto": "inferior_direito",
+        "reserva_recomendada": {"largura": 0.25, "altura": 0.22},
+        "reserva_px": {"1280x720": [320, 158], "1920x1080": [480, 238], "3840x2160": [960, 475]},
+        "medicoes": [
+          {
+            "contexto": "resultado de busca no desktop",
+            "miniatura_css_px": [500, 281],
+            "selo_css_px": [52.4, 20],
+            "folga_css_px": 8,
+            "exemplo": "1:31:02",
+            "fracao_largura": 0.1209,
+            "fracao_altura": 0.0998
+          },
+          {
+            "contexto": "resultado de busca no desktop",
+            "miniatura_css_px": [500, 281],
+            "selo_css_px": [42.5, 20],
+            "folga_css_px": 8,
+            "exemplo": "50:32",
+            "fracao_largura": 0.1009,
+            "fracao_altura": 0.0998
+          },
+          {
+            "contexto": "busca no site móvel (tela de 375 px)",
+            "miniatura_css_px": [375, 210],
+            "selo_css_px": [48.4, 20],
+            "folga_css_px": 8,
+            "exemplo": "1:31:02",
+            "fracao_largura": 0.1505,
+            "fracao_altura": 0.1331
+          },
+          {
+            "contexto": "lista lateral da página do vídeo (desktop)",
+            "miniatura_css_px": [234, 132],
+            "selo_css_px": [38.5, 20],
+            "folga_css_px": 4,
+            "exemplo": "44:18",
+            "fracao_largura": 0.1816,
+            "fracao_altura": 0.1825
+          },
+          {
+            "contexto": "lista lateral da página do vídeo (desktop)",
+            "miniatura_css_px": [234, 132],
+            "selo_css_px": [31.6, 20],
+            "folga_css_px": 8,
+            "exemplo": "0:16",
+            "fracao_largura": 0.1695,
+            "fracao_altura": 0.213
+          }
+        ],
+        "oficial": false,
+        "nota": "O YouTube não documenta o selo de duração. Ele tem altura fixa de 20 px de tela e largura conforme o texto (m:ss, mm:ss, h:mm:ss), então ocupa fração MAIOR quanto menor a miniatura. As frações incluem a folga até a borda. A reserva recomendada (25% x 22%) é o pior caso medido arredondado para cima; em miniaturas ainda menores (TV, telas finais) pode ser mais.",
+        "fontes": ["medicao_propria_yt"]
+      },
+      "outras_sobreposicoes": [
+        {
+          "elemento": "cantos arredondados",
+          "medida": "raio de 12 px numa miniatura de 436 px de largura (cerca de 2,8%)",
+          "oficial": false,
+          "fontes": ["medicao_propria_yt"]
+        },
+        {
+          "elemento": "selo de playlist ('N vídeos') ou de transmissão ao vivo",
+          "medida": "mesmo canto inferior direito; 75,8 x 20 px numa miniatura de 500 px",
+          "oficial": false,
+          "fontes": ["medicao_propria_yt"]
+        },
+        {
+          "elemento": "botões 'Assistir mais tarde' e 'Adicionar à fila' ao passar o mouse (desktop)",
+          "medida": null,
+          "posicao": "canto superior direito",
+          "oficial": false,
+          "fontes": []
+        },
+        {
+          "elemento": "barra vermelha de progresso em vídeo já iniciado",
+          "medida": null,
+          "posicao": "borda inferior, largura inteira",
+          "oficial": false,
+          "fontes": []
+        },
+        {
+          "elemento": "prévia em movimento ao passar o mouse ou parar a rolagem",
+          "medida": null,
+          "posicao": "substitui a thumbnail inteira",
+          "oficial": false,
+          "fontes": []
+        }
+      ],
+      "oficial": true,
+      "nao_oficial": ["peso_max_seguro_mb", "zona_timestamp", "outras_sobreposicoes"],
+      "notas": [
+        "A ajuda do YouTube passou a recomendar 3840x2160 e aceita até 50 MB pelo computador; pelo celular o teto continua 2 MB. Quem exporta abaixo de 2 MB sobe por qualquer caminho.",
+        "A página de specs do Google Ads ainda cita 1280x720 e menos de 2 MB para thumbnail de vídeo, e aceita também GIF estático.",
+        "A ajuda diz que a imagem deve ser 'tão grande quanto possível', porque vira a prévia do player incorporado.",
+        "Thumbnail personalizada exige conta verificada."
+      ],
+      "fontes": ["yt_thumbnail", "yt_ab", "gads_specs", "medicao_propria_yt"]
+    }
+  },
+  "capas": {
+    "reels": {
+      "envio_px": [1080, 1920],
+      "proporcao": "9:16",
+      "formatos": ["JPG", "PNG"],
+      "peso_max_mb_api": 8,
+      "espaco_de_cor": "sRGB",
+      "grade_do_perfil": {
+        "proporcao": "3:4",
+        "recorte_central_px": [1080, 1440],
+        "corte_no_topo_px": 240,
+        "corte_na_base_px": 240,
+        "retangulo_px": {"x0": 0, "y0": 240, "x1": 1080, "y1": 1680},
+        "oficial": false
+      },
+      "feed": {
+        "proporcao": "4:5",
+        "recorte_central_px": [1080, 1350],
+        "retangulo_px": {"x0": 0, "y0": 285, "x1": 1080, "y1": 1635},
+        "oficial": false
+      },
+      "aba_reels": {"proporcao": "9:16", "recorte_central_px": [1080, 1920], "oficial": true},
+      "zona_conservadora_px": {"x0": 0, "y0": 420, "x1": 1080, "y1": 1500, "largura": 1080, "altura": 1080},
+      "oficial": true,
+      "nao_oficial": ["grade_do_perfil", "feed", "zona_conservadora_px"],
+      "notas": [
+        "Grade 3:4: anunciada por Adam Mosseri em janeiro de 2025 e descrita pelo mercado como recorte central de 1080x1440; a Central de Ajuda não traz esse número.",
+        "A Central de Ajuda ainda recomenda capa de '420px by 654px (or 1:1.55 ratio)' — texto antigo; e a documentação da API diz que, ao compartilhar no feed, usa o quadrado central 1:1. Por isso a zona conservadora é o quadrado central de 1080x1080, que sobrevive aos recortes 3:4, 4:5 e 1:1.",
+        "API: capa em JPEG de até 8 MB, sRGB, 9:16 recomendado (se não for, usa o retângulo 9:16 central). Central de Ajuda: 'png or jpg'.",
+        "A Central de Ajuda ainda diz: 'Right now, you can't edit your cover photo after you've uploaded it' — o texto pode estar defasado, mas confira a capa antes de publicar."
+      ],
+      "fontes": ["ig_reel_tamanho", "ig_api_media", "hopper_reels", "kapwing_grade", "businesstoday_grade"]
+    },
+    "tiktok": {
+      "envio_px": [1080, 1920],
+      "proporcao": "9:16",
+      "formatos": null,
+      "peso_max_mb": null,
+      "selecao": "quadro do próprio vídeo (pela API, 'video_cover_timestamp_ms'; sem valor, usa o primeiro quadro)",
+      "grade_do_perfil": {
+        "proporcao": "3:4 (aproximada)",
+        "recorte_central_px": [1080, 1440],
+        "retangulo_px": {"x0": 0, "y0": 240, "x1": 1080, "y1": 1680},
+        "oficial": false
+      },
+      "zona_conservadora_px": {"x0": 0, "y0": 420, "x1": 1080, "y1": 1500, "largura": 1080, "altura": 1080},
+      "oficial": false,
+      "nao_oficial": ["envio_px", "grade_do_perfil", "zona_conservadora_px"],
+      "notas": [
+        "O TikTok não publica tamanho de capa nem o recorte da grade. As fontes de mercado divergem: a maioria fala em recorte central de cerca de 3:4, outras em quadrado 1:1. O quadrado central de 1080x1080 funciona nos dois casos.",
+        "Único dado oficial: a API escolhe a capa por instante do vídeo e, sem instrução, usa o primeiro quadro — por isso o primeiro quadro nunca deve ser preto ou vazio.",
+        "Formato e peso de imagem de capa enviada à parte: não encontrado."
+      ],
+      "fontes": ["tt_api_post", "posteverywhere_tt"]
+    },
+    "shorts": {
+      "envio_px": [2160, 3840],
+      "altura_min_px": 640,
+      "proporcao": "9:16",
+      "formatos": ["JPG", "PNG"],
+      "peso_max_mb": {"computador": 50},
+      "onde_enviar": "somente no YouTube Studio pelo computador, com conta verificada",
+      "grade_do_perfil": null,
+      "teste_ab": false,
+      "oficial": true,
+      "nao_oficial": [],
+      "notas": [
+        "Ajuda do YouTube: 'Custom thumbnails for Shorts are currently only available to add in YouTube Studio on a computer' e, para arquivos enviados, 'the recommended aspect ratio is 9:16'. Resolução recomendada de 2160x3840, altura mínima de 640 px.",
+        "Recorte da capa na aba Shorts do canal, na busca e nas prateleiras: não encontrado em fonte oficial. Uma fonte de mercado afirma que algumas superfícies mostram a capa mais larga que 9:16; mantenha rosto e texto no terço central até medir no canal.",
+        "Segundo o mercado, o envio de capa personalizada para Shorts começou a ser liberado em 25/07/2026 e pode ainda não estar em todas as contas.",
+        "Não há teste A/B para Shorts."
+      ],
+      "fontes": ["yt_thumbnail", "yt_ab", "relevantaudience_shorts"]
+    }
+  },
+  "revalidar": [
+    "Duração máxima de Shorts (hoje 180 s), Reels (20 min; recomendação só até 3 min) e TikTok (10 min gravado, 60 min enviado) e se já chegou à conta do projeto.",
+    "Gabaritos oficiais de zona segura: baixar de novo os PNGs do Google Ads e o .zip do TikTok e conferir se as cotas mudaram; reler os 14% / 35% / 6% da Meta.",
+    "Limite de hashtags do Instagram (hoje 5) e se a documentação da API deixou de dizer 30.",
+    "Thumbnail do YouTube: resolução recomendada (hoje 3840x2160), peso máximo por aparelho (2 MB / 50 MB) e regras do teste A/B (hoje 3 variações, 14 dias).",
+    "Capa personalizada de Shorts: disponibilidade na conta e como ela é recortada na aba Shorts do canal.",
+    "Recorte da grade do perfil no Instagram (hoje 3:4) e no TikTok (não documentado).",
+    "Selo de duração na thumbnail do YouTube: refazer a medição no desktop, no celular e na lista lateral.",
+    "Limite de legenda do TikTok no aplicativo (4.000 relatado) e pela API (2.200).",
+    "Tabela de bitrates e de áudio do YouTube e a recomendação de cor (BT.709; HDR em Rec. 2020 PQ/HLG).",
+    "Limites da Graph API do Instagram para Reels (15 min, 300 MB) e da API do TikTok (10 min, 4 GB), se a publicação passar por agendador.",
+    "Loudness: procurar documentação oficial; até lá, -14 LUFS e -1 dBTP continuam sendo consenso de mercado."
+  ]
+}

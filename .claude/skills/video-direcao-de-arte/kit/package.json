@@ -1,0 +1,15 @@
+{
+  "name": "video-direcao-de-arte-kit",
+  "version": "1.6.0",
+  "private": true,
+  "description": "Motor de render HTML→imagem/vídeo submetido à direção de arte (DA) do projeto.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "playwright-core": "1.49.1"
+  },
+  "scripts": {
+    "render": "node motor/render.mjs"
+  }
+}

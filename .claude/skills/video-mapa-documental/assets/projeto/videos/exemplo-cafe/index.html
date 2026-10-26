@@ -1,0 +1,103 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Pedido: demo 9:16 do estilo mapa-documental (referência: documentário histórico com mapa escuro esverdeado,
+     região vermelha que se espalha, retrato em círculo, rótulos e círculo tracejado). Tema: o café no Brasil —
+     como ele se espalhou pelo mapa. Fatos: chega em 1727 pelo Pará; séc. XIX no Vale do Paraíba; hoje MG é o maior produtor. -->
+<script>VIDEO={w:1080,h:1920,fps:30,dur:8,bpm:96,music:{style:'documental',key:'D',gain:-2}}</script>
+<script>LIBS=['mapadoc.js']</script>
+<script src="../../lib/boot.js"></script>
+<style>#stage{background:#111;overflow:hidden;position:relative;width:1080px;height:1920px}</style></head><body>
+<div id="stage"></div>
+<script>
+const T = {
+  empurra: 0, acende: .85, mergulho: [1.0, 1.75], bordas: 1.2, etiquetas: 1.5,
+  para: 2.12, rotulo1727: 2.2, espalha: 2.45, funde: [3.15, 3.65], triangulo: 3.75,
+  vale: 4.1, retrato: 4.85, recolhe: 5.45, circulo: 5.5, minas: 6.0, creditos: 6.6, fim: 8,
+};
+const cam = MD.camera([
+  { t: 0, lon: -59, lat: -17, z: 16 },
+  { t: T.mergulho[0], lon: -57, lat: -15.5, z: 19, ease: 'sine.inOut' },
+  { t: T.mergulho[1], lon: -47.4, lat: -12.6, z: 53, ease: 'power2.inOut' },
+  { t: T.funde[0], lon: -47.2, lat: -14.0, z: 56, ease: 'sine.inOut' },
+  { t: T.funde[1], lon: -44.75, lat: -20.4, z: 86, ease: 'power2.inOut' },
+  { t: T.fim, lon: -44.7, lat: -20.35, z: 97, ease: 'sine.out' },
+]);
+
+window.SETUP = async () => {
+  const st = K.$('#stage');
+  const M = await MD.mapa(st, {
+    geo: 'geo.json', lat0: -15, cam,
+    tex: [{ bbox: [-130, -60, 0, 75], src: 'img/base' }, { bbox: [-76, -36, -32, 7], src: 'img/br' }, { bbox: [-57, -28, -37, -11], src: 'img/se' }],
+  });
+  MD.acabamento(st, { grao: .07 });
+  MD.anotacoes(st, M);
+  const esc = () => M.cam.z / 86; // anotações "no mapa" crescem com o empurrão final
+
+  // ── etiquetas dos estados (acendem em cascata) e cidades
+  const tags = [
+    [-51.5, -5.0, 'Pará'], [-45.2, -5.0, 'Maranhão'], [-42.5, -7.6, 'Piauí'], [-48.3, -10.4, 'Tocantins'], [-41.8, -12.2, 'Bahia'],
+    [-55.0, -12.5, 'Mato Grosso'], [-49.8, -15.6, 'Goiás'], [-44.6, -17.6, 'Minas Gerais'], [-54.3, -20.6, 'Mato Grosso do Sul'],
+    [-50.3, -21.6, 'São Paulo'], [-42.7, -22.2, 'Rio de Janeiro'], [-41.3, -18.9, 'Espírito Santo'], [-51.7, -24.7, 'Paraná'], [-50.4, -27.3, 'Santa Catarina'],
+  ];
+  tags.forEach(([lo, la, n], i) => MD.etiqueta(lo, la, n, T.etiquetas + i * .042, { seed: i, dim: [3.5, .5], ate: n === 'Minas Gerais' ? T.minas - .1 : n === 'Rio de Janeiro' ? T.triangulo - .05 : undefined }));
+  [[-48.49, -1.46, 'Belém'], [-47.93, -15.78, 'Brasília'], [-38.5, -12.97, 'Salvador', 'e'], [-49.25, -16.68, 'Goiânia'], [-46.63, -23.55, 'São Paulo'], [-51.16, -23.31, 'Londrina']]
+    .forEach(([lo, la, n, l], i) => MD.cidade(lo, la, n, T.etiquetas + .25 + i * .05, { lado: l, dim: [3.5, .6] }));
+
+  // ── manchas vermelhas: o café chega pelo Pará e desce para o Sudeste
+  const mPara = MD.mancha(-48.3, -2.3, 1.5, 1.1, { rot: 10 });
+  // [mancha, atraso, núcleo?] — no fim as periféricas apagam e o núcleo cresce numa região só (como na referência)
+  const sud = [
+    [MD.mancha(-43.6, -22.25, 1.0, .5, { rot: -15 }), 0, 1],   // Vale do Paraíba fluminense
+    [MD.mancha(-45.3, -22.9, 1.0, .45, { rot: -25 }), .08, 1], // Vale do Paraíba paulista
+    [MD.mancha(-42.6, -20.8, .6, .9), .16, 1],                // Zona da Mata
+    [MD.mancha(-45.6, -21.6, 1.3, .8), .24, 1],               // Sul de Minas
+    [MD.mancha(-47.6, -21.9, 1.0, 1.3, { rot: 20 }), .33, 0], // oeste paulista
+    [MD.mancha(-41.0, -19.8, .55, 1.0), .41, 0],              // Espírito Santo
+    [MD.mancha(-51.3, -23.4, 1.3, .6), .5, 0],                // norte do Paraná
+    [MD.mancha(-46.8, -18.9, 1.2, .7), .58, 0],               // Cerrado mineiro
+  ];
+  const pontes = [MD.mancha(-44.5, -22.0, 1.5, 1.0), MD.mancha(-43.3, -21.3, 1.0, .9), MD.mancha(-45.9, -22.3, 1.0, .75, { rot: -20 }), MD.mancha(-44.7, -20.9, 1.1, .7), MD.mancha(-46.4, -21.2, .8, .9)];
+  M.manchas.push(mPara, ...sud.map(s => s[0]), ...pontes);
+
+  // ── anotações
+  MD.chamada(-48.45, -1.5, ['1727', 'chega pelo Pará'], T.rotulo1727, { cot: [70, -80], ponta: [430, -80], tam: 54, seed: 4 });
+  MD.triangulo(-44.4, -21.75, ['Café'], T.triangulo, { lado: 264, tam: 62, escala: esc, miolo: { src: 'img/frutos_pb.jpg', diam: 112, t: T.recolhe + .5 } });
+  MD.chamada(-44.95, -22.85, ['Vale do Paraíba', 'século XIX'], T.vale, { cot: [56, 112], ponta: [440, 112], tam: 41, seed: 7 });
+  MD.retrato(-44.4, -21.75, 'img/frutos_pb.jpg', ['FRUTO DO', 'CAFEEIRO'], T.retrato, { diam: 220, dx: 222, dy: -168, escala: esc, para: { t: T.recolhe, d: .5, dx: 0, dy: -10, s: .51, esconde: true } });
+  MD.circulo(-44.55, -21.7, 360, T.circulo, { escala: esc });
+  MD.chamada(-43.6, -19.4, ['Minas Gerais', 'maior produtor hoje'], T.minas, { cot: [30, -235], ponta: [330, -235], tam: 40, seed: 9 });
+  K.html(st, `<div class="md-cred" id="cred">Relevo: NASA Blue Marble / GIBS · Mapa: Natural Earth (domínio público)<br>Foto: Timothy A. Gonsalves, CC BY-SA 4.0, via Wikimedia Commons</div>`);
+
+  onTick(t => {
+    M.ativo = MD.pisca(t, T.acende, .42, 1, .3);
+    M.contorno = MD.pisca(t, T.acende + .05, .4, 2, .3) * K.lerp(1, .7, MD.vai(t, 3.4, .6));
+    M.bordas = MD.pisca(t, T.bordas, .4, 3, .25) * K.lerp(1, .55, MD.vai(t, 3.4, .6));
+    M.rios = M.ativo * MD.vai(t, T.acende + .2, .6);
+    M.luz = 1; M.grade = 1;
+    mPara.a = MD.pisca(t, T.para, .36, 7, .4) * MD.apaga(t, T.funde[0] + .05, .3, 8);
+    sud.forEach(([m, dt, nucleo], i) => {
+      m.a = MD.pisca(t, T.espalha + dt, .32, 20 + i, .35) * (nucleo ? 1 : MD.apaga(t, T.funde[0] + .04 * i, .3, 30 + i));
+      m.s = K.lerp(.75, 1, MD.vai(t, T.espalha + dt, .3, 'power2.out')) * K.lerp(1, nucleo ? 1.45 : .9, MD.vai(t, T.funde[0], .5, 'power2.inOut'));
+    });
+    pontes.forEach((m, i) => { m.a = MD.vai(t, T.funde[0] + .05 + i * .05, .4, 'sine.inOut'); m.s = K.lerp(.5, 1.15, MD.vai(t, T.funde[0], .55, 'power2.inOut')); });
+    M.desenhar(t);
+    MD.tick(t);
+    const c = K.$('#cred'); c.style.opacity = MD.vai(t, T.creditos, .5, 'sine.inOut');
+  });
+
+  // ── som (cada acendimento, mergulho, linha e rótulo tem um efeito)
+  cue('m:intro', 0); cue('boom', 0.02, { gain: -3 });
+  cue('flicker', T.acende, { d: .42 }); cue('whoosh_slow', T.mergulho[0] + .05, { gain: -2 }); cue('m:drop', T.mergulho[1] - .05);
+  cue('hit_low', T.mergulho[1] - .02, { gain: -3 }); cue('flicker', T.bordas, { d: .4, gain: -5 });
+  tags.forEach((_, i) => { if (i % 3 === 0) cue('ui_blip', T.etiquetas + i * .042, { gain: -9 }); });
+  cue('flicker', T.para, { d: .36, gain: -2 }); cue('tom', T.para + .01, { f: 90, gain: -2 });
+  cue('swoosh', T.rotulo1727, { gain: -8 }); cue('decode', T.rotulo1727 + .2, { gain: -4 });
+  sud.forEach(([_, dt], i) => { if (i % 2 === 0) cue('tom', T.espalha + dt, { f: 110 - i * 6, gain: -5 }); });
+  cue('whoosh_in', T.funde[0], { gain: -3 }); cue('taiko', T.funde[1] - .04, { gain: -2 });
+  cue('flicker', T.triangulo, { d: .35 }); cue('impact', T.triangulo + .01, { gain: -4 });
+  cue('swoosh', T.vale, { gain: -7 }); cue('decode', T.vale + .22, { gain: -3 });
+  cue('pop', T.retrato, { f: 420, gain: -6 }); cue('shutter', T.retrato + .02, { gain: -8 });
+  cue('whoosh_slow', T.recolhe, { gain: -8 }); cue('hit_soft', T.circulo + .05, { gain: -4 }); cue('reverse', T.circulo - .55, { d: .6, gain: -10 });
+  cue('swoosh', T.minas, { gain: -7 }); cue('decode', T.minas + .22, { gain: -3 });
+  cue('m:outro', 6.4); cue('m:stop', T.fim - .2);
+};
+</script></body></html>

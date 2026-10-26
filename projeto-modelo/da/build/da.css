@@ -1,0 +1,78 @@
+/* da.css — gerado por `da.py compilar` (kit 1.6.0). NÃO EDITE: mude o da.json e recompile.
+   DA "Testemunhos" · revisão 1 · sha256 9ad198ef744bb3a6…
+   Tamanhos são frações do lado menor do quadro: --da-lado vale 100vmin por padrão; o motor pode
+   fixá-lo em px no elemento <html> (ex.: style="--da-lado:1080px") quando o viewport não é o quadro.
+   Cor da DA com transparência tem UMA forma: rgba(var(--da-cor-<nome>-rgb), a) — as variáveis -rgb valem "r, g, b"
+   (com vírgulas). rgb(var(--da-cor-<nome>-rgb) / a) é INVÁLIDO: o navegador descarta e a cor computa transparente
+   (o lint acusa como alfa-invalido e o auditor reprova). Em cena do motor: ctx.alfa(token, a). */
+
+@font-face{font-family:"Helvetica";src:url("file:///D:/STUDIO/studio/projetos/104.%20JP/da/fontes/Helvetica-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:"Helvetica";src:url("file:///D:/STUDIO/studio/projetos/104.%20JP/da/fontes/Helvetica.ttf") format("truetype");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:"Newsreader";src:url("file:///D:/STUDIO/studio/projetos/104.%20JP/da/fontes/Newsreader-Variable.ttf") format("truetype");font-weight:200 800;font-style:normal;font-display:block}
+
+:root{
+  --da-lado:100vmin;
+  /* cor */
+  --da-cor-fundo:#0E0D0B; --da-cor-fundo-rgb:14, 13, 11;
+  --da-cor-superficie:#1C1A17; --da-cor-superficie-rgb:28, 26, 23;
+  --da-cor-texto:#FFFFFF; --da-cor-texto-rgb:255, 255, 255;
+  --da-cor-texto-suave:#D9D4CA; --da-cor-texto-suave-rgb:217, 212, 202;
+  --da-cor-primaria:#F2D24B; --da-cor-primaria-rgb:242, 210, 75;
+  --da-cor-secundaria:#231F1A; --da-cor-secundaria-rgb:35, 31, 26;
+  --da-cor-destaque:#F2D24B; --da-cor-destaque-rgb:242, 210, 75;
+  --da-cor-positivo:#2D6A4F; --da-cor-positivo-rgb:45, 106, 79;
+  --da-cor-negativo:#7F1D1D; --da-cor-negativo-rgb:127, 29, 29;
+  --da-cor-alerta:#B45309; --da-cor-alerta-rgb:180, 83, 9;
+  --da-cor-papel:#E6DAC0; --da-cor-papel-rgb:230, 218, 192;
+  --da-cor-tinta:#231F1A; --da-cor-tinta-rgb:35, 31, 26;
+  --da-cor-bandeira-sombra:#000000; --da-cor-bandeira-sombra-rgb:0, 0, 0;
+  --da-cor-mesa:#3B2A1D; --da-cor-mesa-rgb:59, 42, 29;
+  --da-cor-marcador:#C8102E; --da-cor-marcador-rgb:200, 16, 46;
+  --da-dado-1:#F2D24B; --da-dado-1-rgb:242, 210, 75;
+  --da-dado-2:#FFFFFF; --da-dado-2-rgb:255, 255, 255;
+  --da-dado-3:#E07A5F; --da-dado-3-rgb:224, 122, 95;
+  --da-dado-4:#81B29A; --da-dado-4-rgb:129, 178, 154;
+  --da-dado-5:#F2CC8F; --da-dado-5-rgb:242, 204, 143;
+  --da-dado-6:#A8DADC; --da-dado-6-rgb:168, 218, 220;
+  --da-neutro-1:#000000; --da-neutro-1-rgb:0, 0, 0;
+  --da-neutro-2:#FFFFFF; --da-neutro-2-rgb:255, 255, 255;
+  --da-gradiente-papel:linear-gradient(180deg, #0E0D0B 0%, #1C1A17 100%);
+  /* tipografia */
+  --da-fonte-titulo:"Helvetica"; --da-peso-titulo:700; --da-largura-titulo:100%; --da-estilo-titulo:normal; --da-tracking-titulo:-0.022em; --da-caixa-titulo:none; --da-altura-linha-titulo:1.02; --da-eixos-titulo:normal; --da-escala-x-titulo:1;
+  --da-fonte-subtitulo:"Helvetica"; --da-peso-subtitulo:700; --da-largura-subtitulo:100%; --da-estilo-subtitulo:normal; --da-tracking-subtitulo:0.14em; --da-caixa-subtitulo:uppercase; --da-altura-linha-subtitulo:1.3; --da-eixos-subtitulo:normal; --da-escala-x-subtitulo:1;
+  --da-fonte-corpo:"Helvetica"; --da-peso-corpo:400; --da-largura-corpo:100%; --da-estilo-corpo:normal; --da-tracking-corpo:0.002em; --da-caixa-corpo:none; --da-altura-linha-corpo:1.5; --da-eixos-corpo:normal; --da-escala-x-corpo:1;
+  --da-fonte-dados:"Helvetica"; --da-peso-dados:400; --da-largura-dados:100%; --da-estilo-dados:normal; --da-tracking-dados:0em; --da-caixa-dados:none; --da-altura-linha-dados:1.3; --da-eixos-dados:normal; --da-escala-x-dados:1;
+  --da-fonte-legenda:"Helvetica"; --da-peso-legenda:700; --da-largura-legenda:100%; --da-estilo-legenda:normal; --da-tracking-legenda:-0.045em; --da-caixa-legenda:none; --da-altura-linha-legenda:1; --da-eixos-legenda:normal; --da-escala-x-legenda:1;
+  --da-fonte-versiculo:"Newsreader"; --da-peso-versiculo:700; --da-largura-versiculo:100%; --da-estilo-versiculo:normal; --da-tracking-versiculo:-0.01em; --da-caixa-versiculo:none; --da-altura-linha-versiculo:1.18; --da-eixos-versiculo:"wght" 700, "opsz" 72; --da-escala-x-versiculo:1;
+  --da-escala-display:calc(var(--da-lado) * 0.115);
+  --da-escala-h1:calc(var(--da-lado) * 0.076);
+  --da-escala-h2:calc(var(--da-lado) * 0.05);
+  --da-escala-h3:calc(var(--da-lado) * 0.036);
+  --da-escala-corpo:calc(var(--da-lado) * 0.029);
+  --da-escala-nota:calc(var(--da-lado) * 0.022);
+  /* layout */
+  --da-colunas:12;
+  --da-margem:calc(var(--da-lado) * 0.08);
+  --da-calha:calc(var(--da-lado) * 0.016);
+  --da-raio:calc(var(--da-lado) * 0);
+  --da-traco:calc(var(--da-lado) * 0.0019);
+  --da-sombra:none;
+  /* movimento (referência: peças não usam transition/animation; o tempo vem de seek(t)) */
+  --da-dur-micro:0.14s;
+  --da-dur-curta:0.36s;
+  --da-dur-media:0.64s;
+  --da-dur-longa:1.1s;
+  --da-escalonamento:0.09s;
+  --da-curva-entrada:cubic-bezier(0.25, 0.1, 0.25, 1);
+  --da-curva-saida:cubic-bezier(0.4, 0, 1, 1);
+  --da-curva-enfase:cubic-bezier(0.3, 0, 0.1, 1);
+  --da-curva-suave:cubic-bezier(0.45, 0, 0.55, 1);
+  --da-curva-linear:cubic-bezier(0, 0, 1, 1);
+}
+
+.da-titulo{font-family:var(--da-fonte-titulo);font-weight:var(--da-peso-titulo);font-stretch:var(--da-largura-titulo);font-style:var(--da-estilo-titulo);letter-spacing:var(--da-tracking-titulo);text-transform:var(--da-caixa-titulo);line-height:var(--da-altura-linha-titulo);font-variation-settings:var(--da-eixos-titulo)}
+.da-subtitulo{font-family:var(--da-fonte-subtitulo);font-weight:var(--da-peso-subtitulo);font-stretch:var(--da-largura-subtitulo);font-style:var(--da-estilo-subtitulo);letter-spacing:var(--da-tracking-subtitulo);text-transform:var(--da-caixa-subtitulo);line-height:var(--da-altura-linha-subtitulo);font-variation-settings:var(--da-eixos-subtitulo)}
+.da-corpo{font-family:var(--da-fonte-corpo);font-weight:var(--da-peso-corpo);font-stretch:var(--da-largura-corpo);font-style:var(--da-estilo-corpo);letter-spacing:var(--da-tracking-corpo);text-transform:var(--da-caixa-corpo);line-height:var(--da-altura-linha-corpo);font-variation-settings:var(--da-eixos-corpo)}
+.da-dados{font-family:var(--da-fonte-dados);font-weight:var(--da-peso-dados);font-stretch:var(--da-largura-dados);font-style:var(--da-estilo-dados);letter-spacing:var(--da-tracking-dados);text-transform:var(--da-caixa-dados);line-height:var(--da-altura-linha-dados);font-variation-settings:var(--da-eixos-dados)}
+.da-legenda{font-family:var(--da-fonte-legenda);font-weight:var(--da-peso-legenda);font-stretch:var(--da-largura-legenda);font-style:var(--da-estilo-legenda);letter-spacing:var(--da-tracking-legenda);text-transform:var(--da-caixa-legenda);line-height:var(--da-altura-linha-legenda);font-variation-settings:var(--da-eixos-legenda)}
+.da-versiculo{font-family:var(--da-fonte-versiculo);font-weight:var(--da-peso-versiculo);font-stretch:var(--da-largura-versiculo);font-style:var(--da-estilo-versiculo);letter-spacing:var(--da-tracking-versiculo);text-transform:var(--da-caixa-versiculo);line-height:var(--da-altura-linha-versiculo);font-variation-settings:var(--da-eixos-versiculo)}

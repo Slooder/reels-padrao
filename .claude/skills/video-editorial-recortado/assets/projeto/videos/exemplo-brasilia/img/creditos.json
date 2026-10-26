@@ -1,0 +1,18 @@
+[
+ {
+  "file": "catedral_ed.png",
+  "fonte": "catedral.jpg (recortada com tools/recortar.py e tratada com tools/editorial.py recorte)",
+  "title": "File:Roberto Castro Catedral Metropolitana de Nossa Senhora Aparecida Brasilia DF (39098957600).jpg",
+  "license": "Public domain",
+  "artist": "Roberto Castro / MTur Destinos",
+  "page": "https://commons.wikimedia.org/wiki/File:Roberto_Castro_Catedral_Metropolitana_de_Nossa_Senhora_Aparecida_Brasilia_DF_(39098957600).jpg"
+ },
+ {
+  "file": "congresso_ed.png, cupula_ed.png",
+  "fonte": "congresso.jpg (torres + prato num recorte; cúpula do Senado num recorte separado com --caixa)",
+  "title": "File:Brasilia Congresso Nacional 05 2007 221.jpg",
+  "license": "Public domain",
+  "artist": "Mario Roberto Duran Ortiz",
+  "page": "https://commons.wikimedia.org/wiki/File:Brasilia_Congresso_Nacional_05_2007_221.jpg"
+ }
+]

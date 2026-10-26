@@ -1,0 +1,64 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Exemplo da skill video-texto-grifado — demo 9:16 do estilo "texto-grifado" (ref. Klickpin "19 Trending Side Hustle Ideas…": parágrafo serifado
+     escrito palavra a palavra com marca-texto amarelo e destaque vermelho, câmera lenta sobre o texto).
+     Tema: literatura de cordel — o folheto que conta histórias na feira. Texto: uma sextilha (redondilha, rima feira/certeira/inteira). -->
+<script>VIDEO={w:1080,h:1920,fps:24,dur:8,bpm:104,music:{style:'feira',key:'G',gain:-6}}</script>
+<script>LIBS=['grifado.js']</script>
+<script src="../../lib/boot.js"></script>
+<style>#stage{background:#fcfcfc;overflow:hidden}</style></head><body>
+<div id="stage"></div>
+<script>
+const T = {
+  rotulo: [.25, .60],      // marca-texto cresce atrás de "na feira"
+  chicote: [.55, 1.30],    // a câmera sai da abertura para o parágrafo (aceleração longa, freada curta)
+  escreve: .85,            // 1ª palavra
+  verso1: [1.30, 2.60],    // o mesmo marca-texto, já grudado na borda, percorre o verso 1
+  zoom: [1.0, 8.0, 1, 1.07],
+  vermelho: 5.30,          // bloco vermelho no verso 6
+  credito: 6.40,
+};
+const X_T = 1900;          // centro do "papel do texto" no mundo (a abertura fica em 0–1080)
+const VERSOS = ['Pendurado num cordão,', 'o folheto vai à feira.', 'Na capa, xilogravura;', 'por dentro, rima certeira.', 'O poeta lê cantando', 'e reúne a feira inteira.'];
+
+const stage = K.$('#stage');
+GR.mundo(stage, { w: 3000, h: 2400 });
+GR.papel('img/papel.jpg', { x: -150, y: -240, w: 2900, h: 2400 });
+
+window.SETUP = () => {
+  // ── abertura: colagem editorial ── (rótulo e verso 1 na MESMA altura: o grifo do rótulo vira o grifo do verso)
+  GR.pontos({ x: 290, y: 990, w: 400, h: 400, seed: 2 });
+  GR.pontos({ x: 860, y: 1150, w: 300, h: 380, seed: 5 });
+  GR.recorte('img/poeta_gr.png', { x: -50, y: 925, w: 1340 });
+  GR.titulo('Literatura de Cordel', { cx: 540, y: 420, fs: 72 });
+  const rot = GR.rotulo(['Histórias', 'na feira'], { x: 560, y: 617, fs: 66, recuo: 80 });
+
+  // ── parágrafo ──
+  const P = GR.paragrafo(VERSOS, { cx: X_T, cy: 970, fs: 66 });
+  const fim = GR.escrever(P, T.escreve, { pps: 10.5 });
+  const seguir = GR.seguir(P, { tau: .34, cursor: .25 });
+  const amarelo = GR.marca(rot.faixa(1, { antes: 1.5 }), P.faixa(0), { a0: T.rotulo[0], a1: T.rotulo[1], b0: T.verso1[0], b1: T.verso1[1] });
+  const vermelho = GR.destaque(P, P.faixa(5, 1), { t0: T.vermelho, dur: .95 });
+  const cred = GR.credito(stage, 'Foto: Moacir Ximenes / Wikimedia Commons (domínio público)');
+
+  const cam = t => ({
+    x: K.lerp(540, seguir(t), GR.chicote(K.seg(t, ...T.chicote))),
+    y: 960,
+    z: K.lerp(T.zoom[2], T.zoom[3], K.seg(t, T.zoom[0], T.zoom[1])),
+  });
+
+  onTick(t0 => {
+    const t = GR.q(t0), c = cam(t);
+    GR.aplicar(c);
+    GR.palavras(P, t);
+    amarelo.tick(t, c);
+    vermelho.tick(t);
+    cred.style.opacity = K.seg(t, T.credito, T.credito + .3);
+  });
+
+  // ── som ──
+  cue('m:intro', 0); cue('m:main', T.escreve); cue('m:break', fim + .1); cue('m:main', T.vermelho); cue('m:stop', 7.75);
+  cue('whoosh_in', T.chicote[0] + .22, { gain: -2 });
+  cue('paper', T.chicote[1] - .05, { gain: -6 });
+  cue('hit_soft', T.vermelho, { gain: -13 });
+};
+</script></body></html>

@@ -1,0 +1,66 @@
+{
+ "_nota": "simulado a partir da documentação oficial (https://www.pexels.com/api/documentation/, lida em 2026-10-07)",
+ "page": 1,
+ "per_page": 2,
+ "total_results": 2,
+ "url": "https://www.pexels.com/search/videos/server%20room/",
+ "videos": [
+  {
+   "id": 1234567,
+   "width": 3840,
+   "height": 2160,
+   "url": "https://www.pexels.com/video/server-room-with-blinking-lights-1234567/",
+   "image": "https://images.pexels.com/videos/1234567/free-video-1234567.jpg",
+   "duration": 14,
+   "user": {
+    "id": 42,
+    "name": "Ana Lima",
+    "url": "https://www.pexels.com/@ana-lima"
+   },
+   "video_files": [
+    {
+     "id": 1,
+     "quality": "hd",
+     "file_type": "video/mp4",
+     "width": 1920,
+     "height": 1080,
+     "fps": 25,
+     "link": "https://videos.pexels.com/video-files/1234567/1234567-hd_1920_1080_25fps.mp4"
+    },
+    {
+     "id": 2,
+     "quality": "sd",
+     "file_type": "video/mp4",
+     "width": 960,
+     "height": 540,
+     "fps": 25,
+     "link": "https://videos.pexels.com/video-files/1234567/1234567-sd_960_540_25fps.mp4"
+    },
+    {
+     "id": 3,
+     "quality": "uhd",
+     "file_type": "video/mp4",
+     "width": 3840,
+     "height": 2160,
+     "fps": 25,
+     "link": "https://videos.pexels.com/video-files/1234567/1234567-uhd_3840_2160_25fps.mp4"
+    },
+    {
+     "id": 4,
+     "quality": "hls",
+     "file_type": "application/x-mpegURL",
+     "width": null,
+     "height": null,
+     "link": "https://videos.pexels.com/video-files/1234567/master.m3u8"
+    }
+   ],
+   "video_pictures": [
+    {
+     "id": 9,
+     "picture": "https://images.pexels.com/videos/1234567/pictures/preview-0.jpg",
+     "nr": 0
+    }
+   ]
+  }
+ ]
+}

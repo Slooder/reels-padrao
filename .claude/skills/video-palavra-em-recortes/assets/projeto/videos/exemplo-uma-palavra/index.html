@@ -1,0 +1,57 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Pedido: demo 9:16 do estilo "palavra em recortes" (o "recap"/paper cut da referência: a MESMA palavra grifada em vários
+     textos diferentes, trocando a cada 3 quadros, com zoom e giro acumulando e lente velha). Variação de papéis, fontes e grifos.
+     Frase: "Uma palavra muda tudo" — uma montagem por palavra; preto mudo; as quatro palavras viram recortes colados no drop. -->
+<script>VIDEO={w:1080,h:1920,fps:30,dur:8.4,bpm:150,music:{style:'drill',key:'F',gain:1}}</script>
+<script>LIBS=['recortes.js']</script>
+<script src="../../lib/boot.js"></script>
+<style>#stage{background:#000}</style></head><body>
+<div id="stage"></div>
+<script>
+// ── tempos (150 bpm: semicolcheia = 0,1 s = 3 quadros · batida 0,4 s) ──
+const T = {
+  frase: 0,          // 4 palavras × 1,2 s (9 recortes de 3 quadros + 1 que segura 9 quadros)
+  silencio: 4.8,     // preto mudo de 1 batida (como na referência, antes do drop)
+  drop: 5.2,         // colagem: um recorte por batida 5,2 · 5,6 · 6,0 · 6,4
+  fade: [7.8, 8.38],
+};
+const stage = K.$('#stage');
+const palco = RC.palco(stage);
+
+// cada palavra: 10 trechos [antes, depois, topo?]; o último (que segura) é a própria frase com a palavra da vez grifada
+const F = RC.frase(palco, {
+  de: T.frase, q: 3, segura: 9, tam: 165, zoom: [1, 1.5], giro: [0, -7], seed: 21,
+  palavras: [
+    { palavra: 'Uma', frases: [['', 'ideia na cabeça e'], ['Pense nisso.', 'frase basta'], ['', 'noite qualquer na'], ['De novo.', 'história começa'],
+      ['', 'linha escrita à mão'], ['Ponto final.', 'nova página'], ['', 'só frase, sem'], ['E então:', 'escolha simples'], ['', 'vez por semana'],
+      Object.assign(['', 'palavra muda tudo', ''], { material: 'creme', fonte: 0, grifo: 'reta:amarelo' })] },
+    { palavra: 'palavra', frases: [['a última', 'é sempre'], ['', 'por palavra,'], ['Dei a minha', 'e cumpri'], ['sem dizer uma', 'sequer'],
+      ['a', 'certa na hora'], ['cada', 'conta'], ['a primeira', 'do livro'], ['nenhuma', 'a mais'], ['escolha a', 'com calma'],
+      Object.assign(['Uma', 'muda tudo', ''], { material: 'jornal', fonte: 0, grifo: 'circulo:vermelho' })] },
+    { palavra: 'muda', frases: [['nada', 'sem esforço'], ['o vento', 'de direção'], ['quem', 'o jogo'], ['a maré', 'devagar'],
+      ['o tempo', 'as coisas'], ['a cidade', 'à noite'], ['ela', 'de ideia'], ['quando a estação', ','], ['tudo', 'quando'],
+      Object.assign(['Uma palavra', 'tudo', ''], { material: 'caderno', fonte: 0, grifo: 'marca:verde' })] },
+    { palavra: 'tudo', frases: [['antes de', ', respire'], ['acima de', ', calma'], ['', 'ou nada'], ['apesar de', ', seguimos'],
+      ['', 'começou assim'], ['depois de', 'isso'], ['de', 'um pouco'], ['', 'ao mesmo tempo'], ['quase', 'cabe aqui'],
+      Object.assign(['Uma palavra muda', '', ''], { material: 'revista', fonte: 0, grifo: 'tarja:preto' })] },
+  ],
+});
+
+// colagem final: as palavras viram recortes (mesmo papel, fonte e grifo da página que segurou cada uma)
+const ult = F.montagens.map(m => m.pags[m.pags.length - 1]);
+RC.colagem(stage, ['Uma', 'palavra', 'muda', 'tudo'].map((p, i) => ({ palavra: p, pagina: ult[i] })),
+  { de: T.drop, passo: .4, tam: 240, giros: [-4, 3, -2, 4], centro: 950, gap: 30 });
+
+// fade para o preto
+const preto = K.html(stage, `<div class="fill" style="background:#000;pointer-events:none"></div>`);
+onTick(t => { preto.style.opacity = K.seg(t, T.fade[0], T.fade[1]); });
+K.grain(stage, { opacity: .09 });
+
+// som: pancada grave a cada troca de palavra, subida para o silêncio, drop
+F.montagens.forEach((m, i) => cue('hit_soft', m.de, { gain: i ? -6 : -3 }));
+cue('riser', 3.65, { d: 1.15, gain: -4 });
+cue('m:drop', T.drop); cue('m:outro', 7.6); cue('m:stop', 8.2);
+cue('impact', T.drop, { gain: -2 }); cue('sub_drop', T.drop, { gain: -5 });
+
+window.SETUP = async () => { RC.medir(); };
+</script></body></html>

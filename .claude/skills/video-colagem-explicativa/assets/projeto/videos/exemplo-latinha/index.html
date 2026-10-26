@@ -1,0 +1,136 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Exemplo da skill video-colagem-explicativa: demo 9:16 no estilo "colagem explicativa" (referência Klickpin: explainer de colagem sobre papel cinza —
+     planeta com aparelhos em anel, lixeiras e pinheiros, pessoas P&B com borda branca, mancha verde-água com grade,
+     sol + cidade subindo). Tema: a latinha de alumínio, campeã da reciclagem no Brasil. 7,6 s, sem narração.
+     Fotos do Wikimedia Commons (img/creditos.json): catador CC0, fardo de latas e fundição em domínio público,
+     horizonte de São Paulo CC0. Planeta: Natural Earth (domínio público). -->
+<script>VIDEO={w:1080,h:1920,fps:30,dur:7.6,bpm:104,music:{style:'explainer',key:'D',gain:-5}}</script>
+<script>LIBS=['colagem.js']</script>
+<script src="../../lib/boot.js"></script>
+<style>
+#stage{background:#dbdbdb;overflow:hidden}
+.cena{position:absolute;inset:0;z-index:2;display:none}
+.ce-peca{visibility:hidden}
+#cred{position:absolute;left:0;right:0;bottom:0;padding:10px 40px 14px;text-align:center;font:500 16px/1.35 'Poppins';color:#f2f2f2;background:rgba(20,20,20,.55);z-index:30;opacity:0}
+</style></head><body>
+<div id="stage">
+  <div class="cena" id="s1"><div id="anel" style="position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 1090px"></div></div>
+  <div class="cena" id="s2"></div>
+  <div class="cena" id="s3"></div>
+  <div class="cena" id="s4"></div>
+  <div class="cena" id="s5"></div>
+  <div id="cred">Fotos: Wilfredor (CC0) · Lance Cpl. M. Blackburn, USMC e Richard Stone, IWM (domínio público) · Spicypepper999 (CC0) · Mapa: Natural Earth · via Wikimedia Commons</div>
+</div>
+<script>
+// ───── tabela de tempos (s) ─────
+const T = { s2: 1.5, pan: 2.78, s4: 4.45, s5: 5.85, fim: 7.6 };
+const $ = s => K.$(s);
+
+window.SETUP = async () => {
+  CE.defs();
+  CE.papel($('#stage'), 'img/papel.jpg', { seed: 11 });
+  CE.cenas({ '#s1': [0, T.s2], '#s2': [T.s2, T.pan + .5], '#s3': [T.pan, T.s4], '#s4': [T.s4, T.s5], '#s5': [T.s5, 99] });
+  const globo = await (await fetch('img/globo.json')).json();
+  cue('m:main', 0); cue('m:stop', 7.38);
+
+  // ═════ CENA 1 — planeta + latinhas em anel (0 → 1,5) ═════
+  const s1 = $('#s1'), anel = $('#anel');
+  const pl = CE.peca(s1, CE.planeta(globo, { r: 310 }), { x: 540 - 320.85, y: 1090 - 320.85, origem: '50% 50%', z: 2 });
+  CE.sobe(pl, .06, { d: .42, dist: 1150, ease: 'back.out(1.15)' });
+  // anel: 12 latas (em pé e amassadas) + 6 lacres menores entre elas; elipse alta para ocupar o 9:16
+  const r1 = K.rng(21), N = 12, CX = 540, CY = 1090, RX = 452, RY = 560;
+  const ordem = [0, 6, 3, 9, 1, 7, 4, 10, 2, 8, 5, 11];   // pipoca em volta, alternando lados (como na referência)
+  for (let i = 0; i < N; i++) {
+    const a = (-90 + i * 360 / N + (r1() - .5) * 10) * Math.PI / 180, k = 1 + (r1() - .5) * .08, am = i % 3 === 1;
+    const w = am ? 104 + r1() * 22 : 74 + r1() * 22, h = w * (am ? 1.2 : 1.8);
+    const cx = CX + Math.cos(a) * RX * k, cy = CY + Math.sin(a) * RY * k;
+    const el = CE.peca(anel, CE.lata({ w, cor: CE.LATAS[i % 10], amassada: am, id: 'a' + i }), { x: cx - w / 2, y: cy - h / 2, origem: '50% 50%', z: 3 });
+    const rot = (r1() - .5) * 80, o = ordem.indexOf(i);
+    CE.pipoca(el, .56 + o * .055, { d: .22, r0: rot - 25, r: rot, f: 480 + o * 40, gain: -6 - (o % 2) * 2 });
+  }
+  for (let i = 0; i < 6; i++) {
+    const a = (-75 + i * 60) * Math.PI / 180, w = 40 + r1() * 10;   // nos vãos entre as latas, numa elipse por dentro
+    const cx = CX + Math.cos(a) * RX * .84, cy = CY + Math.sin(a) * RY * .8;
+    const el = CE.peca(anel, CE.lacre({ w }), { x: cx - w / 2, y: cy - w * .83, origem: '50% 50%', z: 3 });
+    const rot = (r1() - .5) * 120; CE.pipoca(el, .62 + i * .1, { d: .2, r0: rot + 40, r: rot, som: i % 2 ? false : 'tick', gain: -10 });
+  }
+  const c1 = CE.legenda(s1, { t1: 'A latinha de alumínio', t2: 'a campeã da reciclagem no Brasil', y: 236 });
+  CE.pousa(c1.t1, .3); CE.pousa(c1.t2, .42, { s0: 1.8, som: false });
+  onTick(t => { anel.style.transform = `rotate(${(CE.q(t) * 4).toFixed(2)}deg)`; });
+
+  // ═════ CENA 2 — lixeiras amarelas + pinheiros; latas caem dentro (1,5 → pan 2,78) ═════
+  const s2 = $('#s2');
+  const P = [[-80, 1560, 280, 860, CE.COR.grafite, 1], [96, 1560, 210, 640, CE.COR.grafite2, 2], [786, 1560, 210, 700, CE.COR.grafite, 3], [872, 1560, 290, 930, CE.COR.grafite2, 4]];
+  P.forEach(([x, b, w, h, c, sd], i) => { const el = CE.peca(s2, CE.pinheiro({ w, h, cor: c, seed: sd, niveis: 5 + (i % 2) }), { x, y: b - h, z: 1 }); CE.sobe(el, T.s2 + [0, .06, .03, .09][i], { d: .32, dist: 1100, som: i ? false : 'paper' }); });
+  // latas que já estão dentro (atrás do corpo da lixeira) e as que caem
+  const BIN = [[196, 1520, 256], [628, 1520, 256], [380, 1600, 320]]; // x, base, largura (a do meio na frente)
+  const dentro = [], caem = [];
+  BIN.forEach(([x, b, w], k) => {
+    const top = b - w * 1.32;
+    const grp = CE.peca(s2, '', { x: 0, y: 0, z: k === 2 ? 5 : 3, css: 'width:1080px;height:1920px;visibility:visible' });
+    [[.2, -18, 1], [.6, 22, 0]].forEach(([u, r, am], j) => { const lw = am ? 92 : 70, el = CE.peca(grp, CE.lata({ w: lw, cor: CE.LATAS[(k * 3 + j + 2) % 10], amassada: !!am, id: 'd' + k + j }), { x: x + w * u, y: top + 4 - lw * .55, z: 1, origem: '50% 50%', css: `rotate:${r}deg` }); dentro.push(el); });
+    const lw = 78, cai = CE.peca(grp, CE.lata({ w: lw, cor: CE.LATAS[(k * 4 + 1) % 10], id: 'c' + k }), { x: x + w * .5 - lw / 2, y: top - lw * 1.8 * .45, z: 2, origem: '50% 50%' });
+    caem.push(cai);
+    const bin = CE.peca(grp, CE.lixeira({ w, cor: CE.COR.amarelo }), { x, y: top, z: 3 });
+    CE.sobe(bin, T.s2 + .08 + k * .05, { d: .34, dist: 1000, som: k === 2 ? 'paper' : false });
+    dentro.slice(-2).forEach(el => CE.sobe(el, T.s2 + .08 + k * .05, { d: .34, dist: 1000, som: false }));
+    const imp = CE.cai(cai, 1.98 + k * .16, { d: .34, dist: -760, r0: -30 + k * 25, r: (k - 1) * 10, quique: 18 });   // surge abaixo do letreiro e cai
+    CE.amassa(bin, imp, { s: .93 });
+  });
+  const c2 = CE.legenda(s2, { t1: 'Metal vai no amarelo', t2: 'separe a latinha na coleta seletiva', y: 236 });
+  CE.pousa(c2.t1, T.s2 + .14); CE.pousa(c2.t2, T.s2 + .26, { s0: 1.8, som: false });
+
+  // ═════ CENA 3 — catador com o carrinho cresce do chão (pan 2,78 → 4,45) ═════
+  const s3 = $('#s3');
+  const semi = CE.peca(s3, CE.mancha({ forma: 'semi', w: 1000, h: 520, cor: CE.COR.agua, seed: 3 }), { x: 40, y: 1470 - 520, z: 1 });
+  [[40, 330, 124, 7], [128, 410, 140, 8], [222, 300, 116, 9]].forEach(([x, h, w, sd]) => CE.peca(s3, CE.pinheiro({ w, h, cor: CE.COR.pinho, seed: sd, riscos: false, niveis: 4 }), { x, y: 1470 - h, z: 2 }));
+  K.$$('#s3 .ce-peca').forEach(el => gsap.set(el, { autoAlpha: 1 }));
+  const cat = CE.foto(s3, 'img/catador_pb.png', { x: 150, y: 1640 - 566, w: 900, z: 4, origem: '13% 97%' });
+  CE.cresce(cat, T.pan + .5, { d: .62 });
+  [[640, 1062, 70, 0, -20], [716, 1046, 86, 1, 14], [806, 1060, 64, 0, 32], [880, 1070, 78, 1, -12]].forEach(([x, y, w, am, r], i) => {
+    const el = CE.peca(s3, CE.lata({ w, cor: CE.LATAS[(i * 3 + 1) % 10], amassada: !!am, id: 'k' + i }), { x, y: y - w * (am ? 1.2 : 1.8) * .5, z: 5, origem: '50% 80%' });
+    CE.pipoca(el, T.pan + 1.14 + i * .07, { d: .2, r0: r - 30, r, f: 620 + i * 60, gain: -6 });
+  });
+  const c3 = CE.legenda(s3, { t1: 'Catadores recolhem', t2: 'e levam as latas para reciclar', y: 236 });
+  CE.pousa(c3.t1, T.pan + .5); CE.pousa(c3.t2, T.pan + .62, { s0: 1.8, som: false });
+  CE.pan(s2, s3, T.pan, { d: .46 });
+
+  // ═════ CENA 4 — fundição na mancha verde-água com grade (4,45 → 5,85) ═════
+  const s4 = $('#s4');
+  const sw = CE.peca(s4, CE.mancha({ w: 770, h: 560, cor: CE.COR.aguaEsc, seed: 8, tremor: 10 }), { x: 34, y: 830, z: 1 });
+  const gr = CE.peca(s4, CE.grade({ w: 680, h: 748, passo: 68, cor: 'rgba(255,255,255,.85)', esp: 1.7 }), { x: 352, y: 726, z: 2 });
+  gsap.set([sw, gr], { autoAlpha: 1 });
+  CE.traca(gr.querySelector('svg'), T.s4 + .02, { d: .3, s: .01 });
+  const fu = CE.foto(s4, 'img/fundicao_pb.png', { x: 30, y: 1392 - 745, w: 820, z: 3, sombra: false });
+  CE.sobe(fu, T.s4 + .06, { d: .36, dist: 900, ease: 'back.out(1.05)' });
+  const brasa = CE.peca(s4, `<div style="width:340px;height:380px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,190,60,.95) 0%,rgba(255,128,24,.8) 38%,rgba(255,92,10,.25) 70%,rgba(255,92,10,0) 100%)"></div>`, { x: 410 - 170, y: 1070 - 190, z: 4, origem: '50% 50%', css: 'mix-blend-mode:multiply' });
+  TL.fromTo(brasa, { autoAlpha: 0, scale: .4 }, { autoAlpha: 1, scale: 1, duration: .25, ease: CE.passos('back.out(2)', .25), immediateRender: true }, T.s4 + .44); cue('fogo', T.s4 + .44);
+  onTick(t => { const r = K.rng(Math.floor(t * 12) + 99); brasa.firstChild.style.transform = `scale(${(.92 + r() * .16).toFixed(3)})`; brasa.firstChild.style.opacity = (.78 + r() * .22).toFixed(3); });
+  const fa = CE.foto(s4, 'img/fardo_s.png', { x: 742, y: 1446 - 416, w: 300, z: 5, origem: '50% 100%' }); fa.querySelector('img').style.filter = `brightness(1.35) contrast(1.05) ${CE.SOMBRA}`;
+  CE.cresce(fa, T.s4 + .62, { d: .42, som: 'paper' });
+  [[700, 1470, 66, 15], [960, 1478, 58, -25]].forEach(([x, y, w, r], i) => { const el = CE.peca(s4, CE.lata({ w, cor: CE.LATAS[(i * 5 + 3) % 10], amassada: true, id: 'f' + i }), { x, y: y - w * 1.2, z: 6, origem: '50% 80%' }); CE.pipoca(el, T.s4 + 1.0 + i * .08, { d: .2, r0: r - 20, r, f: 700 + i * 80, gain: -7 }); });
+  const c4 = CE.legenda(s4, { t1: 'Derretida na fundição', t2: 'vira alumínio de novo', y: 236 });
+  CE.pousa(c4.t1, T.s4 + .12); CE.pousa(c4.t2, T.s4 + .24, { s0: 1.8, som: false });
+
+  // ═════ CENA 5 — sol + cidade sobem; latinha nova cai no lugar (5,85 → 7,6) ═════
+  const s5 = $('#s5');
+  const cid = CE.foto(s5, 'img/cidade_s.png', { x: -440, y: 1920 - 520, w: 1885, z: 2, sombra: false });
+  CE.sobe(cid, T.s5 + .03, { d: .4, dist: 600, ease: 'back.out(1.1)' });
+  const sol = CE.peca(s5, CE.sol({ r: 104 }), { x: 84, y: 560, z: 1, origem: '50% 50%' });
+  CE.pipoca(sol, T.s5 + .22, { d: .3, f: 520 });
+  onTick(t => { const g = sol.querySelector('.ce-raios'); if (g) g.setAttribute('transform', `rotate(${(CE.q(t) * 9).toFixed(1)})`); });
+  const an = CE.peca(s5, CE.anel({ r: 300, tracos: 30, esp: 16 }), { x: 562 - 316, y: 1150 - 316, z: 3, origem: '50% 50%' });
+  onTick(t => { an.firstChild.style.transform = `rotate(${(CE.q(t) * 6).toFixed(1)}deg)`; });
+  const nova = CE.peca(s5, CE.lata({ w: 250, cor: ['#c9ced4', CE.COR.verde], contorno: 6, id: 'nova' }), { x: 562 - 125, y: 1452 - 450, z: 4, origem: '50% 100%' });
+  const impN = CE.cai(nova, T.s5 + .5, { d: .36, dist: -640, quique: 30 });
+  CE.amassa(nova, impN, { s: .9 }); cue('chime', impN + .05, { m: 86, gain: -6 });
+  CE.pipoca(an, impN + .06, { d: .3, som: false });
+  const m1 = CE.peca(s5, CE.mancha({ w: 150, h: 150, cor: CE.COR.ocre, seed: 12, tremor: 7 }), { x: 66, y: 1118, z: 3, origem: '50% 50%' });
+  const m2 = CE.peca(s5, CE.mancha({ w: 92, h: 250, cor: CE.COR.azul, seed: 13, tremor: 7 }), { x: 926, y: 880, z: 3, origem: '50% 50%' });
+  CE.pipoca(m1, impN + .16, { d: .24, r0: -12, r: -3, f: 660 }); CE.pipoca(m2, impN + .26, { d: .24, r0: 10, r: 2, f: 760 });
+  const c5 = CE.legenda(s5, { t1: 'Volta como lata nova', t2: 'e pode ser reciclada infinitas vezes', y: 236 });
+  CE.pousa(c5.t1, T.s5 + .12); CE.pousa(c5.t2, T.s5 + .24, { s0: 1.8, som: false });
+  TL.fromTo('#cred', { opacity: 0 }, { opacity: 1, duration: .3, immediateRender: true }, T.s5 + 1.2);
+  TL.set({}, {}, T.fim);
+};
+</script></body></html>

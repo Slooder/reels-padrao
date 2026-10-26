@@ -1,0 +1,435 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "video-ops/da/esquema-v1",
+  "title": "Direção de arte por projeto — da.json (esquema v1)",
+  "description": "Fonte única de verdade visual de um projeto de vídeo. Frações são relativas ao LADO MENOR do quadro, salvo indicação na descrição do campo (em = fração do tamanho da fonte; margens seguras = fração da altura/largura). Campos de cor marcados como token aceitam um nome da paleta ('primaria'), 'dado-N', 'neutro-N' ou um hex #RRGGBB. A validação estrutural é feita sobre a DA já com a herança aplicada. Chaves desconhecidas geram aviso (não erro); chaves iniciadas por '_' ou 'x_' são livres.",
+  "type": "object",
+  "required": ["versao_esquema", "projeto", "conceito", "formatos", "cor", "tipografia", "layout", "movimento", "tratamento", "legenda", "graficos", "thumbnail", "som", "marca"],
+  "properties": {
+    "versao_esquema": {"const": 1, "description": "Versão deste esquema."},
+    "herda": {"type": ["string", "null"], "description": "Nome de um preset (embutido ou pessoal) ou caminho de outro da.json. O filho vence; listas substituem inteiras; 'projeto' nunca é herdado."},
+    "projeto": {
+      "type": "object",
+      "description": "Identidade e estado de aprovação. Nunca herdado.",
+      "required": ["nome", "slug", "criada_em", "revisao", "aprovada", "aprovada_em", "aprovada_sha256"],
+      "properties": {
+        "nome": {"type": "string", "minLength": 1},
+        "slug": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "x-erro": "use minúsculas, números e hífens (ex.: 'meu-video')"},
+        "criada_em": {"type": "string", "minLength": 4, "description": "Data ISO 8601."},
+        "revisao": {"type": "integer", "minimum": 1, "description": "Sobe com `da.py revisar`."},
+        "aprovada": {"type": "boolean"},
+        "aprovada_em": {"type": ["string", "null"]},
+        "aprovada_sha256": {"type": ["string", "null"], "description": "sha256 da DA no momento da aprovação (ver `da.py aprovar`)."},
+        "base": {"type": ["string", "null"], "description": "Extra: preset de origem usado pelo init (só registro)."},
+        "rota_adotada": {"type": ["string", "null"], "description": "Extra: nome da rota que `da.py rotas adotar` trouxe para o projeto (só registro)."}
+      }
+    },
+    "conceito": {
+      "type": "object",
+      "required": ["frase", "palavras_chave", "referencias", "faca", "nao_faca"],
+      "properties": {
+        "frase": {"type": "string", "minLength": 1, "description": "Uma frase que resume a direção de arte."},
+        "palavras_chave": {"type": "array", "items": {"type": "string"}},
+        "referencias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["arquivo", "nota"],
+            "properties": {
+              "arquivo": {"type": "string", "format": "da-arquivo", "x-ausente": "aviso", "description": "Relativo a da/ (ex.: referencias/ref1.jpg), absoluto ou URL."},
+              "nota": {"type": "string"}
+            }
+          }
+        },
+        "faca": {"type": "array", "items": {"type": "string"}},
+        "nao_faca": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "formatos": {
+      "type": "object",
+      "required": ["horizontal", "vertical", "quadrado", "thumbnail", "margens_seguras"],
+      "properties": {
+        "horizontal": {"$ref": "#/$defs/formato_video"},
+        "vertical": {"$ref": "#/$defs/formato_video"},
+        "quadrado": {"$ref": "#/$defs/formato_video"},
+        "thumbnail": {"$ref": "#/$defs/formato_fixo"},
+        "margens_seguras": {
+          "type": "object",
+          "description": "[topo, direita, base, esquerda]: topo/base em fração da ALTURA, direita/esquerda em fração da LARGURA. Origem dos números: plataformas.json do kit.",
+          "required": ["horizontal", "vertical"],
+          "properties": {
+            "horizontal": {"type": "object", "required": ["padrao"], "properties": {"padrao": {"$ref": "#/$defs/margens4"}}, "additionalProperties": {"$ref": "#/$defs/margens4"}},
+            "vertical": {
+              "type": "object",
+              "description": "Zonas cobertas pela interface de cada app; 'uniao' = pior caso das três.",
+              "required": ["instagram", "tiktok", "shorts", "uniao"],
+              "properties": {"instagram": {"$ref": "#/$defs/margens4"}, "tiktok": {"$ref": "#/$defs/margens4"}, "shorts": {"$ref": "#/$defs/margens4"}, "uniao": {"$ref": "#/$defs/margens4"}},
+              "additionalProperties": {"$ref": "#/$defs/margens4"}
+            }
+          },
+          "additionalProperties": {"type": "object", "additionalProperties": {"$ref": "#/$defs/margens4"}}
+        }
+      },
+      "additionalProperties": {"$ref": "#/$defs/formato_fixo"}
+    },
+    "cor": {
+      "type": "object",
+      "required": ["paleta", "neutros", "dados", "gradientes"],
+      "properties": {
+        "paleta": {
+          "type": "object",
+          "description": "Cores com papel fixo. fundo/superficie = planos; texto/texto_suave = leitura; primaria = assinatura; secundaria = apoio; destaque = ênfase pontual; positivo/negativo/alerta = semânticas.",
+          "required": ["fundo", "superficie", "texto", "texto_suave", "primaria", "secundaria", "destaque", "positivo", "negativo", "alerta"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$", "x-erro": "nomes de cor em minúsculas, números e '_'"},
+          "additionalProperties": {"$ref": "#/$defs/hex"}
+        },
+        "neutros": {"type": "array", "items": {"$ref": "#/$defs/hex"}, "description": "Extras tolerados pelo auditor (em geral preto e branco puros). Tokens: neutro-1, neutro-2…"},
+        "dados": {"type": "array", "items": {"type": "string", "pattern": "^(#[0-9a-fA-F]{6}|[a-z][a-z0-9_]*)$", "x-erro": "use #RRGGBB ou o nome de uma cor da paleta (ex.: \"primaria\")"}, "minItems": 6, "description": "Série categórica para gráficos, em ordem fixa. Tokens: dado-1, dado-2… Cada item é um #RRGGBB ou o NOME de uma cor da paleta (\"primaria\", \"texto\"): com o nome, a série acompanha a paleta quando uma rota troca a cor."},
+        "gradientes": {
+          "type": "object",
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$", "x-erro": "nomes de gradiente em minúsculas, números e '_'"},
+          "additionalProperties": {
+            "type": "object",
+            "required": ["tipo", "angulo", "paradas"],
+            "properties": {
+              "tipo": {"enum": ["linear", "radial"]},
+              "angulo": {"type": "number", "minimum": -360, "maximum": 360, "description": "Graus, convenção CSS (90 = da esquerda para a direita). Ignorado em 'radial'."},
+              "paradas": {
+                "type": "array", "minItems": 2,
+                "items": {"type": "array", "minItems": 2, "maxItems": 2, "prefixItems": [{"type": "string", "format": "da-cor-token"}, {"type": "number", "minimum": 0, "maximum": 1}]},
+                "description": "[[token de cor, posição 0–1], …] em ordem crescente."
+              }
+            }
+          }
+        }
+      }
+    },
+    "tipografia": {
+      "type": "object",
+      "required": ["papeis", "escala"],
+      "properties": {
+        "papeis": {
+          "type": "object",
+          "required": ["titulo", "subtitulo", "corpo", "dados", "legenda"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$", "x-erro": "nomes de papel em minúsculas, números e '_'"},
+          "additionalProperties": {"$ref": "#/$defs/papel"}
+        },
+        "escala": {
+          "type": "object",
+          "description": "Tamanhos de fonte como fração do lado menor do quadro.",
+          "required": ["display", "h1", "h2", "h3", "corpo", "nota"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+          "additionalProperties": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.6}
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "required": ["grade", "raio", "traco", "sombra", "densidade"],
+      "properties": {
+        "grade": {
+          "type": "object",
+          "required": ["colunas", "margem", "calha"],
+          "properties": {
+            "colunas": {"type": "integer", "minimum": 1, "maximum": 24},
+            "margem": {"type": "number", "minimum": 0, "maximum": 0.25, "description": "Margem de composição (não confundir com margens seguras de plataforma)."},
+            "calha": {"type": "number", "minimum": 0, "maximum": 0.1}
+          }
+        },
+        "raio": {"type": "number", "minimum": 0, "maximum": 0.5, "description": "Raio de canto padrão."},
+        "traco": {"type": "number", "minimum": 0, "maximum": 0.05, "description": "Espessura padrão de linhas e barras."},
+        "sombra": {
+          "anyOf": [
+            {"type": "null"},
+            {"type": "object", "required": ["dx", "dy", "desfoque", "cor", "alfa"],
+             "properties": {"dx": {"type": "number", "minimum": -0.2, "maximum": 0.2}, "dy": {"type": "number", "minimum": -0.2, "maximum": 0.2}, "desfoque": {"type": "number", "minimum": 0, "maximum": 0.2}, "cor": {"type": "string", "format": "da-cor-token"}, "alfa": {"type": "number", "minimum": 0, "maximum": 1}}}
+          ],
+          "description": "Sombra padrão de blocos (null = sem sombra)."
+        },
+        "densidade": {"enum": ["arejada", "media", "densa"]}
+      }
+    },
+    "movimento": {
+      "type": "object",
+      "required": ["curvas", "duracoes", "escalonamento", "entrada_padrao", "saida_padrao", "transicoes", "principios"],
+      "properties": {
+        "curvas": {
+          "type": "object",
+          "description": "cubic-bezier [x1, y1, x2, y2]; x1 e x2 em [0, 1].",
+          "required": ["entrada", "saida", "enfase", "suave", "linear"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+          "additionalProperties": {"$ref": "#/$defs/curva"}
+        },
+        "duracoes": {
+          "type": "object",
+          "description": "Segundos.",
+          "required": ["micro", "curta", "media", "longa"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+          "additionalProperties": {"type": "number", "exclusiveMinimum": 0, "maximum": 10}
+        },
+        "escalonamento": {"type": "number", "minimum": 0, "maximum": 2, "description": "Atraso (s) entre itens de uma sequência."},
+        "entrada_padrao": {"enum": ["sobe", "desliza", "mascara", "escala", "fade", "digita"]},
+        "saida_padrao": {"enum": ["fade", "desce", "mascara", "corte"]},
+        "transicoes": {
+          "type": "object",
+          "required": ["padrao", "permitidas"],
+          "properties": {
+            "padrao": {"$ref": "#/$defs/transicao"},
+            "permitidas": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/transicao"}}
+          }
+        },
+        "principios": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "tratamento": {
+      "type": "object",
+      "description": "Tratamento de footage e b-roll. `da.py compilar` traduz para filtros ffmpeg em build/grade.json.",
+      "required": ["grade", "duotone", "grao", "vinheta", "nitidez", "desfoque", "velocidade", "moldura", "recorte"],
+      "properties": {
+        "grade": {
+          "type": "object",
+          "required": ["lut", "intensidade_lut", "exposicao", "contraste", "saturacao", "gama", "temperatura", "matiz", "curva"],
+          "properties": {
+            "lut": {"type": ["string", "null"], "format": "da-arquivo", "x-ausente": "erro", "description": "Arquivo .cube (relativo a da/, ex.: luts/filme.cube)."},
+            "intensidade_lut": {"type": "number", "minimum": 0, "maximum": 1},
+            "exposicao": {"type": "number", "minimum": -3, "maximum": 3, "description": "Em stops (EV). 0 = neutro."},
+            "contraste": {"type": "number", "minimum": 0, "maximum": 3, "description": "1 = neutro."},
+            "saturacao": {"type": "number", "minimum": 0, "maximum": 3, "description": "1 = neutro; 0 = preto e branco."},
+            "gama": {"type": "number", "minimum": 0.1, "maximum": 10, "description": "1 = neutro; > 1 clareia os meios-tons."},
+            "temperatura": {"type": "number", "minimum": -100, "maximum": 100, "description": "-100 (fria) a 100 (quente). 0 = neutro."},
+            "matiz": {"type": "number", "minimum": -180, "maximum": 180, "description": "Rotação de matiz em graus. 0 = neutro."},
+            "curva": {
+              "anyOf": [
+                {"type": "null"},
+                {"enum": ["color_negative", "cross_process", "darker", "increase_contrast", "lighter", "linear_contrast", "medium_contrast", "negative", "strong_contrast", "vintage"]},
+                {"$ref": "#/$defs/pontos_curva"},
+                {"type": "object", "properties": {"mestre": {"$ref": "#/$defs/pontos_curva"}, "r": {"$ref": "#/$defs/pontos_curva"}, "g": {"$ref": "#/$defs/pontos_curva"}, "b": {"$ref": "#/$defs/pontos_curva"}}, "additionalProperties": false}
+              ],
+              "description": "null, nome de preset do filtro curves, lista de pontos [[x, y], …] (curva única para R, G e B) ou objeto {mestre, r, g, b}."
+            }
+          }
+        },
+        "duotone": {
+          "type": "object",
+          "required": ["ativo", "sombra", "luz", "mistura"],
+          "properties": {
+            "ativo": {"type": "boolean"},
+            "sombra": {"type": "string", "format": "da-cor-token", "description": "Cor que substitui o preto."},
+            "luz": {"type": "string", "format": "da-cor-token", "description": "Cor que substitui o branco."},
+            "mistura": {"type": "number", "minimum": 0, "maximum": 1, "description": "1 = duotone puro; 0,3 = 30% sobre a imagem original."}
+          }
+        },
+        "grao": {
+          "type": "object",
+          "required": ["ativo", "intensidade", "temporal"],
+          "properties": {"ativo": {"type": "boolean"}, "intensidade": {"type": "number", "minimum": 0, "maximum": 100, "description": "Força do ruído de luminância (escala do filtro noise)."}, "temporal": {"type": "boolean", "description": "true = o padrão muda a cada quadro."}}
+        },
+        "vinheta": {
+          "type": "object",
+          "required": ["ativo", "angulo"],
+          "properties": {"ativo": {"type": "boolean"}, "angulo": {"type": "number", "minimum": 0, "maximum": 1.5708, "description": "Ângulo da lente em radianos (0 a π/2); maior = mais forte."}}
+        },
+        "nitidez": {"type": "number", "minimum": 0, "maximum": 2, "description": "0 = neutro."},
+        "desfoque": {"type": "number", "minimum": 0, "maximum": 0.1, "description": "Desfoca o QUADRO INTEIRO do footage tratado (sigma como fração do lado menor; entra na cadeia de acabamento). 0 = neutro. Para fundo desfocado atrás de um vídeo encaixado, use tratamento.encaixe."},
+        "encaixe": {
+          "type": "object",
+          "description": "Como um vídeo de outra proporção entra no quadro (video.filtro_encaixe): 'desfocado' = o vídeo inteiro por cima de uma cópia dele ampliada e desfocada; 'recorte' = amplia e corta (tratamento.recorte.ancora); 'faixas' = o vídeo inteiro com faixas na cor `cor`.",
+          "default": {"modo": "desfocado", "desfoque": 0.035, "escurecer": 0.25, "cor": "fundo"},
+          "properties": {
+            "modo": {"enum": ["desfocado", "recorte", "faixas"], "default": "desfocado"},
+            "desfoque": {"type": "number", "minimum": 0, "maximum": 0.2, "default": 0.035, "description": "Sigma do desfoque do FUNDO do encaixe, em fração do lado menor do quadro de saída."},
+            "escurecer": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.25, "description": "Quanto o fundo desfocado escurece (0 = nada, 1 = preto), para o vídeo encaixado se destacar."},
+            "cor": {"type": "string", "format": "da-cor-token", "default": "fundo", "description": "Cor das faixas no modo 'faixas'."}
+          }
+        },
+        "velocidade": {"type": "number", "exclusiveMinimum": 0, "maximum": 10, "description": "1 = normal. Não entra na cadeia de cor; ver grade.json → velocidade."},
+        "moldura": {
+          "type": "object",
+          "required": ["estilo", "espessura", "cor", "raio", "margem", "rotulo"],
+          "properties": {
+            "estilo": {"enum": ["nenhuma", "borda", "cantoneiras", "janela", "polaroid"]},
+            "espessura": {"type": "number", "minimum": 0, "maximum": 0.1},
+            "cor": {"type": "string", "format": "da-cor-token"},
+            "raio": {"type": "number", "minimum": 0, "maximum": 0.5},
+            "margem": {"type": "number", "minimum": 0, "maximum": 0.3},
+            "rotulo": {"type": "boolean", "description": "Mostrar rótulo/crédito junto da moldura."}
+          }
+        },
+        "recorte": {"type": "object", "required": ["ancora"], "properties": {"ancora": {"enum": ["centro", "rosto", "terco_esq", "terco_dir"]}}}
+      }
+    },
+    "legenda": {
+      "type": "object",
+      "required": ["estilo", "papel", "tamanho", "caixa", "cor", "cor_destaque", "cor_falada", "contorno", "sombra", "fundo", "posicao", "largura_max", "max_linhas", "max_palavras", "animacao"],
+      "properties": {
+        "estilo": {"enum": ["karaoke", "palavra", "bloco"]},
+        "papel": {"type": "string", "format": "da-papel"},
+        "tamanho": {"type": "number", "minimum": 0.01, "maximum": 0.3},
+        "caixa": {"enum": ["alta", "normal"]},
+        "cor": {"type": "string", "format": "da-cor-token"},
+        "cor_destaque": {"type": "string", "format": "da-cor-token", "description": "Palavra que está sendo dita."},
+        "cor_falada": {"type": ["string", "null"], "format": "da-cor-token", "description": "Palavras já ditas (null = igual a 'cor')."},
+        "contorno": {
+          "anyOf": [{"type": "null"}, {"type": "object", "required": ["cor", "espessura"], "properties": {"cor": {"type": "string", "format": "da-cor-token"}, "espessura": {"type": "number", "minimum": 0, "maximum": 0.5, "description": "Fração do tamanho da fonte: espessura EXTERNA visível, para fora da letra (0,11 a 67 px = 7 px de cada lado). Mesma conta no motor e em texto.py."}}}]
+        },
+        "sombra": {
+          "anyOf": [{"type": "null"}, {"type": "object", "required": ["dy", "desfoque", "alfa"], "properties": {"dx": {"type": "number", "minimum": -1, "maximum": 1, "default": 0}, "dy": {"type": "number", "minimum": -1, "maximum": 1}, "desfoque": {"type": "number", "minimum": 0, "maximum": 1}, "alfa": {"type": "number", "minimum": 0, "maximum": 1}, "cor": {"type": "string", "format": "da-cor-token", "default": "#000000"}}}],
+          "description": "dx, dy e desfoque em fração do tamanho da fonte. desfoque = raio de desfoque no sentido do CSS (text-shadow): o desvio-padrão do gaussiano é a metade."
+        },
+        "fundo": {
+          "anyOf": [{"type": "null"}, {"type": "object", "required": ["cor", "alfa"], "properties": {"cor": {"type": "string", "format": "da-cor-token"}, "alfa": {"type": "number", "minimum": 0, "maximum": 1}, "raio": {"type": "number", "minimum": 0, "maximum": 1, "default": 0}, "respiro": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 0, "maximum": 2}, "default": [0.35, 0.18]}}}],
+          "description": "Caixa atrás do texto (null = sem caixa). raio e respiro [horizontal, vertical] em em."
+        },
+        "posicao": {
+          "type": "object",
+          "description": "Por formato: y = centro vertical do bloco, em fração da ALTURA do quadro. Opcionais: x = centro horizontal em fração da LARGURA (sem ele, o centro do retângulo da zona segura da plataforma) e largura_max = teto de largura só para este formato (sem ele, legenda.largura_max). A legenda nunca passa da zona segura: o que não cabe quebra em linhas e depois encolhe.",
+          "required": ["vertical", "horizontal"],
+          "additionalProperties": {"type": "object", "required": ["y"], "properties": {"y": {"type": "number", "minimum": 0, "maximum": 1}, "x": {"type": "number", "minimum": 0, "maximum": 1}, "largura_max": {"type": "number", "minimum": 0.1, "maximum": 1}}}
+        },
+        "largura_max": {"type": "number", "minimum": 0.1, "maximum": 1, "description": "Fração da LARGURA do quadro. Vale para todo formato que não declare posicao.<formato>.largura_max; no vertical a zona 'uniao' só deixa 0,61."},
+        "max_linhas": {"type": "integer", "minimum": 1, "maximum": 6},
+        "max_palavras": {"type": "integer", "minimum": 1, "maximum": 20, "description": "Palavras por cue."},
+        "animacao": {"enum": ["pop", "fade", "nenhuma"]},
+        "reservar_em": {"type": "array", "uniqueItems": true, "items": {"enum": ["horizontal", "vertical", "quadrado"]}, "default": ["vertical", "quadrado"], "description": "Formatos em que a peça leva legenda queimada: neles as cenas do kit (GC, título, barras, citação, crédito, assinatura) deixam livre a faixa da legenda — a área útil é a zona segura menos essa faixa. Fora deles, só com o parâmetro reservar_legenda da cena."}
+      }
+    },
+    "graficos": {
+      "type": "object",
+      "required": ["gc", "tarja", "icones", "dados", "citacao_fonte"],
+      "properties": {
+        "gc": {
+          "type": "object",
+          "description": "Gerador de caracteres (lower third).",
+          "required": ["estilo", "posicao"],
+          "properties": {
+            "estilo": {"enum": ["barra", "caixa", "linha", "etiqueta"]},
+            "posicao": {"$ref": "#/$defs/posicao"},
+            "papel_nome": {"type": "string", "format": "da-papel", "default": "subtitulo"},
+            "papel_cargo": {"type": "string", "format": "da-papel", "default": "dados"},
+            "tamanho_nome": {"type": "number", "minimum": 0.005, "maximum": 0.3, "default": 0.042},
+            "tamanho_cargo": {"type": "number", "minimum": 0.005, "maximum": 0.3, "default": 0.022},
+            "cor_nome": {"type": "string", "format": "da-cor-token", "default": "texto"},
+            "cor_cargo": {"type": "string", "format": "da-cor-token", "default": "texto_suave"},
+            "cor_fundo": {"type": "string", "format": "da-cor-token", "default": "fundo"},
+            "alfa_fundo": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.86},
+            "cor_acento": {"type": "string", "format": "da-cor-token", "default": "primaria"},
+            "protecao": {"enum": ["auto", "nenhuma", "sombra", "contorno", "degrade"], "default": "auto", "description": "Como o GC se protege do vídeo que passa atrás. auto = degrade no estilo 'linha' (que não tem caixa) e nenhuma nos demais; sombra = halo desfocado em cor_fundo; contorno = anel em cor_fundo em volta das letras; degrade = painel em cor_fundo × alfa_fundo atrás do bloco, que se desfaz para o lado livre."}
+          }
+        },
+        "tarja": {
+          "type": "object",
+          "description": "Faixa de texto de destaque.",
+          "properties": {
+            "estilo": {"enum": ["chapada", "contorno", "sublinhado"], "default": "chapada"},
+            "papel": {"type": "string", "format": "da-papel", "default": "titulo"},
+            "tamanho": {"type": "number", "minimum": 0.005, "maximum": 0.3, "default": 0.042},
+            "cor_fundo": {"type": "string", "format": "da-cor-token", "default": "primaria"},
+            "cor_texto": {"type": "string", "format": "da-cor-token", "default": "fundo"},
+            "inclinacao": {"type": "number", "minimum": -45, "maximum": 45, "default": 0, "description": "Graus."}
+          }
+        },
+        "icones": {"type": "object", "required": ["estilo", "espessura"], "properties": {"estilo": {"enum": ["traco", "cheio"]}, "espessura": {"type": "number", "minimum": 0, "maximum": 0.05}}},
+        "dados": {
+          "type": "object",
+          "description": "Gráficos de dados. As séries usam cor.dados na ordem.",
+          "required": ["eixo", "grade", "rotulo"],
+          "properties": {"eixo": {"type": "string", "format": "da-cor-token"}, "grade": {"type": "string", "format": "da-cor-token"}, "rotulo": {"type": "string", "format": "da-papel"}}
+        },
+        "citacao_fonte": {
+          "type": "object",
+          "description": "Crédito de fonte ('Fonte: IBGE, 2024').",
+          "required": ["papel", "tamanho", "posicao"],
+          "properties": {"papel": {"type": "string", "format": "da-papel"}, "tamanho": {"type": "number", "minimum": 0.005, "maximum": 0.2}, "posicao": {"$ref": "#/$defs/posicao"}, "cor": {"type": "string", "format": "da-cor-token", "default": "texto_suave"}, "prefixo": {"type": "string", "default": "Fonte: ", "description": "Texto posto antes do crédito (\"\" = sem prefixo). Não é duplicado se o crédito já começar por ele."}}
+        }
+      }
+    },
+    "thumbnail": {
+      "type": "object",
+      "required": ["max_palavras", "papel", "tamanho", "contorno", "tratamento_foto", "fundo", "zona_proibida"],
+      "properties": {
+        "max_palavras": {"type": "integer", "minimum": 1, "maximum": 12},
+        "papel": {"type": "string", "format": "da-papel"},
+        "tamanho": {"type": "number", "minimum": 0.02, "maximum": 0.6},
+        "cor": {"type": "string", "format": "da-cor-token", "default": "texto", "description": "Cor do texto."},
+        "cor_destaque": {"type": "string", "format": "da-cor-token", "default": "primaria", "description": "Cor da palavra em destaque."},
+        "contorno": {"anyOf": [{"type": "null"}, {"type": "object", "required": ["cor", "espessura"], "properties": {"cor": {"type": "string", "format": "da-cor-token"}, "espessura": {"type": "number", "minimum": 0, "maximum": 0.5, "description": "Fração do tamanho da fonte: espessura EXTERNA visível, para fora da letra (0,11 a 67 px = 7 px de cada lado). Mesma conta no motor e em texto.py."}}}]},
+        "tratamento_foto": {
+          "type": "object",
+          "required": ["saturacao", "contraste", "recorte_pessoa", "contorno_pessoa"],
+          "properties": {
+            "saturacao": {"type": "number", "minimum": 0, "maximum": 3},
+            "contraste": {"type": "number", "minimum": 0, "maximum": 3},
+            "recorte_pessoa": {"type": "boolean"},
+            "contorno_pessoa": {"anyOf": [{"type": "null"}, {"type": "object", "required": ["cor", "espessura"], "properties": {"cor": {"type": "string", "format": "da-cor-token"}, "espessura": {"type": "number", "minimum": 0, "maximum": 0.1, "description": "Fração do lado menor."}}}]}
+          }
+        },
+        "fundo": {"type": "string", "format": "da-fundo", "description": "Token de cor, 'gradiente:<nome>' ou 'foto' (o próprio quadro tratado)."},
+        "zona_proibida": {"enum": ["nenhuma", "superior_esquerda", "superior_centro", "superior_direita", "inferior_esquerda", "inferior_centro", "inferior_direita"], "description": "Canto que o texto não pode ocupar (o YouTube cobre o inferior direito com a duração)."},
+        "zona_proibida_tamanho": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}, "default": [0.25, 0.22], "description": "[largura, altura] da zona proibida em fração da largura e da altura do quadro. Padrão: a reserva do selo de duração do YouTube (plataformas.json → thumbnail.youtube.zona_timestamp)."}
+      }
+    },
+    "som": {
+      "type": "object",
+      "required": ["identidade", "loudness", "sfx", "musica"],
+      "properties": {
+        "identidade": {"type": "string"},
+        "loudness": {
+          "type": "object",
+          "required": ["longo", "curto"],
+          "properties": {"longo": {"$ref": "#/$defs/loudness"}, "curto": {"$ref": "#/$defs/loudness"}}
+        },
+        "sfx": {"type": "object", "required": ["entrada", "enfase", "texto"], "additionalProperties": {"type": "string"}, "description": "Família de efeito por gatilho."},
+        "musica": {
+          "type": "object",
+          "required": ["clima", "bpm"],
+          "properties": {"clima": {"type": "string"}, "bpm": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 20, "maximum": 300}}}
+        }
+      }
+    },
+    "marca": {
+      "type": "object",
+      "required": ["logo", "assinatura", "posicao_logo", "marca_dagua"],
+      "properties": {
+        "logo": {"type": ["string", "null"], "format": "da-arquivo", "x-ausente": "erro", "description": "Relativo a da/ (ex.: logos/logo.png)."},
+        "assinatura": {"type": ["string", "null"], "description": "Ex.: '@canal'."},
+        "posicao_logo": {"$ref": "#/$defs/posicao"},
+        "marca_dagua": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "hex": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "x-erro": "use hexadecimal completo, no formato #RRGGBB"},
+    "margens4": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number", "minimum": 0, "exclusiveMaximum": 0.5}, "description": "[topo, direita, base, esquerda]."},
+    "curva": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number", "minimum": -3, "maximum": 3}},
+    "pontos_curva": {"type": "array", "minItems": 2, "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 0, "maximum": 1}}},
+    "transicao": {"enum": ["corte", "fade", "empurra", "mascara", "desliza", "zoom"]},
+    "posicao": {"enum": ["superior_esquerda", "superior_centro", "superior_direita", "centro", "inferior_esquerda", "inferior_centro", "inferior_direita"]},
+    "loudness": {"type": "object", "required": ["lufs", "pico_real"], "properties": {"lufs": {"type": "number", "minimum": -40, "maximum": -5}, "pico_real": {"type": "number", "minimum": -12, "maximum": 0, "description": "dBTP."}}},
+    "formato_video": {
+      "type": "object",
+      "required": ["largura", "altura", "fps"],
+      "properties": {"largura": {"type": "integer", "minimum": 16, "maximum": 8192}, "altura": {"type": "integer", "minimum": 16, "maximum": 8192}, "fps": {"type": "string", "format": "da-fps", "description": "Racional: '30000/1001', '24000/1001', '25', '60'."}}
+    },
+    "formato_fixo": {
+      "type": "object",
+      "required": ["largura", "altura"],
+      "properties": {"largura": {"type": "integer", "minimum": 16, "maximum": 8192}, "altura": {"type": "integer", "minimum": 16, "maximum": 8192}, "fps": {"type": "string", "format": "da-fps"}}
+    },
+    "papel": {
+      "type": "object",
+      "required": ["familia", "arquivo", "peso", "largura", "estilo", "caixa", "tracking", "altura_linha"],
+      "properties": {
+        "familia": {"type": "string", "minLength": 1, "pattern": "^[^\"'\\\\;{}]+$", "x-erro": "nome CSS da família, sem aspas nem ponto e vírgula"},
+        "arquivo": {"type": ["string", "null"], "format": "da-arquivo", "x-ausente": "erro", "description": "Relativo a da/ (ex.: fontes/X.ttf), absoluto, ou null para fonte instalada no sistema."},
+        "peso": {"type": "integer", "minimum": 1, "maximum": 1000},
+        "largura": {"type": ["number", "null"], "minimum": 25, "maximum": 200, "description": "font-stretch em % (só tem efeito em fonte variável com eixo wdth); null = normal."},
+        "estilo": {"enum": ["normal", "italic"]},
+        "caixa": {"enum": ["alta", "normal"]},
+        "tracking": {"type": "number", "minimum": -0.3, "maximum": 1, "description": "Em em."},
+        "altura_linha": {"type": "number", "minimum": 0.6, "maximum": 3},
+        "eixos": {"type": "object", "default": {}, "propertyNames": {"pattern": "^[A-Za-z0-9 ]{4}$", "x-erro": "tag de eixo com 4 caracteres (wght, wdth, opsz…)"}, "additionalProperties": {"type": "number"}, "description": "Eixos de fonte variável, ex.: {\"wght\": 900, \"wdth\": 68}."},
+        "escala_x": {"type": "number", "minimum": 0.3, "maximum": 2, "default": 1, "description": "Extra: condensação geométrica (scaleX) aplicada pelo motor — para fontes estáticas sem eixo wdth. 1 = sem deformar."}
+      }
+    }
+  }
+}

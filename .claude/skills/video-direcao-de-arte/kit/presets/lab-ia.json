@@ -1,0 +1,288 @@
+{
+  "versao_esquema": 1,
+  "herda": null,
+  "projeto": {
+    "nome": "Lab IA",
+    "slug": "lab-ia",
+    "criada_em": "2026-10-05",
+    "revisao": 1,
+    "aprovada": false,
+    "aprovada_em": null,
+    "aprovada_sha256": null
+  },
+  "conceito": {
+    "frase": "Laboratório de IA: interface escura e fria, luz de terminal e precisão de instrumento — o vídeo explica o modelo como quem abre o painel e mostra por dentro.",
+    "palavras_chave": ["técnico", "preciso", "frio", "interface", "terminal", "diagrama"],
+    "referencias": [],
+    "faca": [
+      "Tratar cada tela como um painel: grade visível, rótulos em mono, unidade sempre escrita",
+      "Ciano para o que está ativo ou sendo explicado; violeta para o que é do modelo (pesos, camadas, tokens)",
+      "Texto técnico entra digitando; diagramas se constroem na ordem em que o dado flui",
+      "Números com casas decimais alinhadas e a fonte citada",
+      "Deixar respiro: fundo escuro vazio também é informação"
+    ],
+    "nao_faca": [
+      "Cérebro brilhante, robô humanoide, chuva de código verde ou outro clichê de IA",
+      "Neon estourado, reflexo de lente ou gradiente arco-íris",
+      "Animação elástica ou que quica",
+      "Mais de duas cores de acento por tela",
+      "Parágrafo longo: quebre em rótulos e passos"
+    ]
+  },
+  "formatos": {
+    "horizontal": {"largura": 1920, "altura": 1080, "fps": "30000/1001"},
+    "vertical": {"largura": 1080, "altura": 1920, "fps": "30000/1001"},
+    "quadrado": {"largura": 1080, "altura": 1080, "fps": "30000/1001"},
+    "thumbnail": {"largura": 1280, "altura": 720},
+    "margens_seguras": {
+      "horizontal": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      },
+      "vertical": {
+        "instagram": [0.14, 0.21, 0.35, 0.06],
+        "tiktok": [0.125, 0.2778, 0.3438, 0.1111],
+        "shorts": [0.15, 0.1778, 0.35, 0.0444],
+        "uniao": [0.15, 0.2778, 0.35, 0.1111]
+      },
+      "quadrado": {
+        "padrao": [0.05, 0.05, 0.05, 0.05]
+      }
+    }
+  },
+  "cor": {
+    "paleta": {
+      "fundo": "#07090D",
+      "superficie": "#111722",
+      "texto": "#E6EDF3",
+      "texto_suave": "#8494A7",
+      "primaria": "#38E1FF",
+      "secundaria": "#9D7BFF",
+      "destaque": "#FFB454",
+      "positivo": "#3DDC97",
+      "negativo": "#FF5C7A",
+      "alerta": "#F2D45C"
+    },
+    "neutros": ["#000000", "#FFFFFF"],
+    "dados": ["primaria", "secundaria", "#FFB454", "#3DDC97", "#FF5C7A", "texto_suave", "texto"],
+    "gradientes": {
+      "sinal": {
+        "tipo": "linear",
+        "angulo": 90,
+        "paradas": [["primaria", 0], ["secundaria", 1]]
+      },
+      "profundidade": {
+        "tipo": "linear",
+        "angulo": 180,
+        "paradas": [["superficie", 0], ["fundo", 1]]
+      }
+    }
+  },
+  "tipografia": {
+    "papeis": {
+      "titulo": {
+        "familia": "Roboto",
+        "arquivo": "fontes/Roboto-Variable.ttf",
+        "peso": 700,
+        "largura": 82,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.012,
+        "altura_linha": 1.06,
+        "eixos": {"wght": 700, "wdth": 82}
+      },
+      "subtitulo": {
+        "familia": "Fira Code",
+        "arquivo": "fontes/FiraCode-Variable.ttf",
+        "peso": 500,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "alta",
+        "tracking": 0.08,
+        "altura_linha": 1.35,
+        "eixos": {"wght": 500}
+      },
+      "corpo": {
+        "familia": "Roboto",
+        "arquivo": "fontes/Roboto-Variable.ttf",
+        "peso": 400,
+        "largura": 100,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.42,
+        "eixos": {"wght": 400, "wdth": 100}
+      },
+      "dados": {
+        "familia": "Fira Code",
+        "arquivo": "fontes/FiraCode-Variable.ttf",
+        "peso": 500,
+        "largura": null,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": 0.0,
+        "altura_linha": 1.25,
+        "eixos": {"wght": 500}
+      },
+      "legenda": {
+        "familia": "Roboto",
+        "arquivo": "fontes/Roboto-Variable.ttf",
+        "peso": 800,
+        "largura": 88,
+        "estilo": "normal",
+        "caixa": "normal",
+        "tracking": -0.005,
+        "altura_linha": 1.12,
+        "eixos": {"wght": 800, "wdth": 88}
+      }
+    },
+    "escala": {"display": 0.12, "h1": 0.078, "h2": 0.054, "h3": 0.039, "corpo": 0.03, "nota": 0.022}
+  },
+  "layout": {
+    "grade": {"colunas": 12, "margem": 0.06, "calha": 0.012},
+    "raio": 0.008,
+    "traco": 0.0028,
+    "sombra": null,
+    "densidade": "media"
+  },
+  "movimento": {
+    "curvas": {
+      "entrada": [0.16, 1, 0.3, 1],
+      "saida": [0.7, 0, 0.84, 0],
+      "enfase": [0.2, 0, 0, 1],
+      "suave": [0.65, 0, 0.35, 1],
+      "linear": [0, 0, 1, 1]
+    },
+    "duracoes": {"micro": 0.08, "curta": 0.2, "media": 0.36, "longa": 0.7},
+    "escalonamento": 0.04,
+    "entrada_padrao": "digita",
+    "saida_padrao": "fade",
+    "transicoes": {
+      "padrao": "corte",
+      "permitidas": ["corte", "mascara", "fade"]
+    },
+    "principios": [
+      "Movimento de interface: rápido para chegar, exato para parar",
+      "Texto técnico digita; forma geométrica desenha o traço",
+      "Diagramas crescem na direção do fluxo do dado",
+      "Sem elasticidade: nada passa do ponto"
+    ]
+  },
+  "tratamento": {
+    "grade": {
+      "lut": null,
+      "intensidade_lut": 1.0,
+      "exposicao": 0.0,
+      "contraste": 1.1,
+      "saturacao": 0.85,
+      "gama": 1.0,
+      "temperatura": -18,
+      "matiz": 0,
+      "curva": null
+    },
+    "duotone": {"ativo": false, "sombra": "fundo", "luz": "primaria", "mistura": 0.35},
+    "grao": {"ativo": true, "intensidade": 3, "temporal": true},
+    "vinheta": {"ativo": true, "angulo": 0.45},
+    "nitidez": 0.15,
+    "desfoque": 0.0,
+    "velocidade": 1.0,
+    "moldura": {
+      "estilo": "janela",
+      "espessura": 0.0028,
+      "cor": "texto_suave",
+      "raio": 0.012,
+      "margem": 0.06,
+      "rotulo": true
+    },
+    "recorte": {"ancora": "centro"}
+  },
+  "legenda": {
+    "estilo": "karaoke",
+    "papel": "legenda",
+    "tamanho": 0.052,
+    "caixa": "normal",
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "cor_falada": "texto_suave",
+    "contorno": null,
+    "sombra": null,
+    "fundo": {
+      "cor": "fundo",
+      "alfa": 0.84,
+      "raio": 0.22,
+      "respiro": [0.4, 0.2]
+    },
+    "posicao": {
+      "vertical": {"y": 0.6, "largura_max": 0.61},
+      "horizontal": {"y": 0.86}
+    },
+    "largura_max": 0.78,
+    "max_linhas": 2,
+    "max_palavras": 5,
+    "animacao": "fade"
+  },
+  "graficos": {
+    "gc": {
+      "estilo": "linha",
+      "posicao": "inferior_esquerda",
+      "papel_nome": "titulo",
+      "papel_cargo": "dados",
+      "tamanho_nome": 0.036,
+      "tamanho_cargo": 0.026,
+      "cor_nome": "texto",
+      "cor_cargo": "primaria",
+      "cor_fundo": "superficie",
+      "alfa_fundo": 0.9,
+      "cor_acento": "primaria"
+    },
+    "tarja": {
+      "estilo": "contorno",
+      "papel": "subtitulo",
+      "tamanho": 0.026,
+      "cor_fundo": "primaria",
+      "cor_texto": "texto",
+      "inclinacao": 0
+    },
+    "icones": {"estilo": "traco", "espessura": 0.0028},
+    "dados": {"eixo": "texto_suave", "grade": "superficie", "rotulo": "dados"},
+    "citacao_fonte": {
+      "papel": "dados",
+      "tamanho": 0.024,
+      "posicao": "inferior_direita",
+      "cor": "texto_suave"
+    }
+  },
+  "thumbnail": {
+    "max_palavras": 4,
+    "papel": "titulo",
+    "tamanho": 0.17,
+    "cor": "texto",
+    "cor_destaque": "primaria",
+    "contorno": null,
+    "tratamento_foto": {
+      "saturacao": 0.9,
+      "contraste": 1.15,
+      "recorte_pessoa": true,
+      "contorno_pessoa": {"cor": "primaria", "espessura": 0.008}
+    },
+    "fundo": "gradiente:profundidade",
+    "zona_proibida": "inferior_direita"
+  },
+  "som": {
+    "identidade": "Sintético e limpo: texturas eletrônicas discretas, cliques de interface e graves controlados.",
+    "loudness": {
+      "longo": {"lufs": -14, "pico_real": -1.0},
+      "curto": {"lufs": -14, "pico_real": -1.0}
+    },
+    "sfx": {"entrada": "blip", "enfase": "impacto", "texto": "tick"},
+    "musica": {
+      "clima": "eletrônica ambiente, arpejos lentos, sem bateria pesada",
+      "bpm": [90, 110]
+    }
+  },
+  "marca": {
+    "logo": null,
+    "assinatura": null,
+    "posicao_logo": "superior_direita",
+    "marca_dagua": false
+  }
+}

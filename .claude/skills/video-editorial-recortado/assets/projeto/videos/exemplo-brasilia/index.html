@@ -1,0 +1,69 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Pedido: demo 9:16 de ~7 s no estilo "editorial recortado" (referência: editorial em fundo branco, arranha-céus recortados em P&B
+     com borda azul cortada a tesoura, título serifado com sublinhado de pincel, subtítulo que sobe palavra a palavra e etiquetas
+     coral que se montam apontando partes). Tema: Brasília de Niemeyer — a cidade desenhada do zero. Plano único que vai se
+     preenchendo. Fotos do Wikimedia Commons (domínio público; img/creditos.json). -->
+<script>VIDEO={w:1080,h:1920,fps:30,dur:6.8,bpm:92,music:{style:'ambient_major',key:'F',gain:0}}</script>
+<script>LIBS=['editorial.js']</script>
+<script src="../../lib/boot.js"></script>
+<style>
+#stage{background:#f5f5f3;overflow:hidden}
+#cidade{position:absolute;inset:0}
+</style></head><body>
+<div id="stage">
+ <div id="fundo" class="fill"></div>
+ <div id="cidade"></div>
+ <div id="textos" class="fill" style="z-index:5"></div>
+ <div id="rotulos" class="fill" style="z-index:6"></div>
+</div>
+<script>
+// T: tempos (s). Plano único: título → título sobe → subtítulo palavra a palavra → 5 etiquetas que se sobrepõem → respiro.
+const T = { tit: 0, traco: .26, sobe: .95, sub: 1.30, L: [2.62, 3.24, 3.58, 3.90, 4.22], cred: 4.75 };
+const $ = s => document.querySelector(s);
+
+// fundo de papel + retículas (atrás do recorte, como na referência)
+ED.papel($('#fundo'), 'img/papel.jpg');
+ED.reticula($('#fundo'), { x: -10, y: 540, w: 300, h: 230, t0: .05, d: .32 });
+ED.reticula($('#fundo'), { x: 822, y: 930, w: 270, h: 190, t0: .18, d: .32, dir: 'r' });
+ED.reticula($('#fundo'), { x: -10, y: 1480, w: 250, h: 210, t0: .3, d: .32 });
+
+// a cidade: três recortes P&B com borda azul (tools/editorial.py recorte) — trás → frente
+const C = $('#cidade');
+const fundoC = document.createElement('div'); fundoC.className = 'fill'; C.appendChild(fundoC);
+const frente = document.createElement('div'); frente.className = 'fill'; C.appendChild(frente);
+ED.peca(fundoC, 'img/congresso_ed.png', { x: 70, y: 590, w: 1150 });
+ED.peca(frente, 'img/cupula_ed.png', { x: -78, y: 1352, w: 470 });
+ED.peca(frente, 'img/catedral_ed.png', { x: -130, y: 1212, w: 1370 });
+ED.empurra(fundoC, { para: 1.022, dy: -6 });           // câmera quase parada: trás anda menos que a frente
+ED.empurra(frente, { para: 1.04 });
+
+ED.credito($('#rotulos'), 'Fotos: Mario Roberto Duran Ortiz · Roberto Castro/MTur — domínio público, via Wikimedia Commons', { t0: T.cred });
+
+// música por seções
+cue('m:break', 0); cue('m:build', T.sub); cue('m:stop', VIDEO.dur - .2);
+
+window.SETUP = () => {
+  // título + sublinhado de pincel (atrás das letras); o bloco começa mais baixo e sobe para abrir espaço
+  const tit = ED.titulo($('#textos'), 'Brasília de Niemeyer', { y: 168, fs: 86 });
+  ED.sublinhado(tit.el, { x: tit.x0 - tit.fs * .2, y: tit.fs * .95, w: tit.larg + tit.fs * .55, h: tit.fs * .29, t0: T.traco, d: .55 });
+  ED.sobe(tit.palavras, T.tit, { passo: .12, d: .4, som: 'paper', gain: -1 });
+  cue('whoosh_slow', T.sobe - .05, { gain: -4 });
+  const ez = gsap.parseEase('power3.inOut');
+  onTick(t => (tit.el.style.transform = `translateY(${(96 * (1 - ez(K.seg(t, T.sobe, T.sobe + .62)))).toFixed(2)}px)`));
+
+  // subtítulo palavra a palavra
+  const sub = ED.titulo($('#textos'), 'A cidade desenhada do zero', { y: 312, fs: 60, peso: 700 });
+  ED.sobe(sub.palavras, T.sub, { passo: .21, d: .38, som: 'pop', gain: -2 });
+
+  // etiquetas coral apontando as partes
+  const R = $('#rotulos');
+  const fim = [
+    ED.etiqueta(R, { texto: '“A curva livre e sensual”', x: 54, y: 462, t0: T.L[0], seed: 3, fs: 47 }),
+    ED.etiqueta(R, { texto: 'Congresso Nacional', x: 1032, y: 742, t0: T.L[1], seed: 6, fs: 47, alinhar: 'dir' }),
+    ED.etiqueta(R, { texto: 'Câmara', x: 1036, y: 1170, t0: T.L[2], seed: 2, fs: 47, alinhar: 'dir' }),
+    ED.etiqueta(R, { texto: 'Senado', x: 40, y: 1262, t0: T.L[3], seed: 9, fs: 47 }),
+    ED.etiqueta(R, { texto: 'Catedral', x: 668, y: 1606, t0: T.L[4], seed: 4, fs: 47 }),
+  ].map(e => e.fim);
+  cue('chime', Math.max(...fim) + .12, { gain: -9 });
+};
+</script></body></html>
